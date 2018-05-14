@@ -1,5 +1,4 @@
 import os
-import sys
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from codecs import open
@@ -10,19 +9,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
-
-class VerifyVersionCommand(install):
-    """Custom command to verify that the git tag matches our version"""
-    description = 'verify that the git tag matches our version'
-
-    def run(self):
-        tag = os.getenv('CIRCLE_TAG')
-
-        if tag != VERSION:
-            info = "Git tag: {0} does not match the version of this app: {1}".format(
-                tag, VERSION
-            )
-            sys.exit(info)
 
 setup(
     name='sideeye',
@@ -61,8 +47,5 @@ setup(
 
     package_data={
         'sideeye': ['default_config.json'],
-    },
-    cmdclass={
-        'verify': VerifyVersionCommand,
     }
 )
