@@ -33,11 +33,11 @@ jobs:
           - v1-dependencies-{{ checksum "setup.py" }}
           - v1-dependencies-
       - run:
-        name: run tests
-        command: |
-          . venv/bin/activate
-          cd tests
-          -nose2 -c tests/nose2.cfg -v --layer-reporter
+          name: run tests
+          command: |
+            . venv/bin/activate
+            cd tests
+            -nose2 -c tests/nose2.cfg -v --layer-reporter
 
 workflows:
   version: 2
