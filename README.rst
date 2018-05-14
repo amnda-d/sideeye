@@ -219,4 +219,4 @@ A number specifying the level of detail in terminal output.
 .. |circleci| image:: https://circleci.com/gh/zediski/sideeye/tree/master.svg?style=shield
     :alt: Build Status
     :scale: 100%
-    :target:https://circleci.com/gh/zediski/sideeye/tree/master
+    :target: https://circleci.com/gh/zediski/sideeye/tree/master
