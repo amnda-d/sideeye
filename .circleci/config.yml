@@ -10,23 +10,22 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "setup.py" }}
-          - v1-dependencies-
       - run:
           name: install dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install -e .[test]
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "setup.py" }}
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             cd tests
             -nose2 -c tests/nose2.cfg -v --layer-reporter
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "setup.py" }}
 
 workflows:
   version: 2
