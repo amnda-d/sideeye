@@ -1,6 +1,7 @@
 ========
 SideEye
 ========
+|docs|
 
 Python package for processing eye tracking data.
 
@@ -209,3 +210,8 @@ A number specifying the level of detail in terminal output.
 ``4``: Trial-level calculation information.
 
 ``5``: All output information.
+
+.. |docs| image:: https://readthedocs.org/projects/docs/badge/?version=latest
+    :alt: Documentation Status
+    :scale: 100%
+    :target: https://sideeye.readthedocs.io/en/latest/?badge=latest
