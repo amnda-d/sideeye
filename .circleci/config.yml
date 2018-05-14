@@ -33,6 +33,9 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "setup.py" }}
       - run:
           name: init .pypirc
           command: |
@@ -47,6 +50,7 @@ jobs:
       - run:
           name: upload to pypi
           command: |
+            . venv/bin/activate
             pip install twine
             twine upload dist/*
 
