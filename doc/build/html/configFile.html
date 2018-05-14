@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Configuration File &#8212; SideEye 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Default Configuration" href="default_config.json.html" />
+    <link rel="prev" title="Getting Started" href="start.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="default_config.json.html" title="Default Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="start.html" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SideEye 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-configuration-file">
+<h1><a class="toc-backref" href="#id1">The Configuration File</a><a class="headerlink" href="#the-configuration-file" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#the-configuration-file" id="id1">The Configuration File</a><ul>
+<li><a class="reference internal" href="#da1-fields" id="id2">da1_fields</a></li>
+<li><a class="reference internal" href="#region-fields" id="id3">region_fields</a></li>
+<li><a class="reference internal" href="#cutoffs" id="id4">cutoffs</a></li>
+<li><a class="reference internal" href="#region-measures" id="id5">region_measures</a></li>
+<li><a class="reference internal" href="#trial-measures" id="id6">trial_measures</a></li>
+<li><a class="reference internal" href="#region-output" id="id7">region_output</a></li>
+<li><a class="reference internal" href="#trial-output" id="id8">trial_output</a></li>
+<li><a class="reference internal" href="#terminal-output" id="id9">terminal_output</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The configuration file is a JSON file specifying the parameters used by SideEye&#8217;s parsing and output functions. There is a <a class="reference internal" href="default_config.json.html"><span class="doc">default configuration</span></a> used by SideEye if a custom configuration is not provided.
+A custom configuration file must contain the same fields as the default configuration file. To use a custom configuration, copy <a class="reference internal" href="default_config.json.html"><span class="doc">default_config.json</span></a>, change values to your configuration, and provide the file name in functions requiring a configuration in your code.</p>
+<p>The sections of the config file are:</p>
+<p><code class="docutils literal"><span class="pre">da1_fields</span></code>: The locations of values in each line of a .DA1 file.</p>
+<p><code class="docutils literal"><span class="pre">region_fields</span></code>: The locations of values in each line of a region file.</p>
+<p><code class="docutils literal"><span class="pre">cutoffs</span></code>: Fixation duration cutoffs.</p>
+<p><code class="docutils literal"><span class="pre">region_measures</span></code>: Used in region measure calculation and output.</p>
+<p><code class="docutils literal"><span class="pre">trial_measures</span></code>: Used in trial measure calculation and output.</p>
+<p><code class="docutils literal"><span class="pre">region_output</span></code>: Reported columns for region measures in output file.</p>
+<p><code class="docutils literal"><span class="pre">trial_output</span></code>: Reported columns for trial measures in output file.</p>
+<p><code class="docutils literal"><span class="pre">terminal_output</span></code>: Amount of status/debugging information to output to terminal.</p>
+<div class="section" id="da1-fields">
+<h2><a class="toc-backref" href="#id2">da1_fields</a><a class="headerlink" href="#da1-fields" title="Permalink to this headline">¶</a></h2>
+<p>This section contains parameters needed for parsing .DA1 files. A .DA1 file describes the position and timing of fixations. Each line of the file represents a single trial in an experiment. The first fields in the line contain information identifying the trial. After these fields, fixations are represented by groups of four numbers - x-position, y-position, start time, and end time. Five fields are necessary for parsing a .DA1 file:</p>
+<p><code class="docutils literal"><span class="pre">index</span></code>: An integer identifying a single trial, usually the first number in the line.</p>
+<p><code class="docutils literal"><span class="pre">condition</span></code>: A value identifying the condition of the trial.</p>
+<p><code class="docutils literal"><span class="pre">number</span></code>: A value identifying the item of the trial.</p>
+<p><code class="docutils literal"><span class="pre">time</span></code>: The total time of a trial, sometimes either not included in DA1 files or at the end of every line. If this is true, this parameter should be <code class="docutils literal"><span class="pre">-1</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">fixation_start</span></code>: The position in a line where fixation data starts.</p>
+<p>The default configuration for .DA1 files is:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;da1_fields&quot;</span> <span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;number&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;fixation_start&quot;</span><span class="p">:</span> <span class="mi">8</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This default configuration matches a .DA1 file with the following format:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Position</span><span class="p">:</span>   <span class="mi">0</span>   <span class="o">|</span>   <span class="mi">1</span>   <span class="o">|</span>   <span class="mi">2</span>   <span class="o">|</span> <span class="mi">3</span> <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span> <span class="mi">5</span> <span class="o">|</span> <span class="mi">6</span> <span class="o">|</span> <span class="mi">7</span> <span class="o">|</span>   <span class="mi">8</span>   <span class="o">|</span>   <span class="mi">9</span>   <span class="o">|</span> <span class="o">...</span> <span class="o">|</span>  <span class="o">-</span><span class="mi">1</span>  <span class="o">|</span>
+<span class="o">----------------------------------------------------------------------------------</span>
+<span class="n">Value</span><span class="p">:</span>    <span class="n">index</span> <span class="o">|</span> <span class="n">cond</span><span class="o">.</span> <span class="o">|</span> <span class="n">num</span><span class="o">.</span>  <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span> <span class="n">fix</span><span class="o">.</span>  <span class="o">|</span> <span class="n">fix</span><span class="o">.</span>  <span class="o">|</span> <span class="o">...</span> <span class="o">|</span> <span class="n">time</span> <span class="o">|</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="region-fields">
+<h2><a class="toc-backref" href="#id3">region_fields</a><a class="headerlink" href="#region-fields" title="Permalink to this headline">¶</a></h2>
+<p>Similar to <code class="docutils literal"><span class="pre">da1_fields</span></code>, this section specifies the positions of values in each line of a region file. Region files (typically .cnt or .reg) describe regions of interest in items of the experiment. Regions are defined by a character position of the beginning and ending of the region. Character positions can either be a single integer for single-line items, or a pair (line, character) of integers for multi-line items. A line in a region file contains the number and condition of an item, followed by the beginning and end positions of the regions. Four fields are necessary for parsing a region file.</p>
+<p><code class="docutils literal"><span class="pre">number</span></code>: Item identifier.</p>
+<p><code class="docutils literal"><span class="pre">condition</span></code>: Item condition.</p>
+<p><code class="docutils literal"><span class="pre">boundaries_start</span></code>: The position where region boundaries start in a line.</p>
+<p><code class="docutils literal"><span class="pre">includes_y</span></code>: True for multi-line items where regions are bounded by character and line position pairs, false for single-line items where regions are bounded by single integer character positions.</p>
+<p>The default configuration for region files is:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;region_fields&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;number&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;boundaries_start&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">&quot;includes_y&quot;</span><span class="p">:</span> <span class="n">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The default configuration matches a region file with the following format:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Position</span><span class="p">:</span>   <span class="mi">0</span>   <span class="o">|</span>   <span class="mi">1</span>   <span class="o">|</span> <span class="mi">2</span> <span class="o">|</span>   <span class="mi">3</span>   <span class="o">|</span>   <span class="mi">4</span>   <span class="o">|</span>   <span class="mi">5</span>   <span class="o">|</span>   <span class="mi">6</span>   <span class="o">|</span> <span class="o">...</span> <span class="o">|</span>
+<span class="o">-------------------------------------------------------------------</span>
+<span class="n">Value</span><span class="p">:</span>    <span class="n">num</span><span class="o">.</span>  <span class="o">|</span> <span class="n">cond</span><span class="o">.</span> <span class="o">|</span>   <span class="o">|</span>  <span class="n">r1</span>   <span class="o">|</span>  <span class="n">r1</span>   <span class="o">|</span>  <span class="n">r2</span>   <span class="o">|</span>  <span class="n">r2</span>   <span class="o">|</span> <span class="o">...</span> <span class="o">|</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cutoffs">
+<h2><a class="toc-backref" href="#id4">cutoffs</a><a class="headerlink" href="#cutoffs" title="Permalink to this headline">¶</a></h2>
+<p>This section contains cutoffs for fixations. If a fixation&#8217;s duration is less than <cite>min</cite> or greater than <cite>max</cite>, it will be excluded from measure calculations. <cite>include_fixation</cite> and <cite>include_saccades</cite> describe how excluded fixations should be handled when calculating saccades. For more information, see the examples in <a class="reference internal" href="sideeye.data.html#trial"><span class="std std-ref">Trials</span></a>.</p>
+<p><code class="docutils literal"><span class="pre">min</span></code>: Minimum cutoff time for fixation duration.</p>
+<p><code class="docutils literal"><span class="pre">max</span></code>: Maximum cutoff time for fixation duration.</p>
+<p><code class="docutils literal"><span class="pre">include_fixation</span></code>: When true, if a fixation is excluded by cutoffs, its duration is included in the duration of the saccade between the previous and next non-excluded fixations.</p>
+<p><code class="docutils literal"><span class="pre">include_saccades</span></code>: When true, if a fixation is excluded by cutoffs, the duration of the saccade into and out of the fixation is included in the saccade between the previous and next non-excluded fixations.</p>
+</div>
+<div class="section" id="region-measures">
+<h2><a class="toc-backref" href="#id5">region_measures</a><a class="headerlink" href="#region-measures" title="Permalink to this headline">¶</a></h2>
+<p>This section contains parameters for region measure calculation and output. It is a list of all calculated region measure, each with two parameters:</p>
+<p><code class="docutils literal"><span class="pre">cutoff</span></code>: A cutoff value for the measure. If the calculated measure is greater than this value, its value in the output report is <code class="docutils literal"><span class="pre">CUTOFF</span></code>. For some measures, where the value is not numerical, this parameter is ignored.</p>
+<p><code class="docutils literal"><span class="pre">include</span></code>: A boolean (true/false) value specifying whether the measure should be included in the output report. If false, the measure will be excluded.</p>
+<p>The measures in this section of the config file are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">skip</span>
+<span class="n">first_pass_regressions_out</span>
+<span class="n">first_pass_regressions_in</span>
+<span class="n">first_fixation_duration</span>
+<span class="n">single_fixation_duration</span>
+<span class="n">first_pass</span>
+<span class="n">go_past</span>
+<span class="n">total_time</span>
+<span class="n">right_bounded_time</span>
+<span class="n">reread_time</span>
+<span class="n">second_pass</span>
+<span class="n">spillover_time</span>
+<span class="n">refixation_time</span>
+<span class="n">landing_position</span>
+<span class="n">launch_site</span>
+<span class="n">first_pass_fixation_count</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-measures">
+<h2><a class="toc-backref" href="#id6">trial_measures</a><a class="headerlink" href="#trial-measures" title="Permalink to this headline">¶</a></h2>
+<p>This section contains parameters for trial measure calculation and output. Each measure has the same parameters as <code class="docutils literal"><span class="pre">region_measures</span></code>. The measures included in this section are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">location_first_regression</span>
+<span class="n">latency_first_regression</span>
+<span class="n">fixation_count</span>
+<span class="n">percent_regressions</span>
+<span class="n">trial_total_time</span>
+<span class="n">average_forward_saccade</span>
+<span class="n">average_backward_saccade</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="region-output">
+<h2><a class="toc-backref" href="#id7">region_output</a><a class="headerlink" href="#region-output" title="Permalink to this headline">¶</a></h2>
+<p>This section specifies the columns that should be included in the output file for region measures. Each output column has two parameters:</p>
+<p><code class="docutils literal"><span class="pre">include</span></code>: Whether or not the column should be included in the output report, true or false.</p>
+<p><code class="docutils literal"><span class="pre">header</span></code>: A title for the header of the column. Can be different from the name of the column parameter.</p>
+<p>Columns included in this section are:</p>
+<p><code class="docutils literal"><span class="pre">experiment_name</span></code>: Name of experiment.</p>
+<p><code class="docutils literal"><span class="pre">filename</span></code>: Filename of DA1 file.</p>
+<p><code class="docutils literal"><span class="pre">date</span></code>: Date of DA1 file if specified, or date file was parsed if not.</p>
+<p><code class="docutils literal"><span class="pre">trial_id</span></code>: Trial identifier.</p>
+<p><code class="docutils literal"><span class="pre">trial_total_time</span></code>: Total time of trial.</p>
+<p><code class="docutils literal"><span class="pre">item_id</span></code>: Item identifier.</p>
+<p><code class="docutils literal"><span class="pre">item_condition</span></code>: Condition of item.</p>
+<p><code class="docutils literal"><span class="pre">region_label</span></code>: Label for region.</p>
+<p><code class="docutils literal"><span class="pre">region_number</span></code>: Region number (beginning with 0).</p>
+<p><code class="docutils literal"><span class="pre">region_text</span></code>: Text included in region, if specified.</p>
+<p><code class="docutils literal"><span class="pre">region_start</span></code>: Character location of beginning of region.</p>
+<p><code class="docutils literal"><span class="pre">region_end</span></code>: Character location of end of region.</p>
+<p><code class="docutils literal"><span class="pre">measure</span></code>: Name of measure.</p>
+<p><code class="docutils literal"><span class="pre">value</span></code>: Value of measure.</p>
+</div>
+<div class="section" id="trial-output">
+<h2><a class="toc-backref" href="#id8">trial_output</a><a class="headerlink" href="#trial-output" title="Permalink to this headline">¶</a></h2>
+<p>This section specifies the columns that should be included in the output file for trial measures. Each column has the same parameters as <code class="docutils literal"><span class="pre">region_output</span></code>. The columns are the same, but with columns beginning with <code class="docutils literal"><span class="pre">region_</span></code> excluded.</p>
+</div>
+<div class="section" id="terminal-output">
+<h2><a class="toc-backref" href="#id9">terminal_output</a><a class="headerlink" href="#terminal-output" title="Permalink to this headline">¶</a></h2>
+<p>A number specifying the level of detail in terminal output.</p>
+<p><code class="docutils literal"><span class="pre">0</span></code>: Errors only.</p>
+<p><code class="docutils literal"><span class="pre">1</span></code>: File-level information (which file is currently being parsed).</p>
+<p><code class="docutils literal"><span class="pre">2</span></code>: Item and trial-level parsing information.</p>
+<p><code class="docutils literal"><span class="pre">3</span></code>: Measure-level calculation information.</p>
+<p><code class="docutils literal"><span class="pre">4</span></code>: Trial-level calculation information.</p>
+<p><code class="docutils literal"><span class="pre">5</span></code>: All output information.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Configuration File</a><ul>
+<li><a class="reference internal" href="#da1-fields">da1_fields</a></li>
+<li><a class="reference internal" href="#region-fields">region_fields</a></li>
+<li><a class="reference internal" href="#cutoffs">cutoffs</a></li>
+<li><a class="reference internal" href="#region-measures">region_measures</a></li>
+<li><a class="reference internal" href="#trial-measures">trial_measures</a></li>
+<li><a class="reference internal" href="#region-output">region_output</a></li>
+<li><a class="reference internal" href="#trial-output">trial_output</a></li>
+<li><a class="reference internal" href="#terminal-output">terminal_output</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="start.html"
+                        title="previous chapter">Getting Started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="default_config.json.html"
+                        title="next chapter">Default Configuration</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/configFile.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="default_config.json.html" title="Default Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="start.html" title="Getting Started"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SideEye 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Amanda Doucette.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+    </div>
+  </body>
+</html>

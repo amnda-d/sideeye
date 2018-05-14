@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Measures &#8212; SideEye 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parser" href="sideeye.parser.html" />
+    <link rel="prev" title="Data" href="sideeye.data.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sideeye.parser.html" title="Parser"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sideeye.data.html" title="Data"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SideEye 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sideeye.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="measures">
+<h1><a class="toc-backref" href="#id1">Measures</a><a class="headerlink" href="#measures" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#measures" id="id1">Measures</a><ul>
+<li><a class="reference internal" href="#module-sideeye.measures.trial" id="id2">Trial Measures</a></li>
+<li><a class="reference internal" href="#module-sideeye.measures.region" id="id3">Region Measures</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="module-sideeye.measures.trial">
+<span id="trial-measures"></span><h2><a class="toc-backref" href="#id2">Trial Measures</a><a class="headerlink" href="#module-sideeye.measures.trial" title="Permalink to this headline">¶</a></h2>
+<p>Trial-based eye-tracking measures. These measures are calculated for each trial of an experiment.</p>
+<dl class="function">
+<dt id="sideeye.measures.trial.average_backward_saccade">
+<code class="descclassname">sideeye.measures.trial.</code><code class="descname">average_backward_saccade</code><span class="sig-paren">(</span><em>trial</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.trial.average_backward_saccade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average saccade duration between fixations moving backward through the sentence, or the
+average duration of a regression saccade.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.trial.average_forward_saccade">
+<code class="descclassname">sideeye.measures.trial.</code><code class="descname">average_forward_saccade</code><span class="sig-paren">(</span><em>trial</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.trial.average_forward_saccade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average saccade duration between fixations moving forward through the sentence.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.trial.fixation_count">
+<code class="descclassname">sideeye.measures.trial.</code><code class="descname">fixation_count</code><span class="sig-paren">(</span><em>trial</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.trial.fixation_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total number of fixations in a trial.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.trial.latency_first_regression">
+<code class="descclassname">sideeye.measures.trial.</code><code class="descname">latency_first_regression</code><span class="sig-paren">(</span><em>trial</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.trial.latency_first_regression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time until the end of the fixation before the first regression saccade in the trial,
+where a regression is defined as a saccade where the position of the fixation at the beginning of
+the saccade is later in the item than the position of the fixation at the end of the saccade.
+None if there are no regressions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.trial.location_first_regression">
+<code class="descclassname">sideeye.measures.trial.</code><code class="descname">location_first_regression</code><span class="sig-paren">(</span><em>trial</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.trial.location_first_regression" title="Permalink to this definition">¶</a></dt>
+<dd><p>(x, y) character position of the last fixation before the first regression saccade in the trial,
+where a regression is defined as a saccade where the position of the fixation at the beginning of
+the saccade is later in the item than the position of the fixation at the end of the saccade.
+None if there are no regressions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.trial.percent_regressions">
+<code class="descclassname">sideeye.measures.trial.</code><code class="descname">percent_regressions</code><span class="sig-paren">(</span><em>trial</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.trial.percent_regressions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Proportion of saccades that are regressions from the location of the previous fixation,
+where a regression is defined as a saccade where the position of the fixation at the beginning of
+the saccade is later in the item than the position of the fixation at the end of the saccade.
+None if there are no saccades.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.trial.trial_total_time">
+<code class="descclassname">sideeye.measures.trial.</code><code class="descname">trial_total_time</code><span class="sig-paren">(</span><em>trial</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.trial.trial_total_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total time in the trial.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sideeye.measures.region">
+<span id="region-measures"></span><h2><a class="toc-backref" href="#id3">Region Measures</a><a class="headerlink" href="#module-sideeye.measures.region" title="Permalink to this headline">¶</a></h2>
+<p>Region-based eye-tracking measures. These measures are calculated for each region of each trial in an experiment.</p>
+<dl class="function">
+<dt id="sideeye.measures.region.skip">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">skip</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.skip" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the reader fixates a region beyond the target region before
+fixating the target region or the target region is never fixated, False otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.first_pass_regressions_in">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">first_pass_regressions_in</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.first_pass_regressions_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>This measure is True if the reader made a fixation in the region
+after fixating on any region to the right of it, False if they only fixated
+on the region after fixating on regions to the left, and None if the region
+was never fixated.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.first_pass_regressions_out">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">first_pass_regressions_out</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.first_pass_regressions_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>This measure is True if the reader made a regression out of the region on the
+first pass - that is, exited a region to the left after the first pass. The measure
+is False if they exited to the right, and None if the region was not fixated
+during first pass reading.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.landing_position">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">landing_position</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.landing_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location relative to the beginning of the region (in
+number of characters) of the first fixation during the first pass, where the
+first character in the region is at position (0, 0). If the region was skipped,
+this measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.launch_site">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">launch_site</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.launch_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the last fixation prior to the first fixation
+in the region. This measure returns an (x, y) tuple, where x is either the
+number of characters from the the beginning of the target region and y is the
+number of lines from the beginning of the region. -1 indicates the last character
+of the region preceding the target region, or the preceding line, and increasing
+negative numbers indicate further launch sites. If the region was skipped this
+measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.first_pass_fixation_count">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">first_pass_fixation_count</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.first_pass_fixation_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of fixations made in a region before leaving it during first pass.
+If the region was skipped this measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.first_fixation_duration">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">first_fixation_duration</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.first_fixation_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>The duration of the first fixation in a region during first pass reading
+(i.e., before the reader fixates areas beyond the region).
+If this region is skipped during first pass, this measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.single_fixation_duration">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">single_fixation_duration</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.single_fixation_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>If there is only one fixation on the region during first pass reading, this
+measure is the duration of that fixation. If the region is skipped during
+first pass, the measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.first_pass">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">first_pass</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.first_pass" title="Permalink to this definition">¶</a></dt>
+<dd><p>The summed duration of all fixations in a region
+during first pass (i.e., before the reader fixates areas beyond the region).
+If this region is skipped during first pass, this measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.go_past">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">go_past</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.go_past" title="Permalink to this definition">¶</a></dt>
+<dd><p>Also known as regression path duration. The summed duration of all fixations
+starting from the first fixation in the region, including any fixations in
+prior regions until the reader goes past the region (i.e., before the reader
+fixates areas beyond the region). If this region is skipped during first pass,
+this measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.total_time">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">total_time</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.total_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The summed duration of all fixations in the region that
+occur at any time during the trial. If this region is never fixated this
+measure is 0.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.right_bounded_time">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">right_bounded_time</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.right_bounded_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The summed duration of all fixations starting
+from the first fixation in the region, excluding any fixations in prior
+regions until the reader goes past the region (i.e., until the reader
+fixates areas beyond the region). If this region is skipped during first
+pass, this measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.reread_time">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">reread_time</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.reread_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The summed duration of all fixations in the region that occur after a region
+to the right has been fixated. If this region is never fixated this measure is 0.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.second_pass">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">second_pass</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.second_pass" title="Permalink to this definition">¶</a></dt>
+<dd><p>The summed duration of all fixations in the region that occur on a region
+after that region has been exited in either direction for the first time.
+If this region is never fixated this measure is 0.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.spillover_time">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">spillover_time</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.spillover_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The duration of fixations on the region immediately following
+the region of interest, where the previous fixation was on the region of interest.
+If there are no such fixations, the measure is None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sideeye.measures.region.refixation_time">
+<code class="descclassname">sideeye.measures.region.</code><code class="descname">refixation_time</code><span class="sig-paren">(</span><em>trial</em>, <em>region_number</em><span class="sig-paren">)</span><a class="headerlink" href="#sideeye.measures.region.refixation_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sum of all first-pass fixations excluding the first
+fixation. If there was a single fixation in the region or it was skipped
+this measure is None.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Measures</a><ul>
+<li><a class="reference internal" href="#module-sideeye.measures.trial">Trial Measures</a></li>
+<li><a class="reference internal" href="#module-sideeye.measures.region">Region Measures</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sideeye.data.html"
+                        title="previous chapter">Data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sideeye.parser.html"
+                        title="next chapter">Parser</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sideeye.measures.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sideeye.parser.html" title="Parser"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sideeye.data.html" title="Data"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SideEye 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="sideeye.html" >API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Amanda Doucette.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+    </div>
+  </body>
+</html>

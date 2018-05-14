@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>README &#8212; SideEye 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="sideeye.html" />
+    <link rel="prev" title="Welcome to SideEye’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sideeye.html" title="API Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to SideEye’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SideEye 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="readme">
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sideeye">
+<h2>SideEye<a class="headerlink" href="#sideeye" title="Permalink to this headline">¶</a></h2>
+<p>Python package for processing eye tracking data.</p>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="dependencies">
+<h4>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h4>
+<p>SideEye requires Python &gt;= 3.4.</p>
+</div>
+</div>
+<div class="section" id="local-installation">
+<h3>Local Installation<a class="headerlink" href="#local-installation" title="Permalink to this headline">¶</a></h3>
+<p>Run the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">side</span><span class="o">-</span><span class="n">eye</span> <span class="n">folder</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="development">
+<h3>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h3>
+<p>To install package in development mode run the following command in the package directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">build</span>
+</pre></div>
+</div>
+<p>To run tests and Pylint:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">test</span>
+</pre></div>
+</div>
+<p>To run Pylint only:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">lint</span>
+</pre></div>
+</div>
+<p>To remove python artifacts (.pyc, .egg-info, etc):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">clean</span>
+</pre></div>
+</div>
+<p>Make sure tests pass before committing any changes.</p>
+</div>
+<div class="section" id="pre-alpha-testing">
+<h3>Pre-Alpha Testing<a class="headerlink" href="#pre-alpha-testing" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="setup">
+<h4>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h4>
+<p>The <a class="reference external" href="examples">examples</a> directory contains <a class="reference external" href="examples/sample.py">sample.py</a>, which is an example of the simplest way to use the package. To run on a folder of DA1 files, copy <a class="reference external" href="examples/sample.py">sample.py</a> and <a class="reference external" href="examples/sample_config.json">sample_config.json</a> into the directory containing a folder of DA1 files and a .cnt or .reg region file. Open both files in a text editor. Replace the file paths in <a class="reference external" href="examples/sample.py">sample.py</a> with paths to your DA1 and region files. Replace <code class="docutils literal"><span class="pre">examples/sample_output.csv</span></code> with whatever you want the output file to be named. Edit <a class="reference external" href="examples/sample_config.json">sample_config.json</a> to match the parameters needed for your experiment, according to the instructions in <a class="reference internal" href="#the-configuration-file">The Configuration File</a>.</p>
+</div>
+<div class="section" id="running-the-script">
+<h4>Running the Script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h4>
+<p>Open a bash shell (Terminal on MacOS) and navigate to the directory containing the edited <a class="reference external" href="examples/sample.py">sample.py</a>. If you are unfamiliar with bash commands, two are necessary:</p>
+<p><code class="docutils literal"><span class="pre">ls</span></code> lists the files in the current directory.</p>
+<p><code class="docutils literal"><span class="pre">cd</span> <span class="pre">&lt;directory&gt;</span></code> changes the current directory.</p>
+<p><code class="docutils literal"><span class="pre">cd</span> <span class="pre">..</span></code> will move you up one directory level.</p>
+<p>Type <code class="docutils literal"><span class="pre">ls</span></code> followed by enter in the terminal to see your current directory. You will most likely see a list of directories like <code class="docutils literal"><span class="pre">Documents</span></code>, <code class="docutils literal"><span class="pre">Applications</span></code>, <code class="docutils literal"><span class="pre">Desktop</span></code>, etc. Start typing the name of the directory containing <a class="reference external" href="examples/sample.py">sample.py</a>. If you hit the tab key after entering a couple characters, it should start to autocomplete. Hit tab again too see the directory of the path you&#8217;ve typed so far. After you&#8217;ve typed the full path, hit enter. For example, I have to type this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">Documents</span><span class="o">/</span><span class="n">GitHub</span><span class="o">/</span><span class="n">sideeye</span><span class="o">-</span><span class="n">tests</span><span class="o">/</span><span class="n">example</span>
+</pre></div>
+</div>
+<p>Now you should be in the right directory. Type <code class="docutils literal"><span class="pre">ls</span></code> and you should see <a class="reference external" href="examples/sample.py">sample.py</a>, <a class="reference external" href="examples/sample_config.json">sample_config.json</a>, your DA1 directory, and your region file. To run the script, type:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">sample</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>This should generate an output file. If it does not work, type <code class="docutils literal"><span class="pre">python</span> <span class="pre">--version</span></code> to make sure you have the correct version of Python installed. If you have Python &gt;= 3.4 and the script still isn&#8217;t working, something is probably wrong, and you should contact Amanda at <code class="docutils literal"><span class="pre">amanda.doucette&#64;originate.com</span></code>.</p>
+</div>
+</div>
+<div class="section" id="the-configuration-file">
+<h3>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>The configuration file is a JSON file specifying the changeable parameters used by SideEye&#8217;s default parsing and output functions. An example is found in <a class="reference external" href="examples/sample_config.json">examples/sample_config.json</a>. The config file should always have the same format. It has several sections:</p>
+<p><code class="docutils literal"><span class="pre">da1_fields</span></code>: The locations of values in each line of a DA1 file.</p>
+<p><code class="docutils literal"><span class="pre">region_fields</span></code>: The locations of values in each line of a region file.</p>
+<p><code class="docutils literal"><span class="pre">cutoffs</span></code>: Fixation duration cutoffs.</p>
+<p><code class="docutils literal"><span class="pre">region_measures</span></code>: Used in region measure calculation and output.</p>
+<p><code class="docutils literal"><span class="pre">trial_measures</span></code>: Used in trial measure calculation and output.</p>
+<p><code class="docutils literal"><span class="pre">region_output</span></code>: Reported columns for region measures in output file.</p>
+<p><code class="docutils literal"><span class="pre">trial_output</span></code>: Reported columns for trial measures in output file.</p>
+<div class="section" id="da1-fields">
+<h4>da1_fields<a class="headerlink" href="#da1-fields" title="Permalink to this headline">¶</a></h4>
+<p>This section contains parameters needed for parsing DA1 files. Because there are several formats for DA1 files, the positions of each value in a line are needed. The parameters are all positions in a line, where 0 is the first value in the line.:</p>
+<p><code class="docutils literal"><span class="pre">index</span></code>: An integer identifying a single trial, usually the first number in a line.</p>
+<p><code class="docutils literal"><span class="pre">condition</span></code>: A value identifying the condition of the trial.</p>
+<p><code class="docutils literal"><span class="pre">number</span></code>: A value identifying the item of the trial.</p>
+<p><code class="docutils literal"><span class="pre">time</span></code>: The total time of a trial, sometimes either not included in DA1 files or at the end of every line. If this is true, this parameter should be <code class="docutils literal"><span class="pre">-1</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">fixation_start</span></code>: The position in a line where fixation data starts.</p>
+<p>As an example, a line of a DA1 file could look like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Position</span><span class="p">:</span>   <span class="mi">0</span>   <span class="o">|</span>   <span class="mi">1</span>   <span class="o">|</span>   <span class="mi">2</span>   <span class="o">|</span> <span class="mi">3</span> <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span> <span class="mi">5</span> <span class="o">|</span> <span class="mi">6</span> <span class="o">|</span> <span class="mi">7</span> <span class="o">|</span>   <span class="mi">8</span>   <span class="o">|</span>   <span class="mi">9</span>   <span class="o">|</span> <span class="o">...</span> <span class="o">|</span>  <span class="o">-</span><span class="mi">1</span>  <span class="o">|</span>
+<span class="n">Value</span><span class="p">:</span>    <span class="n">index</span> <span class="o">|</span> <span class="n">cond</span><span class="o">.</span> <span class="o">|</span> <span class="n">num</span><span class="o">.</span>  <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span> <span class="n">fix</span><span class="o">.</span>  <span class="o">|</span> <span class="n">fix</span><span class="o">.</span>  <span class="o">|</span> <span class="o">...</span> <span class="o">|</span> <span class="n">time</span> <span class="o">|</span>
+</pre></div>
+</div>
+<p>And the <code class="docutils literal"><span class="pre">da1_fields</span></code> section of the config file would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;da1_fields&quot;</span> <span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;number&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;fixation_start&quot;</span><span class="p">:</span> <span class="mi">8</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="region-fields">
+<h4>region_fields<a class="headerlink" href="#region-fields" title="Permalink to this headline">¶</a></h4>
+<p>Similar to <code class="docutils literal"><span class="pre">da1_fields</span></code>, this section specifies the positions of values in each line of a region file. The parameters are:</p>
+<p><code class="docutils literal"><span class="pre">number</span></code>: Item identifier.</p>
+<p><code class="docutils literal"><span class="pre">condition</span></code>: Item condition.</p>
+<p><code class="docutils literal"><span class="pre">boundaries_start</span></code>: The position where region boundaries start in a line.</p>
+<p><code class="docutils literal"><span class="pre">includes_y</span></code>: Whether or not the region file includes line position in region boundaries. If true, a region is bounded by four numbers: <code class="docutils literal"><span class="pre">(char_start,</span> <span class="pre">line_start),</span> <span class="pre">(char_end,</span> <span class="pre">line_end)</span></code>. If false, the region is bounded by two numbers: <code class="docutils literal"><span class="pre">char_start,</span> <span class="pre">char_end</span></code>.</p>
+</div>
+<div class="section" id="cutoffs">
+<h4>cutoffs<a class="headerlink" href="#cutoffs" title="Permalink to this headline">¶</a></h4>
+<p>This section contains cutoffs for fixations. If a fixation&#8217;s duration is less than <cite>min</cite> or greater than <cite>max</cite>, it will be excluded from measure calculations.</p>
+<p><code class="docutils literal"><span class="pre">min</span></code>: Minimum cutoff time for fixation duration.</p>
+<p><code class="docutils literal"><span class="pre">max</span></code>: Maximum cutoff time for fixation duration.</p>
+<p><code class="docutils literal"><span class="pre">include_fixation</span></code>: When true, if a fixation is excluded by cutoffs, its duration is included in the duration of the saccade between the previous and next non-excluded fixations.</p>
+<p><code class="docutils literal"><span class="pre">include_saccades</span></code>: When true, if a fixation is excluded by cutoffs, the duration of the saccade into and out of the fixation is included in the saccade between the previous and next non-excluded fixations.</p>
+</div>
+<div class="section" id="region-measures">
+<h4>region_measures<a class="headerlink" href="#region-measures" title="Permalink to this headline">¶</a></h4>
+<p>This section contains parameters for region measure calculation and output. It is a list of all calculated region measure, each with two parameters:</p>
+<p><code class="docutils literal"><span class="pre">cutoff</span></code>: A cutoff value for the measure. If the calculated measure is greater than this value, its value in the output report is <code class="docutils literal"><span class="pre">CUTOFF</span></code>. For some measures, where the value is not numerical, this parameter is ignored.</p>
+<p><code class="docutils literal"><span class="pre">include</span></code>: A boolean (true/false) value specifying whether the measure should be included in the output report. If false, the measure will be excluded.</p>
+<p>The measures in this section of the config file are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">skip</span>
+<span class="n">first_pass_regressions_out</span>
+<span class="n">first_pass_regressions_in</span>
+<span class="n">first_fixation_duration</span>
+<span class="n">single_fixation_duration</span>
+<span class="n">first_pass</span>
+<span class="n">go_past</span>
+<span class="n">total_time</span>
+<span class="n">right_bounded_time</span>
+<span class="n">reread_time</span>
+<span class="n">second_pass</span>
+<span class="n">spillover_time</span>
+<span class="n">refixation_time</span>
+<span class="n">landing_position</span>
+<span class="n">launch_site</span>
+<span class="n">first_pass_fixation_count</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trial-measures">
+<h4>trial_measures<a class="headerlink" href="#trial-measures" title="Permalink to this headline">¶</a></h4>
+<p>This section contains parameters for trial measure calculation and output. Each measure has the same parameters as <code class="docutils literal"><span class="pre">region_measures</span></code>. The measures included in this section are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">location_first_regression</span>
+<span class="n">latency_first_regression</span>
+<span class="n">fixation_count</span>
+<span class="n">percent_regressions</span>
+<span class="n">trial_total_time</span>
+<span class="n">average_forward_saccade</span>
+<span class="n">average_backward_saccade</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="region-output">
+<h4>region_output<a class="headerlink" href="#region-output" title="Permalink to this headline">¶</a></h4>
+<p>This section specifies the columns that should be included in the output file for region measures. Each output column has two parameters:</p>
+<p><code class="docutils literal"><span class="pre">include</span></code>: Whether or not the column should be included in the output report. true/false</p>
+<p><code class="docutils literal"><span class="pre">header</span></code>: A title for the header of the column. Can be different from the name of the column parameter.</p>
+<p>Columns included in this section are:</p>
+<p><code class="docutils literal"><span class="pre">experiment_name</span></code>: Name of experiment.</p>
+<p><code class="docutils literal"><span class="pre">filename</span></code>: Filename of DA1 file.</p>
+<p><code class="docutils literal"><span class="pre">date</span></code>: Date of DA1 file if specified, or date file was parsed if not.</p>
+<p><code class="docutils literal"><span class="pre">trial_id</span></code>: Trial identifier.</p>
+<p><code class="docutils literal"><span class="pre">trial_total_time</span></code>: Total time of trial.</p>
+<p><code class="docutils literal"><span class="pre">item_id</span></code>: Item identifier.</p>
+<p><code class="docutils literal"><span class="pre">item_condition</span></code>: Condition of item.</p>
+<p><code class="docutils literal"><span class="pre">region_label</span></code>: Label for region.</p>
+<p><code class="docutils literal"><span class="pre">region_number</span></code>: Region number (beginning with 0).</p>
+<p><code class="docutils literal"><span class="pre">region_text</span></code>: Text included in region, if specified.</p>
+<p><code class="docutils literal"><span class="pre">region_start</span></code>: Character location of beginning of region.</p>
+<p><code class="docutils literal"><span class="pre">region_end</span></code>: Character location of end of region.</p>
+<p><code class="docutils literal"><span class="pre">measure</span></code>: Name of measure.</p>
+<p><code class="docutils literal"><span class="pre">value</span></code>: Value of measure.</p>
+</div>
+<div class="section" id="trial-output">
+<h4>trial_output<a class="headerlink" href="#trial-output" title="Permalink to this headline">¶</a></h4>
+<p>This section specifies the columns that should be included in the output file for trial measures. Each column has the same parameters as <code class="docutils literal"><span class="pre">region_output</span></code>. The columns are the same, but with columns beginning with <code class="docutils literal"><span class="pre">region_</span></code> excluded.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">README</a><ul>
+<li><a class="reference internal" href="#sideeye">SideEye</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#local-installation">Local Installation</a></li>
+<li><a class="reference internal" href="#development">Development</a></li>
+<li><a class="reference internal" href="#pre-alpha-testing">Pre-Alpha Testing</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the Script</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-configuration-file">The Configuration File</a><ul>
+<li><a class="reference internal" href="#da1-fields">da1_fields</a></li>
+<li><a class="reference internal" href="#region-fields">region_fields</a></li>
+<li><a class="reference internal" href="#cutoffs">cutoffs</a></li>
+<li><a class="reference internal" href="#region-measures">region_measures</a></li>
+<li><a class="reference internal" href="#trial-measures">trial_measures</a></li>
+<li><a class="reference internal" href="#region-output">region_output</a></li>
+<li><a class="reference internal" href="#trial-output">trial_output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to SideEye&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sideeye.html"
+                        title="next chapter">API Reference</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/readme.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sideeye.html" title="API Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to SideEye’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SideEye 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Amanda Doucette.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+    </div>
+  </body>
+</html>

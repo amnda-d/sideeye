@@ -1,0 +1,7 @@
+sideeye
+=======
+
+.. toctree::
+   :maxdepth: 4
+
+   sideeye
