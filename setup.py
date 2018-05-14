@@ -1,13 +1,14 @@
+import os
+import sys
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from codecs import open
-from os import path, getenv
 
 VERSION = '1.0.0a2'
 
-here = path.abspath(path.dirname(__file__))
+here = os.path.abspath(os.path.dirname(__file__))
 
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 class VerifyVersionCommand(install):
