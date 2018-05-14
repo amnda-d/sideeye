@@ -10,5 +10,12 @@ jobs:
       - checkout
 
       - run:
+          name: setup venv
+          command: |
+            python3 -m venv venv
+
+      - run:
           name: run tests
-          command: make test
+          command: |
+            . venv/bin/activate
+            make test
