@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.1
-
     working_directory: ~/sideeye
 
     steps:
@@ -28,7 +27,6 @@ jobs:
   test:
     docker:
       - image: circleci/python:3.6.1
-
     working_directory: ~/sideeye
 
     steps:
@@ -39,8 +37,8 @@ jobs:
         command: |
           . venv/bin/activate
           pylint sideeye --disable=too-few-public-methods,too-many-arguments --output-format=colorized || true
-        	cd tests
-        	-nose2 -c tests/nose2.cfg -v --layer-reporter
+          cd tests
+          -nose2 -c tests/nose2.cfg -v --layer-reporter
 
 workflows:
   version: 2
