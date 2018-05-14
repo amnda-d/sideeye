@@ -11,7 +11,7 @@ lint:
 	pylint sideeye --disable=too-few-public-methods,too-many-arguments --output-format=colorized || true
 
 build: clean
-	pip install -e .
+	pip install -e .[test]
 
 test: build
 	make lint
