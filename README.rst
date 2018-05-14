@@ -12,76 +12,15 @@ Dependencies
 
 SideEye requires Python >= 3.5.
 
-Local Installation
+Installation
 ------------------
 
 Run the following command:
 
 ::
 
-  pip install <path to side-eye folder>
+  pip install sideeye
 
-Development
------------
-
-To install package in development mode run the following command in the package directory:
-
-::
-
-  make build
-
-To run tests and Pylint:
-
-::
-
-  make test
-
-To run Pylint only:
-
-::
-
-  make lint
-
-To remove python artifacts (.pyc, .egg-info, etc):
-
-::
-
-  make clean
-
-Make sure tests pass before committing any changes.
-
-Pre-Alpha Testing
------------------
-
-Setup
-~~~~~
-
-The `examples <examples>`_ directory contains `sample.py <examples/sample.py>`_, which is an example of the simplest way to use the package. To run on a folder of DA1 files, copy `sample.py <examples/sample.py>`_ and `sample_config.json <examples/sample_config.json>`_ into the directory containing a folder of DA1 files and a .cnt or .reg region file. Open both files in a text editor. Replace the file paths in `sample.py <examples/sample.py>`_ with paths to your DA1 and region files. Replace ``examples/sample_output.csv`` with whatever you want the output file to be named. Edit `sample_config.json <examples/sample_config.json>`_ to match the parameters needed for your experiment, according to the instructions in `The Configuration File`_.
-
-Running the Script
-~~~~~~~~~~~~~~~~~~
-
-Open a bash shell (Terminal on MacOS) and navigate to the directory containing the edited `sample.py <examples/sample.py>`_. If you are unfamiliar with bash commands, two are necessary:
-
-``ls`` lists the files in the current directory.
-
-``cd <directory>`` changes the current directory.
-
-``cd ..`` will move you up one directory level.
-
-Type ``ls`` followed by enter in the terminal to see your current directory. You will most likely see a list of directories like ``Documents``, ``Applications``, ``Desktop``, etc. Start typing the name of the directory containing `sample.py <examples/sample.py>`_. If you hit the tab key after entering a couple characters, it should start to autocomplete. Hit tab again too see the directory of the path you've typed so far. After you've typed the full path, hit enter. For example, I have to type this:
-
-::
-
-  cd Documents/GitHub/sideeye-tests/example
-
-Now you should be in the right directory. Type ``ls`` and you should see `sample.py <examples/sample.py>`_, `sample_config.json <examples/sample_config.json>`_, your DA1 directory, and your region file. To run the script, type:
-
-::
-
-  python sample.py
-
-This should generate an output file. If it does not work, type ``python --version`` to make sure you have the correct version of Python installed. If you have Python >= 3.4 and the script still isn't working, something is probably wrong, and you should contact Amanda at ``amanda.doucette@originate.com``.
 
 The Configuration File
 ----------------------
