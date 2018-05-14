@@ -44,12 +44,5 @@ setup(
 
     package_data={
         'sideeye': ['default_config.json'],
-        'examples': ['sample_DA1s/sample1.DA1', 'sample_config.json', 'sample_output.csv', 'sample.cnt', 'sample.py']
-    },
-
-    entry_points={
-        'console_scripts': [
-            'sideeye_example=examples.sample:main',
-        ],
-    },
+    }
 )

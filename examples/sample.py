@@ -15,18 +15,14 @@ import os
 # Import the sideeye module.
 import sideeye
 
-def main():
-    # Get directory path.
-    dirname = os.path.dirname(os.path.realpath(__file__))
+# Get directory path.
+dirname = os.path.dirname(os.path.realpath(__file__))
 
-    # Get config file path.
-    config = os.path.join(dirname, 'sample_config.json')
+# Get config file path.
+config = os.path.join(dirname, 'sample_config.json')
 
-    # Parse all DA1 files in directory using items listed in region file.
-    experiments = sideeye.parser.experiment.parse_dir(os.path.join(dirname, 'sample_DA1s'), os.path.join(dirname, 'sample.cnt'), config)
+# Parse all DA1 files in directory using items listed in region file.
+experiments = sideeye.parser.experiment.parse_dir(os.path.join(dirname, 'sample_DA1s'), os.path.join(dirname, 'sample.cnt'), config)
 
-    # Calculate all measures listed in config file, and output results as a csv.
-    sideeye.calculate_all_measures(experiments, 'sample_output.csv', config)
-
-if __name__ == '__main__':
-    main()
+# Calculate all measures listed in config file, and output results as a csv.
+sideeye.calculate_all_measures(experiments, 'sample_output.csv', config)
