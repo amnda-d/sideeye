@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from codecs import open
-from os import path
+from os import path, getenv
 
 VERSION = '1.0.0a2'
 
