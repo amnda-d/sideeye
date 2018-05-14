@@ -6,13 +6,12 @@ or measures on each trial or region of the experiments.
 """
 
 import json
-import os
 from . import measures
 from .output import generate_all_output
 
 def load_config(config_file):
     """Load a JSON config file into a dictionary."""
-    with open(os.path.abspath(config_file)) as cfg:
+    with open(config_file) as cfg:
         return json.load(cfg)
 
 def calculate_measure(experiments, measure, verbose=0):
@@ -72,5 +71,5 @@ def calculate_all_measures(experiments,
         calculate_measure(experiments, measure, verbose)
 
     if output_file is not None:
-        with open(os.path.abspath(output_file), 'w') as output:
+        with open(output_file, 'w') as output:
             output.write(generate_all_output(experiments, config_file))

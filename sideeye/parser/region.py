@@ -2,7 +2,6 @@
 A file parser for region data files.
 """
 from collections import defaultdict
-import os
 
 from ..data import Point, Region, Item
 
@@ -75,7 +74,7 @@ def file(filename,
                 regions += [Region(Point(x_start, 0), Point(x_end, 0))]
         return regions
 
-    with open(os.path.abspath(filename), 'r') as region_file:
+    with open(filename, 'r') as region_file:
         items = defaultdict(lambda: defaultdict(bool))
         for line in region_file:
             line = [int(x) for x in line.split()]

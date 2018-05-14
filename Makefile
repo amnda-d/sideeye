@@ -16,7 +16,7 @@ build: clean
 test: build
 	make lint
 	cd tests
-	-nose2 -c tests/nose2.cfg -v --layer-reporter
+	nose2 -c tests/nose2.cfg -v --layer-reporter
 	cd ..
 	make clean
 

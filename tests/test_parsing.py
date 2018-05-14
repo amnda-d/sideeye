@@ -1,3 +1,5 @@
+import os
+
 from sideeye import parser, Point, Fixation, Trial, Region, Item
 
 from nose2.tools import such
@@ -16,10 +18,11 @@ with such.A('Parser') as it:
     with it.having('DA1 parser'):
         @it.has_setup
         def setup():
-            it.timdrop_items = parser.region.file('tests/testdata/timdropDA1.cnt', number_location=0, condition_location=1)
-            it.robodoc_items = parser.region.file('tests/testdata/robodocDA1.reg', number_location=1, condition_location=0, includes_y=True)
-            it.timdrop_DA1 = parser.da1.parse_timdrop('tests/testdata/timdrop.DA1', it.timdrop_items)
-            it.robodoc_DA1 = parser.da1.parse_robodoc('tests/testdata/robodoc.DA1', it.robodoc_items)
+            it.dirname = os.path.dirname(os.path.realpath(__file__))
+            it.timdrop_items = parser.region.file(os.path.join(it.dirname, 'testdata/timdropDA1.cnt'), number_location=0, condition_location=1)
+            it.robodoc_items = parser.region.file(os.path.join(it.dirname, 'testdata/robodocDA1.reg'), number_location=1, condition_location=0, includes_y=True)
+            it.timdrop_DA1 = parser.da1.parse_timdrop(os.path.join(it.dirname, 'testdata/timdrop.DA1'), it.timdrop_items)
+            it.robodoc_DA1 = parser.da1.parse_robodoc(os.path.join(it.dirname, 'testdata/robodoc.DA1'), it.robodoc_items)
 
         @it.should('parse a timdrop DA1 file')
         def test_da1():
@@ -58,15 +61,16 @@ with such.A('Parser') as it:
         @it.should('throw an error when given a non-DA1 file input')
         def test_non_da1():
             with it.assertRaises(ValueError):
-                parser.da1.parse_robodoc('tests/testdata/robodocDA1.reg', it.robodoc_items)
+                parser.da1.parse_robodoc(os.path.join(it.dirname, 'testdata/robodocDA1.reg'), it.robodoc_items)
             with it.assertRaises(ValueError):
-                parser.da1.parse_robodoc('tests/testdata/timdrop.DA1', it.robodoc_items)
+                parser.da1.parse_robodoc(os.path.join(it.dirname, 'testdata/timdrop.DA1'), it.robodoc_items)
 
     with it.having('region parser'):
         @it.has_setup
         def setup():
-            it.reg = parser.region.file('tests/testdata/robodocDA1.reg', number_location=1, condition_location=0, includes_y=True)
-            it.cnt = parser.region.file('tests/testdata/timdropDA1.cnt', number_location=0, condition_location=1)
+            it.dirname = os.path.dirname(os.path.realpath(__file__))
+            it.reg = parser.region.file(os.path.join(it.dirname, 'testdata/robodocDA1.reg'), number_location=1, condition_location=0, includes_y=True)
+            it.cnt = parser.region.file(os.path.join(it.dirname, 'testdata/timdropDA1.cnt'), number_location=0, condition_location=1)
             it.reg_regions = [Region(Point(0, 0), Point(11, 0)),
                               Region(Point(11, 0), Point(21, 0)),
                               Region(Point(21, 0), Point(34, 0)),
@@ -93,11 +97,12 @@ with such.A('Parser') as it:
         @it.should('throw an error when given a non-region file input')
         def test_non_reg():
             with it.assertRaises(ValueError):
-                parser.region.file('tests/testdata/robodoc.DA1', number_location=1, condition_location=0)
+                parser.region.file(os.path.join(it.dirname, 'testdata/robodoc.DA1'), number_location=1, condition_location=0)
 
     with it.having('Region string parser'):
         @it.has_setup
         def setup():
+            it.dirname = os.path.dirname(os.path.realpath(__file__))
             it.region = parser.region.text('This is/ a string/ with four/ regions')
             it.parsed_regions = [Region(Point(0, 0), Point(7, 0), 'This is'),
                                  Region(Point(7, 0), Point(16, 0), ' a string'),

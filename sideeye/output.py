@@ -4,11 +4,10 @@ for experiments.
 """
 
 import json
-import os
 
 def load_config(config_file):
 # Load a JSON config file into a dictionary.
-    with open(os.path.abspath(config_file)) as cfg:
+    with open(config_file) as cfg:
         return json.load(cfg)
 
 def write_column(column, experiment, trial, region, measure, cutoff):

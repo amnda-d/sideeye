@@ -9,7 +9,7 @@ from .. import parser
 
 def load_config(config_file):
     """Load a JSON config file into a dictionary."""
-    with open(os.path.abspath(config_file)) as cfg:
+    with open(config_file) as cfg:
         return json.load(cfg)
 
 def parse(da1_file, region_file, config_file='sideeye/default_config.json'):
@@ -60,7 +60,7 @@ def parse_dir(da1_directory, region_file, config_file='sideeye/default_config.js
         config_file: Name of configuration file.
     """
     config = load_config(config_file)
-    da1s = os.listdir(os.path.abspath(da1_directory))
+    da1s = os.listdir(da1_directory)
 
     region_config = config['region_fields']
     da1_config = config['da1_fields']

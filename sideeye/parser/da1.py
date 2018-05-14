@@ -71,7 +71,7 @@ def validate(filename, fixations_first_col, da1_type=None):
     """Checks if a file is in DA1 format."""
     if filename[-4:].lower() != '.da1':
         raise ValueError('%s Failed validation: Not a DA1 file' % filename)
-    with open(os.path.abspath(filename)) as da1_file:
+    with open(filename) as da1_file:
         line = [int(x) for x in da1_file.readline().split()]
         if (len(line) - fixations_first_col) % 4 != 0:
             raise ValueError('%s Failed validation: Does not match DA1 file format' % filename)
@@ -139,7 +139,7 @@ def parse(filename,
 
         return fixations
 
-    with open(os.path.abspath(filename)) as da1_file:
+    with open(filename) as da1_file:
         trials = []
         for line in da1_file:
             line = [int(x) for x in line.split()]
