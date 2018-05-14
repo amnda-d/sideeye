@@ -17,33 +17,19 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -e .[test]
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "setup.py" }}
-  test:
-    docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/sideeye
-
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "setup.py" }}
-          - v1-dependencies-
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             cd tests
             -nose2 -c tests/nose2.cfg -v --layer-reporter
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "setup.py" }}
 
 workflows:
   version: 2
   build-and-test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
