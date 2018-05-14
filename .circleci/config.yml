@@ -7,19 +7,16 @@ jobs:
 
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "setup.py" }}
           - v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install -e .[test]
-
       - save_cache:
           paths:
             - ./venv
@@ -31,12 +28,14 @@ jobs:
 
     steps:
       - checkout
-
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "setup.py" }}
+          - v1-dependencies-
       - run:
         name: run tests
         command: |
           . venv/bin/activate
-          pylint sideeye --disable=too-few-public-methods,too-many-arguments --output-format=colorized || true
           cd tests
           -nose2 -c tests/nose2.cfg -v --layer-reporter
 
