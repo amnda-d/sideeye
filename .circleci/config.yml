@@ -26,9 +26,51 @@ jobs:
             . venv/bin/activate
             cd tests
             nose2 -c tests/nose2.cfg -v --layer-reporter
+  deploy:
+    docker:
+      - image: circleci/python:3.6.1
+    working_directory: ~/sideeye
+
+    steps:
+      - run:
+          name: verify git tag vs. version
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            python setup.py verify
+      - run:
+          name: init .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = amnda" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: create packages
+          command: |
+            python setup.py sdist
+            python setup.py bdist_wheel
+      - run:
+          name: upload to pypi
+          command: |
+            . venv/bin/activate
+            twine upload dist/*
 
 workflows:
   version: 2
   build-and-test:
     jobs:
       - build
+  deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
