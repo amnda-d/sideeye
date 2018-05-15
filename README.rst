@@ -3,27 +3,27 @@ SideEye
 ========
 |circleci| |docs|
 
-Python package for processing eye tracking data.
+SideEye is still in beta! New features are in development, but if you find any bugs or have suggestions, `Open a GitHub issue <https://github.com/zediski/sideeye/issues/new/choose>`_ or email `sideeye@amnda.me <sideeye@amnda.me>`_.
 
-Installation
-------------
+SideEye is a Python package for processing eye tracking data that interfaces with EyeTrack and Experiment Builder.
 
-Dependencies
-~~~~~~~~~~~~
+It is meant to parse eye-tracking-while-reading data and calculate useful experimental measures. Currently, SideEye can only parse the .DA1 file format, but other formats will be added later. The goal is to parse all eye-tracking-while-reading data into a common format, and provide a consistent and accurate method for processing the data.
 
-SideEye requires Python >= 3.5.
+Documentation (currently incomplete, but more detail than provided here) can be found at `sideeye.readthedocs.io<http://sideeye.readthedocs.io/en/latest/index.html#>`_.
+
+Refer to `examples/sample.py<examples/sample.py>`_ for an up-to-date sample script.
 
 Installation
 ------------------
 
-Run the following command:
+SideEye requires Python >= 3.5.
 
 ::
 
   pip install sideeye
 
 
-The Configuration File
+Options
 ----------------------
 
 The configuration file is a JSON file specifying the changeable parameters used by SideEye's default parsing and output functions. An example is found in `examples/sample_config.json <examples/sample_config.json>`_. The config file should always have the same format. It has several sections:

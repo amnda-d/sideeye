@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from setuptools.command.install import install
 from codecs import open
 
-VERSION = '1.0.0a3'
+VERSION = '1.0.0a4'
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -21,7 +21,7 @@ setup(
         'Documentation': '',
     },
     author='Amanda Doucette',
-    author_email='amandakdoucette@gmail.com',
+    author_email='sideeye@amnda.me',
     license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
