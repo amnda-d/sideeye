@@ -9,9 +9,9 @@ SideEye is a Python package for processing eye tracking data that interfaces wit
 
 It is meant to parse eye-tracking-while-reading data and calculate useful experimental measures. Currently, SideEye can only parse the .DA1 file format, but other formats will be added later. The goal is to parse all eye-tracking-while-reading data into a common format, and provide a consistent and accurate method for processing the data.
 
-Documentation (currently incomplete, but more detail than provided here) can be found at `sideeye.readthedocs.io<http://sideeye.readthedocs.io/en/latest/index.html#>`_.
+Documentation (currently incomplete, but more detail than provided here) can be found at `sideeye.readthedocs.io <http://sideeye.readthedocs.io/en/latest/index.html#>`_.
 
-Refer to `examples/sample.py<examples/sample.py>`_ for an up-to-date sample script.
+Refer to `examples/sample.py <examples/sample.py>`_ for an up-to-date sample script.
 
 Installation
 ------------------
