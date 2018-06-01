@@ -8,6 +8,13 @@ def skip(trial, region_number):
     """
     True if the reader fixates a region beyond the target region before
     fixating the target region or the target region is never fixated, False otherwise.
+
+    ::
+
+        if length of get_first_pass_fixations(trial, region_number) is 0:
+            return True
+        else return False
+
     """
     region = region_exists(trial, region_number)
     return save_measure(trial, region,
@@ -21,6 +28,21 @@ def first_pass_regressions_out(trial, region_number):
     first pass - that is, exited a region to the left after the first pass. The measure
     is False if they exited to the right, and None if the region was not fixated
     during first pass reading.
+
+    ::
+
+        fp_fixations = get_first_pass_fixations(trial, region_number)
+
+        if length of fp_fixations is 0:
+            return None
+
+        next_fixation = next non-excluded fixation after last fixation in fp_fixations
+
+        if next_fixation.region_number < region_number:
+            return True
+        else:
+            return False
+
     """
     region = region_exists(trial, region_number)
     fp_fixations = get_fp_fixations(trial, region_number)
@@ -45,6 +67,20 @@ def first_pass_regressions_in(trial, region_number):
     after fixating on any region to the right of it, False if they only fixated
     on the region after fixating on regions to the left, and None if the region
     was never fixated.
+
+    ::
+
+        region_fixations = [all non-excluded fixations in region]
+
+        if length of region_fixations is 0:
+            return None
+
+        for fixation in region_fixations:
+            if previous_fixation.region_number > region_number:
+                return True
+
+        return False
+
     """
     region = region_exists(trial, region_number)
     trial_fixations = [fix for fix in trial.fixations if not fix.excluded]

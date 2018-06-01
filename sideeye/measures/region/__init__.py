@@ -1,6 +1,23 @@
 """
 Region-based eye-tracking measures. These measures are calculated for each region
 of each trial in an experiment.
+
+Many of these measures use a list of first pass fixations in the region in calculating the measure. First pass fixations are defined as:
+
+::
+
+    def get_first_pass_fixations(trial, region_number):
+        first_pass_fixations = []
+
+        for fixation in trial:
+            if fixation.region_number > region_number:
+                break
+            if length of first_pass_fixations > 0 and fixation.region_number is not region_number:
+                break
+            if fixation.region_number is region_number and fixation is not excluded:
+                first_pass_fixations += [fixation]
+
+        return first_pass_fixations
 """
 
 from .boolean import (

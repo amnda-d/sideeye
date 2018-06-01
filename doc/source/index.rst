@@ -8,21 +8,15 @@ SideEye
 
 .. toctree::
    :maxdepth: 2
+   :titlesonly:
 
    sideeye
    start
    configFile
    default_config.json
+   changes
 
 .. automodule:: sideeye
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
 Introduction
 ============

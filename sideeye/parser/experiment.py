@@ -75,17 +75,20 @@ def parse_dir(da1_directory, region_file, config_file='sideeye/default_config.js
                                verbose=verbose)
     experiments = []
     for da1 in da1s:
-        experiments += [parser.da1.parse(os.path.join(da1_directory, da1),
-                                         items,
-                                         da1_config['index'],
-                                         da1_config['number'],
-                                         da1_config['condition'],
-                                         da1_config['time'],
-                                         da1_config['fixation_start'],
-                                         cutoffs['min'],
-                                         cutoffs['max'],
-                                         cutoffs['include_fixation'],
-                                         cutoffs['include_saccades'],
-                                         verbose=verbose)]
+        if da1[-4:].lower() != '.da1':
+            print('Skipping %s: not a DA1 file.' % da1)
+        else:
+            experiments += [parser.da1.parse(os.path.join(da1_directory, da1),
+                                             items,
+                                             da1_config['index'],
+                                             da1_config['number'],
+                                             da1_config['condition'],
+                                             da1_config['time'],
+                                             da1_config['fixation_start'],
+                                             cutoffs['min'],
+                                             cutoffs['max'],
+                                             cutoffs['include_fixation'],
+                                             cutoffs['include_saccades'],
+                                             verbose=verbose)]
 
     return experiments

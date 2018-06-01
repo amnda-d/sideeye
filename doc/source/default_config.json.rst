@@ -19,7 +19,9 @@ Default Configuration
     },
     "cutoffs":{
       "min": -1,
-      "max": -1
+      "max": -1,
+      "include_fixation": false,
+      "include_saccades": false
     },
     "region_measures":{
       "skip":{

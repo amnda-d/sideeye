@@ -10,6 +10,14 @@ def location_first_regression(trial):
     in the trial, where a regression is defined as a saccade where the position of
     the fixation at the beginning of the saccade is later in the item than the
     position of the fixation at the end of the saccade. None if there are no regressions.
+
+    ::
+
+        for saccade in trial:
+            if saccade is regression:
+                return (saccade.start_fixation.char, saccade.start_fixation.line)
+            else:
+                return None
     """
     for saccade in trial.saccades:
         if saccade.regression:
@@ -24,6 +32,15 @@ def latency_first_regression(trial):
     where a regression is defined as a saccade where the position of the fixation at
     the beginning of the saccade is later in the item than the position of the fixation
     at the end of the saccade. None if there are no regressions.
+
+    ::
+
+        for saccade in trial:
+            if saccade is regression:
+                return saccade.start_fixation.end_time
+            else:
+                return None
+
     """
     for saccade in trial.saccades:
         if saccade.regression:
@@ -32,7 +49,12 @@ def latency_first_regression(trial):
 
 def fixation_count(trial):
     """
-    Total number of fixations in a trial.
+    Total number of non-excluded fixations in a trial.
+
+    ::
+
+        return length of [non-excluded fixations in trial]
+
     """
     return save_trial_measure(trial,
                               'fixation_count',
@@ -44,6 +66,17 @@ def percent_regressions(trial):
     where a regression is defined as a saccade where the position of the fixation at the
     beginning of the saccade is later in the item than the position of the fixation at
     the end of the saccade. None if there are no saccades.
+
+    ::
+
+        regressions = 0
+
+        for saccade in trial:
+            if saccade is regression:
+                regressions += 1
+
+        return regressions / (length of [trial.saccades])
+
     """
     regressions = 0
 
@@ -59,6 +92,11 @@ def percent_regressions(trial):
 def trial_total_time(trial):
     """
     Total time in the trial.
+
+    ::
+
+        return total trial time from .DA1 file OR end time of last non-excluded fixation
+
     """
     if trial.time is None:
         return save_trial_measure(trial,
@@ -69,6 +107,22 @@ def trial_total_time(trial):
 def average_forward_saccade(trial):
     """
     Average saccade duration between fixations moving forward through the sentence.
+
+    ::
+
+        forward_saccades = 0
+        total_time = 0
+
+        for saccade in trial:
+            if saccade is not regression:
+                forward_saccades += 1
+                total_time += saccade.duration
+
+        if forward_saccades is 0:
+            return 0
+        else:
+            return total_time / forward_saccades
+
     """
     forward_saccades = 0.0
     total = 0.0
@@ -86,6 +140,22 @@ def average_backward_saccade(trial):
     """
     Average saccade duration between fixations moving backward through the sentence, or the
     average duration of a regression saccade.
+
+    ::
+
+        backward_saccades = 0
+        total_time = 0
+
+        for saccade in trial:
+            if saccade is regression:
+                backward_saccades += 1
+                total_time += saccade.duration
+
+        if backward_saccades is 0:
+            return 0
+        else:
+            return total_time / backward_saccades
+
     """
     backward_saccades = 0.0
     total = 0.0

@@ -10,6 +10,20 @@ def landing_position(trial, region_number):
     number of characters) of the first fixation during the first pass, where the
     first character in the region is at position (0, 0). If the region was skipped,
     this measure is None.
+
+    ::
+
+        fp_fixations = get_first_pass_fixations(trial, region_number)
+
+        if (length of fp_fixations is not 0
+                and fp_fixations[0].char is not None
+                and fp_fixations[0].line is not None):
+            return (fp_fixations[0].char - region.start.char,
+                    fp_fixations[0].line - region.start.line)
+
+        else:
+            return None
+
     """
     region = region_exists(trial, region_number)
     landing_pos = None
@@ -33,6 +47,32 @@ def launch_site(trial, region_number):
     of the region preceding the target region, or the preceding line, and increasing
     negative numbers indicate further launch sites. If the region was skipped this
     measure is None.
+
+    ::
+
+        fixations = [fixation for fixation in trial if fixation is not excluded]
+
+        for (index, fixation) in enumerate(fixations):
+            if fixation.region_number > region_number:
+                break
+            if fixation.region_number == region_number:
+                if index == 0:
+                    break
+
+                if fixations[index - 1].char is None:
+                    launch_char = fixations[index - 1].char
+                else:
+                    launch_char = fixations[index - 1].char - fixation.region.start.char
+
+                if fixations[index - 1].line is None:
+                    launch_line = fixations[index - 1].line
+                else:
+                    launch_line = fixations[index - 1].line - fixation.region.start.line
+
+                return (launch_char, launch_line)
+
+        return None
+
     """
     region = region_exists(trial, region_number)
     launch = None
@@ -63,6 +103,16 @@ def first_pass_fixation_count(trial, region_number):
     """
     The number of fixations made in a region before leaving it during first pass.
     If the region was skipped this measure is None.
+
+    ::
+
+        fp_fixations = get_first_pass_fixations(trial, region_number)
+
+        if length of fp_fixations is 0:
+            return None
+        else:
+            return length of fp_fixations
+
     """
     region = region_exists(trial, region_number)
     fp_fixations = get_fp_fixations(trial, region_number)

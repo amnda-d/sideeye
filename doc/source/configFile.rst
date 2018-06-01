@@ -196,7 +196,7 @@ This section specifies the columns that should be included in the output file fo
 terminal_output
 ~~~~~~~~~~~~~~~
 
-A number specifying the level of detail in terminal output.
+A number specifying the level of detail in terminal output. This option is useful for debugging, for example, finding out if an error is being caused by a specific input file, or by calculating a specific measure.
 
 ``0``: Errors only.
 

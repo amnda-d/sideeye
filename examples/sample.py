@@ -10,10 +10,9 @@ region file and a directory of DA1 files. Edit the file names below to match you
 and make any necessary changes to the config file. Run sample.py in the new directory.
 """
 
-import os
-
-# Import the sideeye module.
+# Import modules.
 import sideeye
+import os
 
 # Get directory path.
 dirname = os.path.dirname(os.path.realpath(__file__))
