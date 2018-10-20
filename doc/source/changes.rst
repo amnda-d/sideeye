@@ -1,6 +1,10 @@
 Version History
 ===============
 
+`1.0.0a6 <https://pypi.org/project/sideeye/1.0.0a6/>`_
+------------------------------------------------------
+- Added go-back time by region and character.
+
 `1.0.0a5 <https://pypi.org/project/sideeye/1.0.0a5/>`_
 ------------------------------------------------------
 - Ignore non-DA1 files when parsing an experiment.

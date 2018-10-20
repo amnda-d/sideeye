@@ -355,3 +355,115 @@ def refixation_time(trial, region_number):
         total += fixation.duration
 
     return save_measure(trial, region, 'refixation_time', total, fp_fixations[1:])
+
+def go_back_time_char(trial, region_number):
+    """
+    Go-back time is the time (in ms) until the first regression is made after encountering a region.
+    For the purposes of go-back time, any fixation which lands to the left of the preceding fixation
+    is considered a regression; the landing site regression does not need to precede
+    the critical region.
+    If a region was fixated, it is measured from the onset of the first fixation in that regreion.
+    If a region was skipped, it is measured from the offset of the preceding fixation.
+    The end point is the end of the fixation that precedes the regression.
+    If no regression is made after the critical region, this measure is 'None.'
+
+    go_back_time_char defines a regression character by character: any fixation which
+    lands on a character to the left of the preceding fixation counts as a regression.
+    """
+    region = region_exists(trial, region_number)
+    fp_fixations = get_fp_fixations(trial, region_number)
+    go_back_start = 0
+    go_back_end = None
+
+    if fp_fixations:
+        go_back_start = fp_fixations[0].start
+        start_fix = fp_fixations[0]
+
+    if not fp_fixations:
+        try:
+            start_fix = [fix for fix in trial.fixations
+                         if not fix.excluded
+                         and fix.region.number < region_number][0]
+            for idx in range(1, len(trial.fixations) - 1):
+                if not trial.fixations[idx].excluded:
+                    if trial.fixations[idx].region.number > region_number:
+                        break
+                    start_fix = trial.fixations[idx]
+            go_back_start = start_fix.end
+        except IndexError:
+            pass
+
+    try:
+        prev_fix = start_fix
+        curr_fix = trial.fixations[start_fix.index + 1]
+        for idx in range(start_fix.index + 1, len(trial.fixations) - 1):
+            curr_fix = trial.fixations[idx]
+            if not curr_fix.excluded:
+                if (curr_fix.line < prev_fix.line
+                        or (curr_fix.line == prev_fix.line and curr_fix.char < prev_fix.char)):
+                    go_back_end = prev_fix.end
+                    break
+                prev_fix = curr_fix
+    except IndexError:
+        pass
+
+    if go_back_end != None:
+        return save_measure(trial, region, 'go_back_time_char', go_back_end-go_back_start, None)
+
+    return save_measure(trial, region, 'go_back_time_char', None, None)
+
+
+def go_back_time_region(trial, region_number):
+    """
+    Go-back time is the time (in ms) until the first regression is made after encountering a region.
+    For the purposes of go-back time, any fixation which lands to the left of the preceding fixation
+    is considered a regression; the landing site regression does not need to precede
+    the critical region.
+    If a region was fixated, it is measured from the onset of the first fixation in that regreion.
+    If a region was skipped, it is measured from the offset of the preceding fixation.
+    The end point is the end of the fixation that precedes the regression.
+    If no regression is made after the critical region, this measure is 'None.'
+
+    go_back_time_region defines a regression region by region: any fixation which
+    lands on a region to the left of the preceding fixation counts as a regression.
+    """
+    region = region_exists(trial, region_number)
+    fp_fixations = get_fp_fixations(trial, region_number)
+    go_back_start = 0
+    go_back_end = None
+
+    if fp_fixations:
+        go_back_start = fp_fixations[0].start
+        start_fix = fp_fixations[0]
+
+    if not fp_fixations:
+        try:
+            start_fix = [fix for fix in trial.fixations
+                         if not fix.excluded
+                         and fix.region.number < region_number][0]
+            for idx in range(1, len(trial.fixations) - 1):
+                if not trial.fixations[idx].excluded:
+                    if trial.fixations[idx].region.number > region_number:
+                        break
+                    start_fix = trial.fixations[idx]
+            go_back_start = start_fix.end
+        except IndexError:
+            pass
+
+    try:
+        prev_fix = start_fix
+        curr_fix = trial.fixations[start_fix.index + 1]
+        for idx in range(start_fix.index + 1, len(trial.fixations) - 1):
+            curr_fix = trial.fixations[idx]
+            if not curr_fix.excluded:
+                if curr_fix.region.number < prev_fix.region.number:
+                    go_back_end = prev_fix.end
+                    break
+                prev_fix = curr_fix
+    except IndexError:
+        pass
+
+    if go_back_end != None:
+        return save_measure(trial, region, 'go_back_time_region', go_back_end-go_back_start, None)
+
+    return save_measure(trial, region, 'go_back_time_region', None, None)

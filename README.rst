@@ -1,7 +1,7 @@
 ========
 SideEye
 ========
-|circleci| |docs|
+|circleci| |docs| |waffle|
 
 SideEye is still in beta! New features are in development, but if you find any bugs or have suggestions, `Open a GitHub issue <https://github.com/zediski/sideeye/issues/new/choose>`_ or email `sideeye@amnda.me <sideeye@amnda.me>`_.
 
@@ -211,12 +211,17 @@ A number specifying the level of detail in terminal output.
 
 ``5``: All output information.
 
-.. |docs| image:: https://readthedocs.org/projects/docs/badge/?version=latest
+.. |docs| image:: https://readthedocs.org/projects/sideeye/badge/?version=latest
     :alt: Documentation Status
     :scale: 100%
     :target: https://sideeye.readthedocs.io/en/latest/?badge=latest
 
-.. |circleci| image:: https://circleci.com/gh/zediski/sideeye/tree/master.svg?style=shield
+.. |circleci| image:: https://circleci.com/gh/amnda-d/sideeye/tree/master.svg?style=shield
     :alt: Build Status
     :scale: 100%
-    :target: https://circleci.com/gh/zediski/sideeye/tree/master
+    :target: https://circleci.com/gh/amnda-d/sideeye/tree/master
+
+.. |waffle| image:: https://badge.waffle.io/amnda-d/sideeye.svg?columns=all
+    :target: https://waffle.io/amnda-d/sideeye
+    :alt: 'Waffle.io - Columns and their card count'
+    :scale: 100%

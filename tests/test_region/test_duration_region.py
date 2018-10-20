@@ -31,6 +31,14 @@ with such.A('Duration Region Measures') as it:
                           Fixation(Point(11, 0), 550, 600, it.regions_x[1])]
         it.trial_x = Trial(1, 600, it.item_x, it.fixations_x)
 
+        it.fixations_x2 = [Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
+                          Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
+                          Fixation(Point(22, 0), 200, 370, it.regions_x[2]),
+                          Fixation(Point(24, 0), 370, 380, it.regions_x[2], excluded=True),
+                          Fixation(Point(21, 0), 380, 400, it.regions_x[2]),
+                          Fixation(Point(3, 0), 400, 550, it.regions_x[0])]
+        it.trial_x2 = Trial(1, 600, it.item_x, it.fixations_x2)
+
         # aaaaaaaaaa/aaaaaaaaa.../
         # aaaaaaaaaa/aaaaaaaaaa/
         it.regions_y = [Region(Point(0, 0), Point(10, 0)),
@@ -236,5 +244,36 @@ with such.A('Duration Region Measures') as it:
         def test_refixation_time_error():
             with it.assertRaises(ValueError):
                 measures.region.refixation_time(it.trial_x, 5)
+
+    with it.having('go back time by character measure'):
+        @it.should('calculate refixation time correctly')
+        def test_go_back_time_char():
+            it.assertEqual(measures.region.go_back_time_char(it.trial_x2, 0)['value'], 370)
+            it.assertEqual(measures.region.go_back_time_char(it.trial_x, 0)['value'], 350)
+            it.assertEqual(measures.region.go_back_time_char(it.trial_y, 3)['value'], 250)
+
+        @it.should('measures from the previous fixation if the region is skipped')
+        def test_refixation_char_time_skip():
+            it.assertEqual(measures.region.go_back_time_char(it.trial_x2, 1)['value'], 170)
+
+        @it.should('throw an error if the target region does not exist in the trial')
+        def test_go_back_time_char_error():
+            with it.assertRaises(ValueError):
+                measures.region.go_back_time_char(it.trial_x, 5)
+
+    with it.having('go back time by region measure'):
+        @it.should('calculate refixation time correctly')
+        def test_go_back_time_region():
+            it.assertEqual(measures.region.go_back_time_region(it.trial_x, 0)['value'], 350)
+            it.assertEqual(measures.region.go_back_time_region(it.trial_y, 3)['value'], 250)
+
+        @it.should('measures from the previous fixation if the region is skipped')
+        def test_go_back_time_region_skip():
+            it.assertEqual(measures.region.go_back_time_region(it.trial_y, 2)['value'], 250)
+
+        @it.should('throw an error if the target region does not exist in the trial')
+        def test_go_back_time_region_error():
+            with it.assertRaises(ValueError):
+                measures.region.go_back_time_region(it.trial_x, 5)
 
 it.createTests(globals())
