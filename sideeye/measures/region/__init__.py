@@ -38,7 +38,9 @@ from .duration import (
     reread_time,
     second_pass,
     spillover_time,
-    refixation_time
+    refixation_time,
+    go_back_time_char,
+    go_back_time_region
     )
 
 __all__ = [
@@ -57,5 +59,8 @@ __all__ = [
     'reread_time',
     'second_pass',
     'spillover_time',
-    'refixation_time'
+    'refixation_time',
+    'go_back_time_char',
+    'go_back_time_region'
+
 ]

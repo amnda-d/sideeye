@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from setuptools.command.install import install
 from codecs import open
 
-VERSION = '1.0.0a5'
+VERSION = '1.0.0a6'
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,7 +16,7 @@ setup(
     description='Library for analyzing eye-tracking-while-reading data',
     long_description=long_description,
     long_description_content_type='text/x-rst',
-    url='https://github.com/zediski/sideeye',
+    url='https://github.com/amnda-d/sideeye',
     project_urls={
         'Documentation': '',
     },

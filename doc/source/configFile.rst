@@ -133,6 +133,8 @@ The measures in this section of the config file are:
   landing_position
   launch_site
   first_pass_fixation_count
+  go_back_time_region
+  go_back_time_char
 
 trial_measures
 ~~~~~~~~~~~~~~

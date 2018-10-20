@@ -4,7 +4,7 @@ Default Configuration
 ::
 
   {
-    "da1_fields" : {
+    "da1_fields": {
       "index": 0,
       "condition": 1,
       "number": 2,
@@ -17,106 +17,114 @@ Default Configuration
       "boundaries_start": 3,
       "includes_y": false
     },
-    "cutoffs":{
+    "cutoffs": {
       "min": -1,
       "max": -1,
       "include_fixation": false,
       "include_saccades": false
     },
-    "region_measures":{
-      "skip":{
-         "include": true,
-         "cutoff": -1
+    "region_measures": {
+      "skip": {
+        "include": true,
+        "cutoff": -1
       },
-      "first_pass_regressions_out":{
-         "include": true,
-         "cutoff": -1
+      "first_pass_regressions_out": {
+        "include": true,
+        "cutoff": -1
       },
-      "first_pass_regressions_in":{
-         "include": true,
-         "cutoff": -1
+      "first_pass_regressions_in": {
+        "include": true,
+        "cutoff": -1
       },
-      "first_fixation_duration":{
-         "include": true,
-         "cutoff": -1
+      "first_fixation_duration": {
+        "include": true,
+        "cutoff": -1
       },
-      "single_fixation_duration":{
-         "include": true,
-         "cutoff": -1
+      "single_fixation_duration": {
+        "include": true,
+        "cutoff": -1
       },
-      "first_pass":{
-         "include": true,
-         "cutoff": -1
+      "first_pass": {
+        "include": true,
+        "cutoff": -1
       },
-      "go_past":{
-         "include": true,
-         "cutoff": -1
+      "go_past": {
+        "include": true,
+        "cutoff": -1
       },
-      "total_time":{
-         "include": true,
-         "cutoff": -1
+      "total_time": {
+        "include": true,
+        "cutoff": -1
       },
-      "right_bounded_time":{
-         "include": true,
-         "cutoff": -1
+      "right_bounded_time": {
+        "include": true,
+        "cutoff": -1
       },
-      "reread_time":{
-         "include": true,
-         "cutoff": -1
+      "reread_time": {
+        "include": true,
+        "cutoff": -1
       },
-      "second_pass":{
-         "include": true,
-         "cutoff": -1
+      "second_pass": {
+        "include": true,
+        "cutoff": -1
       },
-      "spillover_time":{
-         "include": true,
-         "cutoff": -1
+      "spillover_time": {
+        "include": true,
+        "cutoff": -1
       },
-      "refixation_time":{
-         "include": true,
-         "cutoff": -1
+      "refixation_time": {
+        "include": true,
+        "cutoff": -1
       },
-      "landing_position":{
-         "include": true,
-         "cutoff": -1
+      "landing_position": {
+        "include": true,
+        "cutoff": -1
       },
-      "launch_site":{
-         "include": true,
-         "cutoff": -1
+      "launch_site": {
+        "include": true,
+        "cutoff": -1
       },
-      "first_pass_fixation_count":{
-         "include": true,
-         "cutoff": -1
+      "first_pass_fixation_count": {
+        "include": true,
+        "cutoff": -1
+      },
+      "go_back_time_region": {
+        "include": true,
+        "cutoff": -1
+      },
+      "go_back_time_char": {
+        "include": true,
+        "cutoff": -1
       }
-   },
-   "trial_measures":{
-      "location_first_regression":{
-         "include": true,
-         "cutoff": -1
+    },
+    "trial_measures": {
+      "location_first_regression": {
+        "include": true,
+        "cutoff": -1
       },
-      "latency_first_regression":{
-         "include": true,
-         "cutoff": -1
+      "latency_first_regression": {
+        "include": true,
+        "cutoff": -1
       },
-      "fixation_count":{
-         "include": true,
-         "cutoff": -1
+      "fixation_count": {
+        "include": true,
+        "cutoff": -1
       },
-      "percent_regressions":{
-         "include": true,
-         "cutoff": -1
+      "percent_regressions": {
+        "include": true,
+        "cutoff": -1
       },
-      "trial_total_time":{
-         "include": true,
-         "cutoff": -1
+      "trial_total_time": {
+        "include": true,
+        "cutoff": -1
       },
-      "average_forward_saccade":{
-         "include": true,
-         "cutoff": -1
+      "average_forward_saccade": {
+        "include": true,
+        "cutoff": -1
       },
-      "average_backward_saccade":{
-         "include": true,
-         "cutoff": -1
+      "average_backward_saccade": {
+        "include": true,
+        "cutoff": -1
       }
     },
     "region_output": {
