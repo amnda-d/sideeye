@@ -5,9 +5,11 @@ experiment. These functions do not return anything, they only calculate the meas
 or measures on each trial or region of the experiments.
 """
 
-import json
+import json, os
 from . import measures
-from .output import generate_all_output
+from .output import generate_all_output, generate_all_output_wide_format
+
+DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'default_config.json')
 
 def load_config(config_file):
     """Load a JSON config file into a dictionary."""
@@ -49,7 +51,7 @@ def calculate_measure(experiments, measure, verbose=0):
 
 def calculate_all_measures(experiments,
                            output_file=None,
-                           config_file='sideeye/default_config.json'):
+                           config_file=DEFAULT_CONFIG):
     """
     Given an array of experiments and config file, calculate all measures specified in the
     config file for the experiment, and optionally output the results as a csv.
@@ -60,6 +62,7 @@ def calculate_all_measures(experiments,
         config_file (str): Configuration filename.
     """
     config = load_config(config_file)
+    wide_format = config['wide_format']
     region_measures = config['region_measures']
     trial_measures = config['trial_measures']
     verbose = config['terminal_output']
@@ -70,6 +73,11 @@ def calculate_all_measures(experiments,
     for measure in trial_measures.keys():
         calculate_measure(experiments, measure, verbose)
 
+    output_text = (generate_all_output_wide_format(experiments, config_file)
+                   if wide_format
+                   else generate_all_output(experiments, config_file))
     if output_file is not None:
         with open(output_file, 'w') as output:
-            output.write(generate_all_output(experiments, config_file))
+            output.write(output_text)
+
+    return output_text

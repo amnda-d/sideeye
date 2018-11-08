@@ -58,7 +58,7 @@ def file(filename,
     validate_region_file(filename)
 
     def line_to_regions(line):
-    # Helper function to convert a list of region boundaries into an item.
+        """Helper function to convert a list of region boundaries into an item."""
         regions = []
         if includes_y:
             for boundary in range(0, len(line) - 3, 2):

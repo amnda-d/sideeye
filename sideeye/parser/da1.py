@@ -75,7 +75,7 @@ def validate(filename, fixations_first_col, da1_type=None):
         line = [int(x) for x in da1_file.readline().split()]
         if (len(line) - fixations_first_col) % 4 != 0:
             raise ValueError('%s Failed validation: Does not match DA1 file format' % filename)
-        if da1_type is 'robodoc' and line[3] < line[-1]:
+        if da1_type == 'robodoc' and line[3] < line[-1]:
             raise ValueError('%s Failed validation: Not a robodoc DA1 file' % filename)
 
 def parse(filename,
@@ -118,7 +118,7 @@ def parse(filename,
     validate(filename, fixations_first_col, da1_type)
 
     def parse_fixations(line, item):
-        # Parses a list of (x, y, start time, end time) numbers into a list of Fixations.
+        """Parses a list of (x, y, start time, end time) numbers into a list of Fixations."""
         fixations = []
         for pos in range(0, len(line), 4):
             x_pos = line[pos]

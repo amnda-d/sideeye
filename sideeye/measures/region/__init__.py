@@ -2,7 +2,8 @@
 Region-based eye-tracking measures. These measures are calculated for each region
 of each trial in an experiment.
 
-Many of these measures use a list of first pass fixations in the region in calculating the measure. First pass fixations are defined as:
+Many of these measures use a list of first pass fixations in the region in calculating
+the measure. First pass fixations are defined as:
 
 ::
 

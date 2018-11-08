@@ -7,12 +7,14 @@ import json
 import os
 from .. import parser
 
+DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../default_config.json')
+
 def load_config(config_file):
     """Load a JSON config file into a dictionary."""
     with open(config_file) as cfg:
         return json.load(cfg)
 
-def parse(da1_file, region_file, config_file='sideeye/default_config.json'):
+def parse(da1_file, region_file, config_file=DEFAULT_CONFIG):
     """
     Given a DA1 file and region file, and config file, parse an Experiment. If
     config is not provided, default config will be used.
@@ -49,7 +51,7 @@ def parse(da1_file, region_file, config_file='sideeye/default_config.json'):
                                   verbose=verbose)
     return experiment
 
-def parse_dir(da1_directory, region_file, config_file='sideeye/default_config.json'):
+def parse_dir(da1_directory, region_file, config_file=DEFAULT_CONFIG):
     """
     Given a directory of DA1 files, a region file, and config file, parse all DA1 files in
     the directory into Experiments. If config is not provided, default config will be used.

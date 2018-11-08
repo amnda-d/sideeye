@@ -84,10 +84,9 @@ def percent_regressions(trial):
         if saccade.regression:
             regressions += 1.0
 
-    if len(trial.saccades) == 0:
+    if not trial.saccades:
         return save_trial_measure(trial, 'percent_regressions', None)
-    else:
-        return save_trial_measure(trial, 'percent_regressions', regressions/len(trial.saccades))
+    return save_trial_measure(trial, 'percent_regressions', regressions/len(trial.saccades))
 
 def trial_total_time(trial):
     """

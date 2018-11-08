@@ -3,15 +3,17 @@ This module contains functions to generate csv reports of measures calculated
 for experiments.
 """
 
-import json
+import json, os
+
+DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'default_config.json')
 
 def load_config(config_file):
-# Load a JSON config file into a dictionary.
+    """Loads a JSON config file into a dictionary."""
     with open(config_file) as cfg:
         return json.load(cfg)
 
 def write_column(column, experiment, trial, region, measure, cutoff):
-# Map a column name to an output value.
+    """Maps a column name to an output value."""
     output = 'NA'
     if column == 'experiment_name':
         output = experiment.name
@@ -52,7 +54,12 @@ def write_column(column, experiment, trial, region, measure, cutoff):
         if cutoff >= 0 and isinstance(output, int) and output > cutoff:
             output = 'CUTOFF'
     else:
-        raise ValueError('Column %s is not defined' % column)
+        try:
+            output = trial.region_measures[region.number][measure]['value']
+        except KeyError:
+            output = trial.trial_measures[measure]
+        if cutoff >= 0 and isinstance(output, int) and output > cutoff:
+            output = 'CUTOFF'
     return str(output)
 
 def measure_output(measure, cutoff, columns, experiment, trial, region):
@@ -71,7 +78,7 @@ def measure_output(measure, cutoff, columns, experiment, trial, region):
                                                     region, measure, cutoff),
                         list(columns.keys()))) + '\n'
 
-def generate_region_output(experiments, config_file='sideeye/default_config.json'):
+def generate_region_output(experiments, config_file=DEFAULT_CONFIG):
     """
     Generates a string in csv format of a list of experiments' region measures
     using columns specified in config file.
@@ -94,7 +101,7 @@ def generate_region_output(experiments, config_file='sideeye/default_config.json
     return output
 
 
-def generate_trial_output(experiments, config_file='sideeye/default_config.json'):
+def generate_trial_output(experiments, config_file=DEFAULT_CONFIG):
     """
     Generates a string in csv format of list of experiments' trial measures using columns and
     measures specified in config file.
@@ -114,11 +121,10 @@ def generate_trial_output(experiments, config_file='sideeye/default_config.json'
                 measure_output(measure, value['cutoff'], columns, experiment, trial, None)
     return output
 
-def generate_all_output(experiments, config_file='sideeye/default_config.json'):
+def generate_all_output(experiments, config_file=DEFAULT_CONFIG):
     """
     Generates a string in csv format of all measures specified in config file for a
     list of experiments.
-
     Args:
         experiments (List[Experiment]): List of experiments.
         config_file (str): Name of configuration file.
@@ -133,6 +139,8 @@ def generate_all_output(experiments, config_file='sideeye/default_config.json'):
     columns = {key:value for (key, value)
                in {**config['region_output'], **config['trial_output']}.items()
                if value['include']}
+    columns = {**columns, 'measure': {'header': 'measure'}, 'value': {'header': 'value'}}
+
     output = ','.join([value['header'] for value in columns.values()]) + '\n'
 
     for experiment in experiments:
@@ -143,4 +151,39 @@ def generate_all_output(experiments, config_file='sideeye/default_config.json'):
                 for (measure, value) in region_measures.items():
                     output += measure_output(measure, value['cutoff'], columns,
                                              experiment, trial, region)
+    return output
+
+def generate_all_output_wide_format(experiments, config_file=DEFAULT_CONFIG):
+    """
+    Generates a string in csv format of all measures specified in config file for a
+    list of experiments, with all measures as columns.
+
+    Args:
+        experiments (List[Experiment]): List of experiments.
+        config_file (str): Name of configuration file.
+    """
+    config = load_config(config_file)
+    columns = {key:value for (key, value)
+               in {**config['region_output'],
+                   **config['trial_output'],
+                   **config['region_measures'],
+                   **config['trial_measures']
+                  }.items()
+               if value['include']}
+    output = ','.join([value['header'] for value in columns.values()]) + '\n'
+
+    for experiment in experiments:
+        for trial in experiment.trials.values():
+            for region in trial.item.regions:
+                output += ','.join(map(lambda column: write_column(column[0],
+                                                                   experiment,
+                                                                   trial,
+                                                                   region,
+                                                                   column[0],
+                                                                   (column[1]['cutoff']
+                                                                    if 'cutoff' in column[1]
+                                                                    else None
+                                                                   )
+                                                                  ),
+                                       [(key, value) for (key, value) in columns.items()])) + '\n'
     return output

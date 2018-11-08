@@ -8,6 +8,8 @@ A custom configuration file must contain the same fields as the default configur
 
 The sections of the config file are:
 
+``wide_format``: Whether the output file should be in wide or long format.
+
 ``da1_fields``: The locations of values in each line of a .DA1 file.
 
 ``region_fields``: The locations of values in each line of a region file.
@@ -23,6 +25,22 @@ The sections of the config file are:
 ``trial_output``: Reported columns for trial measures in output file.
 
 ``terminal_output``: Amount of status/debugging information to output to terminal.
+
+wide_format
+~~~~~~~~~~~
+
+A boolean (``true/false``) indicating whether the output should be in wide or long format. If ``true``, the output will be in wide format, with each measure as a column of the csv. If ``false``, the output will be in long format, with each measure as a separate row of the csv.
+
+For example, the column headers in long format will be:
+
+::
+
+  experiment_name,trial_id,trial_total_time,item_id,item_condition,region_number,measure,value
+
+The column headers in wide format will be:
+
+::
+  experiment_name,trial_id,trial_total_time,item_id,item_condition,region_number,skip,first_pass_regressions_out, ... ,average_forward_saccade,average_backward_saccade
 
 da1_fields
 ~~~~~~~~~~
@@ -113,6 +131,8 @@ This section contains parameters for region measure calculation and output. It i
 
 ``include``: A boolean (true/false) value specifying whether the measure should be included in the output report. If false, the measure will be excluded.
 
+``header``: A string used as a header for the measure in wide output format.
+
 The measures in this section of the config file are:
 
 ::
@@ -185,10 +205,6 @@ Columns included in this section are:
 ``region_start``: Character location of beginning of region.
 
 ``region_end``: Character location of end of region.
-
-``measure``: Name of measure.
-
-``value``: Value of measure.
 
 trial_output
 ~~~~~~~~~~~~

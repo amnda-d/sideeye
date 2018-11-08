@@ -1,6 +1,10 @@
 Version History
 ===============
 
+`1.0.0a7 <https://pypi.org/project/sideeye/1.0.0a7/>`_
+------------------------------------------------------
+- Added wide output format and changed default output format to wide.
+
 `1.0.0a6 <https://pypi.org/project/sideeye/1.0.0a6/>`_
 ------------------------------------------------------
 - Added go-back time by region and character.
