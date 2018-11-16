@@ -55,8 +55,8 @@ class Experiment:
             condition (int): Trial condition.
             index (int): Trial index.
         """
-        if index != None:
+        if index is not None:
             return self.trials[self.trial_indices[index]]
-        if number != None and condition != None:
+        if number is not None and condition is not None:
             return self.trials[(number, condition)]
         raise ValueError('Either index or condition and number must be provided.')

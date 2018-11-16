@@ -15,9 +15,9 @@ class TestData(object):
 with such.A('Experiment') as it:
     @it.has_setup
     def setup():
-        it.r1 = Region(Point(1, 1), Point(2, 2), 'region 1')
-        it.r2 = Region(Point(1, 1), Point(2, 2), 'region 2')
-        it.r3 = Region(Point(1, 1), Point(2, 2), 'region 3')
+        it.r1 = Region(Point(1, 1), Point(2, 2), 1, 'region 1')
+        it.r2 = Region(Point(1, 1), Point(2, 2), 1, 'region 2')
+        it.r3 = Region(Point(1, 1), Point(2, 2), 1, 'region 3')
         it.fix1 = Fixation(Point(1, 2), 3, 4)
         it.fix2 = Fixation(Point(1, 2), 5, 6)
         it.fix3 = Fixation(Point(1, 3), 8, 9)

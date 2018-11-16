@@ -12,6 +12,7 @@ class Region:
     Attributes:
         start (Point): The character and line position of the beginning of the Region.
         end (Point): The character and line position of the end of the Region.
+        length (number, optional): Length of region in characters.
         text (str, optional): Text contained in the region.
         label (str, optional): A label for the region.
         number (int, optional): A number identifier for the region.
@@ -19,19 +20,23 @@ class Region:
     Args:
         start (Point): The character and line position of the beginning of the Region.
         end (Point): The character and line position of the end of the Region.
+        length (number, optional): Length of region in characters.
         text (str, optional): Text contained in the region.
         label (str, optional): A label for the region.
         number (int, optional): A number identifier for the region.
     """
 
-    def __init__(self, start, end, text="", label='undefined', number=None):
+    def __init__(self, start, end, length=None, text="", label='undefined', number=None):
         if start > end:
             raise ValueError('End of region must be after start of region.')
         if start.x < 0 or start.y < 0 or end.x < 0 or end.y < 0:
             raise ValueError('Region cannot have negative start and end.')
+        if length is not None and length < 0:
+            raise ValueError('Region must have positive length.')
 
         self.start = start
         self.end = end
+        self.length = length
         self.label = label
         self.text = text
         self.number = number
@@ -44,6 +49,8 @@ class Region:
                 + str(self.start)
                 + ', end: '
                 + str(self.end)
+                + ', length: '
+                + str(self.length)
                 + ', label: '
                 + str(self.label)
                 + ', number: '

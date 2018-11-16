@@ -407,7 +407,7 @@ def go_back_time_char(trial, region_number):
     except IndexError:
         pass
 
-    if go_back_end != None:
+    if go_back_end is not None:
         return save_measure(trial, region, 'go_back_time_char', go_back_end-go_back_start, None)
 
     return save_measure(trial, region, 'go_back_time_char', None, None)
@@ -463,7 +463,7 @@ def go_back_time_region(trial, region_number):
     except IndexError:
         pass
 
-    if go_back_end != None:
+    if go_back_end is not None:
         return save_measure(trial, region, 'go_back_time_region', go_back_end-go_back_start, None)
 
     return save_measure(trial, region, 'go_back_time_region', None, None)

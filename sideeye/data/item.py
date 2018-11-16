@@ -25,9 +25,9 @@ class Item:
     """
     def __init__(self, number, condition, regions, labels=None):
         """Inits Item class."""
-        if labels != None and len(labels) != len(regions):
+        if labels is not None and len(labels) != len(regions):
             raise ValueError('Number of regions must be equal to number of labels.')
-        if labels != None and len(set(labels)) != len(labels):
+        if labels is not None and len(set(labels)) != len(labels):
             raise ValueError('Region labels must be unique')
         if regions is None or len(regions) is 0:
             raise ValueError('An Item must have at least one Region')

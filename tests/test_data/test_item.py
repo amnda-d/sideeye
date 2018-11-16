@@ -15,12 +15,12 @@ class TestData(object):
 with such.A('Item') as it:
     @it.has_test_setup
     def setup():
-        it.r1 = Region(Point(1, 1), Point(3, 1), 'region 1')
-        it.r2 = Region(Point(3, 1), Point(8, 1), 'region 2')
-        it.r3 = Region(Point(8, 1), Point(2, 2), 'region 3')
-        it.r4 = Region(Point(1, 1), Point(3, 1), 'region 1')
-        it.r5 = Region(Point(3, 1), Point(8, 1), 'region 2')
-        it.r6 = Region(Point(8, 1), Point(2, 2), 'region 3')
+        it.r1 = Region(Point(1, 1), Point(3, 1), 1, 'region 1')
+        it.r2 = Region(Point(3, 1), Point(8, 1), 1, 'region 2')
+        it.r3 = Region(Point(8, 1), Point(2, 2), 1, 'region 3')
+        it.r4 = Region(Point(1, 1), Point(3, 1), 1, 'region 1')
+        it.r5 = Region(Point(3, 1), Point(8, 1), 1, 'region 2')
+        it.r6 = Region(Point(8, 1), Point(2, 2), 1, 'region 3')
         it.labeled_item = Item(1, 1, [it.r1, it.r2, it.r3], ['r1', 'r2', 'r3'])
         it.unlabeled_item = Item(2, 1, [it.r4, it.r5, it.r6])
 
@@ -73,6 +73,6 @@ with such.A('Item') as it:
     @it.should('have equality defined correctly')
     def test_item_equality():
         it.assertTrue(Item(2, 1, [it.r1, it.r2, it.r3]) == Item(2, 1, [it.r1, it.r2, it.r3]))
-        it.assertTrue(Item(2, 1, [it.r1, it.r2, it.r3]) != Item(2, 1, [it.r1, it.r2, Region(Point(1, 1), Point(2, 2), 'region 4')]))
+        it.assertTrue(Item(2, 1, [it.r1, it.r2, it.r3]) != Item(2, 1, [it.r1, it.r2, Region(Point(1, 1), Point(2, 2), 1, 'region 4')]))
 
 it.createTests(globals())

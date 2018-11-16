@@ -28,7 +28,7 @@ def text(string):
             char = 0
         char += len(region)
         end = Point(char, line)
-        regions += [Region(start, end, region)]
+        regions += [Region(start, end, len(region), region)]
     return regions
 
 def validate_region_file(filename):
