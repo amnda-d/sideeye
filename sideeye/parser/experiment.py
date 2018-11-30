@@ -21,7 +21,7 @@ def parse(da1_file, region_file, config_file=DEFAULT_CONFIG):
 
     Args:
         da1_file (str): Name of DA1 file.
-        region_file: Name of region file (.cnt or .reg).
+        region_file: Name of region file (.cnt, .reg, or .txt).
         config_file: Name of configuration file.
     """
     config = load_config(config_file)
@@ -30,12 +30,15 @@ def parse(da1_file, region_file, config_file=DEFAULT_CONFIG):
     cutoffs = config['cutoffs']
     verbose = config['terminal_output']
 
-    items = parser.region.file(region_file,
-                               region_config['number'],
-                               region_config['condition'],
-                               region_config['boundaries_start'],
-                               region_config['includes_y'],
-                               verbose=verbose)
+    if region_file[-4:].lower() == '.txt':
+        items = parser.region.textfile(region_file, verbose=verbose)
+    else:
+        items = parser.region.file(region_file,
+                                   region_config['number'],
+                                   region_config['condition'],
+                                   region_config['boundaries_start'],
+                                   region_config['includes_y'],
+                                   verbose=verbose)
 
     experiment = parser.da1.parse(da1_file,
                                   items,
@@ -58,7 +61,7 @@ def parse_dir(da1_directory, region_file, config_file=DEFAULT_CONFIG):
 
     Args:
         da1_directory: Name of directory containing DA1 files.
-        region_file: Name of region file (.cnt or .reg).
+        region_file: Name of region file (.cnt, .reg, or .txt).
         config_file: Name of configuration file.
     """
     config = load_config(config_file)
@@ -69,12 +72,15 @@ def parse_dir(da1_directory, region_file, config_file=DEFAULT_CONFIG):
     cutoffs = config['cutoffs']
     verbose = config['terminal_output']
 
-    items = parser.region.file(region_file,
-                               region_config['number'],
-                               region_config['condition'],
-                               region_config['boundaries_start'],
-                               region_config['includes_y'],
-                               verbose=verbose)
+    if region_file[-4:].lower() == '.txt':
+        items = parser.region.textfile(region_file, verbose=verbose)
+    else:
+        items = parser.region.file(region_file,
+                                   region_config['number'],
+                                   region_config['condition'],
+                                   region_config['boundaries_start'],
+                                   region_config['includes_y'],
+                                   verbose=verbose)
     experiments = []
     for da1 in da1s:
         if da1[-4:].lower() != '.da1':

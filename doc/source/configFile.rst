@@ -80,7 +80,7 @@ This default configuration matches a .DA1 file with the following format:
 region_fields
 ~~~~~~~~~~~~~
 
-Similar to ``da1_fields``, this section specifies the positions of values in each line of a region file. Region files (typically .cnt or .reg) describe regions of interest in items of the experiment. Regions are defined by a character position of the beginning and ending of the region. Character positions can either be a single integer for single-line items, or a pair (line, character) of integers for multi-line items. A line in a region file contains the number and condition of an item, followed by the beginning and end positions of the regions. Four fields are necessary for parsing a region file.
+Similar to ``da1_fields``, this section specifies the positions of values in each line of a region file. If the newer text region format is used, this section of the configuration is ignored. Region files (typically .cnt or .reg) describe regions of interest in items of the experiment. Regions are defined by a character position of the beginning and ending of the region. Character positions can either be a single integer for single-line items, or a pair (line, character) of integers for multi-line items. A line in a region file contains the number and condition of an item, followed by the beginning and end positions of the regions. Four fields are necessary for parsing a region file.
 
 ``number``: Item identifier.
 

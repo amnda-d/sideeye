@@ -16,20 +16,56 @@ def text(string):
     """
     if not isinstance(string, str):
         raise ValueError('Not a region string.')
-    string = string.split('/')
+    string = string.rstrip('\n').split('/')
     regions = []
     line = 0
     char = 0
     for region in string:
         start = Point(char, line)
+        region = region.replace('\\n', '\n')
         if '\n' in region:
-            region = region.split('\n')[1]
             line += 1
             char = 0
-        char += len(region)
+        char += len(region.split('\n')[-1])
         end = Point(char, line)
-        regions += [Region(start, end, len(region), region)]
+        regions += [Region(
+            start,
+            end,
+            len([c for c in region if c != '\n']),
+            region.strip('\n')
+            )]
     return regions
+
+def textfile(filename, verbose=0):
+    """
+    A parser for a region text file, with regions separated by ``/`` and lines
+    within an item separated by ``\n``. ``\n`` is ignored in counting the length
+    of a region.
+
+    Each line should contain one Item, with the item number, followed by a space or
+    tab (``\t``), the item condition, another space or tab, and the region string.
+
+    For example: ``1    2   This is item one /condition two.\n/There are two
+    lines /and four regions.
+    """
+    if verbose > 0:
+        print('\nParsing region text file: %s' % filename)
+
+    if filename[-4:].lower() != '.txt':
+        raise ValueError('%s Failed validation: Not a region file' % filename)
+
+    with open(filename, 'r') as region_file:
+        items = defaultdict(lambda: defaultdict(bool))
+        for line in region_file:
+            line = line.split(maxsplit=2)
+            number = int(line[0])
+            condition = int(line[1])
+            if verbose == 2 or verbose >= 5:
+                print('\tParsing item: %s, condition: %s' % (number, condition))
+            items[number][condition] = Item(number,
+                                            condition,
+                                            text(line[2]))
+        return items
 
 def validate_region_file(filename):
     """Checks if a file is a region file."""

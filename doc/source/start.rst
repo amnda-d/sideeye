@@ -54,8 +54,8 @@ This default configuration matches a .DA1 file with the following format:
 
 If your .DA1 files do not match this format, copy :doc:`default_config.json <default_config.json>` into a new file in the same directory, and edit the ``da1_fields`` section to match your .DA1 file format.
 
-Region File Formats
-~~~~~~~~~~~~~~~~~~~
+Numeric Region File Formats
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Region files (typically .cnt or .reg) describe regions of interest in items of the experiment. Regions are defined by a character position of the beginning and ending of the region. Character positions can either be a single integer for single-line items, or a pair (line, character) of integers for multi-line items. A line in a region file contains the number and condition of an item, followed by the beginning and end positions of the regions. Four fields are necessary for parsing a region file.
 
@@ -87,6 +87,26 @@ The default configuration matches a region file with the following format:
   Value:    num.  | cond. |   |  r1   |  r1   |  r2   |  r2   | ... |
 
 If your region file does not match this format, copy :doc:`default_config.json <default_config.json>` into a new file in the same directory, and edit the ``region_fields`` section to match your region file format.
+
+Text Region File Formats
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Text region files are a new format for use with SideEye. This format can be used instead of a .cnt or .reg file, and allows for region length to be calculated automatically, and for region text to be included in the experiment output. There is only one format for this type of region file, so the ``region_fields`` configuration section is ignored. In this format, each line represents an item.
+
+In this format, each line should have a number or string identifying the item number, followed by a tab or space, a number or string identifying the item condition, another tab or space, and then the text of the item. In the region text, regions are separated by the ``/`` character, and lines are separated by ``\n``.
+
+For example, the following line represents an item with number 1, condition 3, and four regions on two lines:
+
+::
+
+  1    3    This is an item/ with two lines/\nand four/ regions.
+
+The item displayed by the eye tracker would be:
+
+::
+
+  This is an item with two lines
+  and four regions.
 
 Parsing The Experiment
 ~~~~~~~~~~~~~~~~~~~~~~

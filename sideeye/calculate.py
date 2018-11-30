@@ -5,7 +5,8 @@ experiment. These functions do not return anything, they only calculate the meas
 or measures on each trial or region of the experiments.
 """
 
-import json, os
+import json
+import os
 from . import measures
 from .output import generate_all_output, generate_all_output_wide_format
 

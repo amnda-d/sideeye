@@ -3,7 +3,8 @@ This module contains functions to generate csv reports of measures calculated
 for experiments.
 """
 
-import json, os
+import json
+import os
 
 DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'default_config.json')
 

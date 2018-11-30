@@ -1,0 +1,5 @@
+1 1 this is region 1 /this is region 2/ this is region 3/\nthis is a new line/this is another region/\nthis is a third line
+1 2 item with one region
+2 1 item with/\none region per line
+2 2 this is /an item /with/\nthree lines /of regions/\nand multiple regions /per line
+3     1 this is an\nitem with /a new line in the middle of a region

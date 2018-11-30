@@ -99,24 +99,5 @@ with such.A('Parser') as it:
             with it.assertRaises(ValueError):
                 parser.region.file(os.path.join(it.dirname, 'testdata/robodoc.DA1'), number_location=1, condition_location=0)
 
-    with it.having('Region string parser'):
-        @it.has_setup
-        def setup():
-            it.dirname = os.path.dirname(os.path.realpath(__file__))
-            it.region = parser.region.text('This is/ a string/ with four/ regions')
-            it.parsed_regions = [Region(Point(0, 0), Point(7, 0), 7, 'This is'),
-                                 Region(Point(7, 0), Point(16, 0), 9, ' a string'),
-                                 Region(Point(16, 0), Point(26, 0), 10, ' with four'),
-                                 Region(Point(26, 0), Point(34, 0), 8, ' regions')]
-
-        @it.should('parse a region string')
-        def test_region_string():
-            it.assertEqual(it.region, it.parsed_regions)
-
-        @it.should('throw an error when given a non-region string input')
-        def test_non_region_string():
-            with it.assertRaises(ValueError):
-                parser.region.text(1)
-
 
 it.createTests(globals())
