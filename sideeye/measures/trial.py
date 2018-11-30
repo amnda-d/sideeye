@@ -21,9 +21,11 @@ def location_first_regression(trial):
     """
     for saccade in trial.saccades:
         if saccade.regression:
-            return save_trial_measure(trial,
-                                      'location_first_regression',
-                                      '"(%s, %s)"' % (saccade.start.char, saccade.start.line))
+            return save_trial_measure(
+                trial,
+                'location_first_regression',
+                '"(%s, %s)"' % (saccade.start.char, saccade.start.line)
+            )
     return save_trial_measure(trial, 'location_first_regression', None)
 
 def latency_first_regression(trial):
@@ -56,9 +58,11 @@ def fixation_count(trial):
         return length of [non-excluded fixations in trial]
 
     """
-    return save_trial_measure(trial,
-                              'fixation_count',
-                              len([fix for fix in trial.fixations if not fix.excluded]))
+    return save_trial_measure(
+        trial,
+        'fixation_count',
+        len([fix for fix in trial.fixations if not fix.excluded])
+    )
 
 def percent_regressions(trial):
     """
@@ -98,9 +102,11 @@ def trial_total_time(trial):
 
     """
     if trial.time is None:
-        return save_trial_measure(trial,
-                                  'trial_total_time',
-                                  [fix for fix in trial.fixations if not fix.excluded][-1].end)
+        return save_trial_measure(
+            trial,
+            'trial_total_time',
+            [fix for fix in trial.fixations if not fix.excluded][-1].end
+        )
     return save_trial_measure(trial, 'trial_total_time', trial.time)
 
 def average_forward_saccade(trial):

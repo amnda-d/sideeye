@@ -28,12 +28,14 @@ def text(string):
             char = 0
         char += len(region.split('\n')[-1])
         end = Point(char, line)
-        regions += [Region(
-            start,
-            end,
-            len([c for c in region if c != '\n']),
-            region.strip('\n')
-            )]
+        regions += [
+            Region(
+                start,
+                end,
+                len([c for c in region if c != '\n']),
+                region.strip('\n')
+            )
+        ]
     return regions
 
 def textfile(filename, verbose=0):
@@ -62,9 +64,11 @@ def textfile(filename, verbose=0):
             condition = int(line[1])
             if verbose == 2 or verbose >= 5:
                 print('\tParsing item: %s, condition: %s' % (number, condition))
-            items[number][condition] = Item(number,
-                                            condition,
-                                            text(line[2]))
+            items[number][condition] = Item(
+                number,
+                condition,
+                text(line[2])
+            )
         return items
 
 def validate_region_file(filename):
@@ -72,12 +76,14 @@ def validate_region_file(filename):
     if filename[-4:].lower() != '.cnt' and filename[-4:].lower() != '.reg':
         raise ValueError('%s Failed validation: Not a region file' % filename)
 
-def file(filename,
-         number_location,
-         condition_location,
-         boundaries_start=3,
-         includes_y=False,
-         verbose=0):
+def file(
+        filename,
+        number_location,
+        condition_location,
+        boundaries_start=3,
+        includes_y=False,
+        verbose=0
+    ):
     """
     Parses a .reg or .cnt file into a dictionary of sideeye Item objects.
 
@@ -118,7 +124,9 @@ def file(filename,
             number = line[number_location]
             if verbose == 2 or verbose >= 5:
                 print('\tParsing item: %s, condition: %s' % (number, condition))
-            items[number][condition] = Item(number,
-                                            condition,
-                                            line_to_regions(line[boundaries_start:]))
+            items[number][condition] = Item(
+                number,
+                condition,
+                line_to_regions(line[boundaries_start:])
+            )
         return items

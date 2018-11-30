@@ -1,57 +1,56 @@
-from sideeye import measures, parser
-from sideeye.data import Point, Fixation, Region, Item, Trial
-
 from nose2.tools import such
-
-class TestData(object):
-
-    @classmethod
-    def setUp(cls):
-        it.testdata = True
-
-    @classmethod
-    def tearDown(cls):
-        del it.testdata
+from sideeye import measures
+from sideeye.data import Point, Fixation, Region, Item, Trial
 
 with such.A('Duration Region Measures') as it:
     @it.has_setup
-    def setup():
+    def setup_all():
         # /aaaaaaaaaa/aaaaaaaaaa/aaaaaaaaaa/aaaaaaaaaa/
-        it.regions_x = [Region(Point(0, 0), Point(10, 0)),
-                      Region(Point(10, 0), Point(20, 0)),
-                      Region(Point(20, 0), Point(30, 0)),
-                      Region(Point(30, 0), Point(40, 0))]
+        it.regions_x = [
+            Region(Point(0, 0), Point(10, 0)),
+            Region(Point(10, 0), Point(20, 0)),
+            Region(Point(20, 0), Point(30, 0)),
+            Region(Point(30, 0), Point(40, 0))
+        ]
         it.item_x = Item(1, 1, it.regions_x)
-        it.fixations_x = [Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
-                          Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
-                          Fixation(Point(22, 0), 200, 350, it.regions_x[2]),
-                          Fixation(Point(24, 0), 350, 350, it.regions_x[2], excluded=True),
-                          Fixation(Point(12, 0), 350, 400, it.regions_x[1]),
-                          Fixation(Point(3, 0), 400, 550, it.regions_x[0]),
-                          Fixation(Point(11, 0), 550, 600, it.regions_x[1])]
+        it.fixations_x = [
+            Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
+            Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
+            Fixation(Point(22, 0), 200, 350, it.regions_x[2]),
+            Fixation(Point(24, 0), 350, 350, it.regions_x[2], excluded=True),
+            Fixation(Point(12, 0), 350, 400, it.regions_x[1]),
+            Fixation(Point(3, 0), 400, 550, it.regions_x[0]),
+            Fixation(Point(11, 0), 550, 600, it.regions_x[1])
+        ]
         it.trial_x = Trial(1, 600, it.item_x, it.fixations_x)
 
-        it.fixations_x2 = [Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
-                          Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
-                          Fixation(Point(22, 0), 200, 370, it.regions_x[2]),
-                          Fixation(Point(24, 0), 370, 380, it.regions_x[2], excluded=True),
-                          Fixation(Point(21, 0), 380, 400, it.regions_x[2]),
-                          Fixation(Point(3, 0), 400, 550, it.regions_x[0])]
+        it.fixations_x2 = [
+            Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
+            Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
+            Fixation(Point(22, 0), 200, 370, it.regions_x[2]),
+            Fixation(Point(24, 0), 370, 380, it.regions_x[2], excluded=True),
+            Fixation(Point(21, 0), 380, 400, it.regions_x[2]),
+            Fixation(Point(3, 0), 400, 550, it.regions_x[0])
+        ]
         it.trial_x2 = Trial(1, 600, it.item_x, it.fixations_x2)
 
         # aaaaaaaaaa/aaaaaaaaa.../
         # aaaaaaaaaa/aaaaaaaaaa/
-        it.regions_y = [Region(Point(0, 0), Point(10, 0)),
-                      Region(Point(10, 0), Point(0, 1)),
-                      Region(Point(0, 1), Point(10, 1)),
-                      Region(Point(10, 1), Point(20, 1))]
+        it.regions_y = [
+            Region(Point(0, 0), Point(10, 0)),
+            Region(Point(10, 0), Point(0, 1)),
+            Region(Point(0, 1), Point(10, 1)),
+            Region(Point(10, 1), Point(20, 1))
+        ]
         it.item_y = Item(2, 1, it.regions_y)
-        it.fixations_y = [Fixation(Point(12, 0), 0, 100, it.regions_y[1]),
-                          Fixation(Point(12, 1), 100, 150, it.regions_y[3]),
-                          Fixation(Point(15, 1), 150, 350, it.regions_y[3]),
-                          Fixation(Point(8, 0), 350, 400, it.regions_y[0]),
-                          Fixation(Point(15, 1), 400, 600, it.regions_y[3]),
-                          Fixation(Point(17, 1), 600, 700, it.regions_y[3])]
+        it.fixations_y = [
+            Fixation(Point(12, 0), 0, 100, it.regions_y[1]),
+            Fixation(Point(12, 1), 100, 150, it.regions_y[3]),
+            Fixation(Point(15, 1), 150, 350, it.regions_y[3]),
+            Fixation(Point(8, 0), 350, 400, it.regions_y[0]),
+            Fixation(Point(15, 1), 400, 600, it.regions_y[3]),
+            Fixation(Point(17, 1), 600, 700, it.regions_y[3])
+        ]
         it.trial_y = Trial(1, 400, it.item_y, it.fixations_y)
 
     with it.having('first_fixation_duration measure'):
@@ -152,25 +151,36 @@ with such.A('Duration Region Measures') as it:
 
     with it.having('right-bounded time measure'):
         @it.has_test_setup
-        def setup():
-            it.right_bounded_fixations = [Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
-                              Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
-                              Fixation(Point(14, 0), 200, 350, it.regions_x[1]),
-                              Fixation(Point(12, 0), 350, 400, it.regions_x[1]),
-                              Fixation(Point(3, 0), 400, 550, it.regions_x[0]),
-                              Fixation(Point(11, 0), 550, 600, it.regions_x[1]),
-                              Fixation(Point(21, 0), 650, 700, it.regions_x[2]),
-                              Fixation(Point(11, 0), 750, 800, it.regions_x[1])]
+        def setup_rb():
+            it.right_bounded_fixations = [
+                Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
+                Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
+                Fixation(Point(14, 0), 200, 350, it.regions_x[1]),
+                Fixation(Point(12, 0), 350, 400, it.regions_x[1]),
+                Fixation(Point(3, 0), 400, 550, it.regions_x[0]),
+                Fixation(Point(11, 0), 550, 600, it.regions_x[1]),
+                Fixation(Point(21, 0), 650, 700, it.regions_x[2]),
+                Fixation(Point(11, 0), 750, 800, it.regions_x[1])
+            ]
             it.trial_right_bound = Trial(1, 600, it.item_x, it.right_bounded_fixations)
 
         @it.should('calculate right-bounded time correctly')
         def test_right_bounded_time():
-            it.assertEqual(measures.region.right_bounded_time(it.trial_right_bound, 0)['value'], 200)
-            it.assertEqual(measures.region.right_bounded_time(it.trial_right_bound, 1)['value'], 250)
+            it.assertEqual(
+                measures.region.right_bounded_time(it.trial_right_bound, 0)['value'],
+                200
+            )
+            it.assertEqual(
+                measures.region.right_bounded_time(it.trial_right_bound, 1)['value'],
+                250
+            )
 
         @it.should('be None if the region is skipped during first pass')
         def test_right_bounded_time_skip():
-            it.assertEqual(measures.region.right_bounded_time(it.trial_right_bound, 3)['value'], None)
+            it.assertEqual(
+                measures.region.right_bounded_time(it.trial_right_bound, 3)['value'],
+                None
+            )
             it.assertEqual(measures.region.right_bounded_time(it.trial_y, 0)['value'], None)
 
         @it.should('throw an error if the target region does not exist in the trial')
@@ -209,7 +219,7 @@ with such.A('Duration Region Measures') as it:
             it.assertEqual(measures.region.second_pass(it.trial_y, 1)['value'], 0)
 
         @it.should('throw an error if the target region does not exist in the trial')
-        def test_reread_time_error():
+        def test_second_pass_error():
             with it.assertRaises(ValueError):
                 measures.region.second_pass(it.trial_x, 5)
 

@@ -1,16 +1,5 @@
-from sideeye import Point, Fixation, Saccade, Region, Item, Trial, Experiment
-
 from nose2.tools import such
-
-class TestData(object):
-
-    @classmethod
-    def setUp(cls):
-        it.testdata = True
-
-    @classmethod
-    def tearDown(cls):
-        del it.testdata
+from sideeye import Point, Region, Item
 
 with such.A('Item') as it:
     @it.has_test_setup
@@ -73,6 +62,9 @@ with such.A('Item') as it:
     @it.should('have equality defined correctly')
     def test_item_equality():
         it.assertTrue(Item(2, 1, [it.r1, it.r2, it.r3]) == Item(2, 1, [it.r1, it.r2, it.r3]))
-        it.assertTrue(Item(2, 1, [it.r1, it.r2, it.r3]) != Item(2, 1, [it.r1, it.r2, Region(Point(1, 1), Point(2, 2), 1, 'region 4')]))
+        it.assertTrue(
+            Item(2, 1, [it.r1, it.r2, it.r3]) !=
+            Item(2, 1, [it.r1, it.r2, Region(Point(1, 1), Point(2, 2), 1, 'region 4')])
+        )
 
 it.createTests(globals())

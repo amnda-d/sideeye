@@ -17,10 +17,13 @@ def skip(trial, region_number):
 
     """
     region = region_exists(trial, region_number)
-    return save_measure(trial, region,
-                        'skip',
-                        bool(len(get_fp_fixations(trial, region_number)) is 0),
-                        None)
+    return save_measure(
+        trial,
+        region,
+        'skip',
+        bool(len(get_fp_fixations(trial, region_number)) is 0),
+        None
+    )
 
 def first_pass_regressions_out(trial, region_number):
     """
@@ -84,8 +87,11 @@ def first_pass_regressions_in(trial, region_number):
     """
     region = region_exists(trial, region_number)
     trial_fixations = [fix for fix in trial.fixations if not fix.excluded]
-    region_fixations = [key for key, fixation in enumerate(trial_fixations)
-                        if fixation.region.number is region_number]
+    region_fixations = [
+        key for key, fixation
+        in enumerate(trial_fixations)
+        if fixation.region.number is region_number
+    ]
 
     if len(region_fixations) is 0:
         return save_measure(trial, region, 'first_pass_regressions_in', None, None)

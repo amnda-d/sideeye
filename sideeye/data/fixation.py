@@ -51,27 +51,24 @@ class Fixation:
     def __eq__(self, other):
         if self.region:
             return self.__dict__ == other.__dict__
-        return (self.char == other.char
-                and self.line == other.line
-                and self.start == other.start
-                and self.end == other.end
-                and self.duration == other.duration
-                and self.excluded == other.excluded)
+        return (
+            self.char == other.char
+            and self.line == other.line
+            and self.start == other.start
+            and self.end == other.end
+            and self.duration == other.duration
+            and self.excluded == other.excluded
+        )
 
     def __str__(self):
-        return ('(char: '
-                + str(self.char)
-                + ', line: '
-                + str(self.line)
-                + ', start: '
-                + str(self.start)
-                + 'ms, end: '
-                + str(self.end)
-                + 'ms, region: '
-                + str(self.region)
-                + ', excluded: '
-                + str(self.excluded)
-                + ')')
+        return (
+            '(char: ' + str(self.char)
+            + ', line: ' + str(self.line)
+            + ', start: ' + str(self.start)
+            + 'ms, end: ' + str(self.end)
+            + 'ms, region: ' + str(self.region)
+            + ', excluded: ' + str(self.excluded) + ')'
+        )
 
     def assign_region(self, region):
         """

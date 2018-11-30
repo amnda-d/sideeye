@@ -25,7 +25,7 @@ from .boolean import (
     skip,
     first_pass_regressions_in,
     first_pass_regressions_out
-    )
+)
 
 from .other import landing_position, launch_site, first_pass_fixation_count
 
@@ -42,7 +42,7 @@ from .duration import (
     refixation_time,
     go_back_time_char,
     go_back_time_region
-    )
+)
 
 __all__ = [
     'skip',
@@ -63,5 +63,4 @@ __all__ = [
     'refixation_time',
     'go_back_time_char',
     'go_back_time_region'
-
 ]

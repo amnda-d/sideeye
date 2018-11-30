@@ -31,8 +31,9 @@ class Trial:
         include_saccades (bool): Boolean indicating whether saccades surrounding an excluded
                                  fixation should be included in a saccade.
     """
-    def __init__(self, index, time, item, fixations,
-                 include_fixation=False, include_saccades=False):
+    def __init__(
+            self, index, time, item, fixations, include_fixation=False, include_saccades=False
+        ):
         """Inits Trial class."""
         if index < 0:
             raise ValueError('Index must be greater than 0.')
@@ -56,21 +57,23 @@ class Trial:
                         saccade_duration += fixation.start - fixations[key - 1].end
                     if saccade_duration > 0:
                         if fixation.char is None or fixation.line is None:
-                            saccades += [Saccade(saccade_duration,
-                                                 True,
-                                                 saccade_start,
-                                                 fixation)]
+                            saccades += [
+                                Saccade(saccade_duration, True, saccade_start, fixation)
+                            ]
                         elif saccade_start.char is None or saccade_start.line is None:
-                            saccades += [Saccade(saccade_duration,
-                                                 False,
-                                                 saccade_start,
-                                                 fixation)]
+                            saccades += [
+                                Saccade(saccade_duration, False, saccade_start, fixation)
+                            ]
                         else:
-                            saccades += [Saccade(saccade_duration,
-                                                 Point(fixation.char, fixation.line) <
-                                                 Point(saccade_start.char, saccade_start.line),
-                                                 saccade_start,
-                                                 fixation)]
+                            saccades += [
+                                Saccade(
+                                    saccade_duration,
+                                    Point(fixation.char, fixation.line) <
+                                    Point(saccade_start.char, saccade_start.line),
+                                    saccade_start,
+                                    fixation
+                                )
+                            ]
                     saccade_start = fixation
                     saccade_duration = 0
                 else:
@@ -94,17 +97,13 @@ class Trial:
         return self.__dict__ == other.__dict__
 
     def __str__(self):
-        return ('(index: ' +
-                str(self.index) +
-                ', time: ' +
-                str(self.time) +
-                'ms, item: ' +
-                str(self.item) +
-                ', fixations: ' +
-                str(len(self.fixations)) +
-                ', saccades: ' +
-                str(len(self.saccades)) +
-                ')')
+        return (
+            '(index: ' + str(self.index) +
+            ', time: ' + str(self.time) +
+            'ms, item: ' + str(self.item) +
+            ', fixations: ' + str(len(self.fixations)) +
+            ', saccades: ' + str(len(self.saccades)) + ')'
+        )
 
     def fixation_count(self):
         """Return the number of fixations in the item."""

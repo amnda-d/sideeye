@@ -50,9 +50,11 @@ def calculate_measure(experiments, measure, verbose=0):
     else:
         raise ValueError('Measure "%s" does not exist.' % measure)
 
-def calculate_all_measures(experiments,
-                           output_file=None,
-                           config_file=DEFAULT_CONFIG):
+def calculate_all_measures(
+        experiments,
+        output_file=None,
+        config_file=DEFAULT_CONFIG
+    ):
     """
     Given an array of experiments and config file, calculate all measures specified in the
     config file for the experiment, and optionally output the results as a csv.
@@ -74,9 +76,11 @@ def calculate_all_measures(experiments,
     for measure in trial_measures.keys():
         calculate_measure(experiments, measure, verbose)
 
-    output_text = (generate_all_output_wide_format(experiments, config_file)
-                   if wide_format
-                   else generate_all_output(experiments, config_file))
+    output_text = (
+        generate_all_output_wide_format(experiments, config_file)
+        if wide_format
+        else generate_all_output(experiments, config_file)
+    )
     if output_file is not None:
         with open(output_file, 'w') as output:
             output.write(output_text)

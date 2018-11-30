@@ -25,10 +25,13 @@ def first_fixation_duration(trial, region_number):
 
     if len(fp_fixations) is 0:
         return save_measure(trial, region, 'first_fixation_duration', None, None)
-    return save_measure(trial, region,
-                        'first_fixation_duration',
-                        fp_fixations[0].duration,
-                        [fp_fixations[0]])
+    return save_measure(
+        trial,
+        region,
+        'first_fixation_duration',
+        fp_fixations[0].duration,
+        [fp_fixations[0]]
+    )
 
 def single_fixation_duration(trial, region_number):
     """
@@ -50,10 +53,13 @@ def single_fixation_duration(trial, region_number):
     fp_fixations = get_fp_fixations(trial, region_number)
 
     if len(fp_fixations) is 1:
-        return save_measure(trial, region,
-                            'single_fixation_duration',
-                            fp_fixations[0].duration,
-                            [fp_fixations[0]])
+        return save_measure(
+            trial,
+            region,
+            'single_fixation_duration',
+            fp_fixations[0].duration,
+            [fp_fixations[0]]
+        )
     return save_measure(trial, region, 'single_fixation_duration', None, None)
 
 def first_pass(trial, region_number):
@@ -381,9 +387,11 @@ def go_back_time_char(trial, region_number):
 
     if not fp_fixations:
         try:
-            start_fix = [fix for fix in trial.fixations
-                         if not fix.excluded
-                         and fix.region.number < region_number][0]
+            start_fix = [
+                fix for fix in trial.fixations
+                if not fix.excluded
+                and fix.region.number < region_number
+            ][0]
             for idx in range(1, len(trial.fixations) - 1):
                 if not trial.fixations[idx].excluded:
                     if trial.fixations[idx].region.number > region_number:
@@ -400,7 +408,8 @@ def go_back_time_char(trial, region_number):
             curr_fix = trial.fixations[idx]
             if not curr_fix.excluded:
                 if (curr_fix.line < prev_fix.line
-                        or (curr_fix.line == prev_fix.line and curr_fix.char < prev_fix.char)):
+                        or (curr_fix.line == prev_fix.line and curr_fix.char < prev_fix.char)
+                   ):
                     go_back_end = prev_fix.end
                     break
                 prev_fix = curr_fix
@@ -438,9 +447,11 @@ def go_back_time_region(trial, region_number):
 
     if not fp_fixations:
         try:
-            start_fix = [fix for fix in trial.fixations
-                         if not fix.excluded
-                         and fix.region.number < region_number][0]
+            start_fix = [
+                fix for fix in trial.fixations
+                if not fix.excluded
+                and fix.region.number < region_number
+            ][0]
             for idx in range(1, len(trial.fixations) - 1):
                 if not trial.fixations[idx].excluded:
                     if trial.fixations[idx].region.number > region_number:

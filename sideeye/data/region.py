@@ -45,16 +45,11 @@ class Region:
         return self.__dict__ == other.__dict__
 
     def __str__(self):
-        return ('(start: '
-                + str(self.start)
-                + ', end: '
-                + str(self.end)
-                + ', length: '
-                + str(self.length)
-                + ', label: '
-                + str(self.label)
-                + ', number: '
-                + str(self.number)
-                + ', text: '
-                + str(self.text)
-                + ')')
+        return (
+            '(start: ' + str(self.start) +
+            ', end: ' + str(self.end) +
+            ', length: ' + str(self.length) +
+            ', label: ' + str(self.label) +
+            ', number: ' + str(self.number) +
+            ', text: ' + str(self.text) + ')'
+        )

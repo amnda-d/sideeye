@@ -8,7 +8,8 @@ clean:
 	@rm -rf *.egg-info
 
 lint:
-	pylint sideeye --disable=too-few-public-methods,too-many-arguments --output-format=colorized || true
+	pylint sideeye --disable=too-few-public-methods,too-many-arguments,too-many-branches --output-format=colorized || true
+	pylint tests --disable=too-few-public-methods,too-many-arguments,wildcard-import,too-many-branches,missing-docstring,duplicate-code --output-format=colorized || true
 
 build: clean
 	pip install -e .[test]

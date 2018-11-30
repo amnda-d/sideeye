@@ -33,25 +33,29 @@ def parse(da1_file, region_file, config_file=DEFAULT_CONFIG):
     if region_file[-4:].lower() == '.txt':
         items = parser.region.textfile(region_file, verbose=verbose)
     else:
-        items = parser.region.file(region_file,
-                                   region_config['number'],
-                                   region_config['condition'],
-                                   region_config['boundaries_start'],
-                                   region_config['includes_y'],
-                                   verbose=verbose)
+        items = parser.region.file(
+            region_file,
+            region_config['number'],
+            region_config['condition'],
+            region_config['boundaries_start'],
+            region_config['includes_y'],
+            verbose=verbose
+        )
 
-    experiment = parser.da1.parse(da1_file,
-                                  items,
-                                  da1_config['index'],
-                                  da1_config['number'],
-                                  da1_config['condition'],
-                                  da1_config['time'],
-                                  da1_config['fixation_start'],
-                                  cutoffs['min'],
-                                  cutoffs['max'],
-                                  cutoffs['include_fixation'],
-                                  cutoffs['include_saccades'],
-                                  verbose=verbose)
+    experiment = parser.da1.parse(
+        da1_file,
+        items,
+        da1_config['index'],
+        da1_config['number'],
+        da1_config['condition'],
+        da1_config['time'],
+        da1_config['fixation_start'],
+        cutoffs['min'],
+        cutoffs['max'],
+        cutoffs['include_fixation'],
+        cutoffs['include_saccades'],
+        verbose=verbose
+    )
     return experiment
 
 def parse_dir(da1_directory, region_file, config_file=DEFAULT_CONFIG):
@@ -75,28 +79,34 @@ def parse_dir(da1_directory, region_file, config_file=DEFAULT_CONFIG):
     if region_file[-4:].lower() == '.txt':
         items = parser.region.textfile(region_file, verbose=verbose)
     else:
-        items = parser.region.file(region_file,
-                                   region_config['number'],
-                                   region_config['condition'],
-                                   region_config['boundaries_start'],
-                                   region_config['includes_y'],
-                                   verbose=verbose)
+        items = parser.region.file(
+            region_file,
+            region_config['number'],
+            region_config['condition'],
+            region_config['boundaries_start'],
+            region_config['includes_y'],
+            verbose=verbose
+        )
     experiments = []
     for da1 in da1s:
         if da1[-4:].lower() != '.da1':
             print('Skipping %s: not a DA1 file.' % da1)
         else:
-            experiments += [parser.da1.parse(os.path.join(da1_directory, da1),
-                                             items,
-                                             da1_config['index'],
-                                             da1_config['number'],
-                                             da1_config['condition'],
-                                             da1_config['time'],
-                                             da1_config['fixation_start'],
-                                             cutoffs['min'],
-                                             cutoffs['max'],
-                                             cutoffs['include_fixation'],
-                                             cutoffs['include_saccades'],
-                                             verbose=verbose)]
+            experiments += [
+                parser.da1.parse(
+                    os.path.join(da1_directory, da1),
+                    items,
+                    da1_config['index'],
+                    da1_config['number'],
+                    da1_config['condition'],
+                    da1_config['time'],
+                    da1_config['fixation_start'],
+                    cutoffs['min'],
+                    cutoffs['max'],
+                    cutoffs['include_fixation'],
+                    cutoffs['include_saccades'],
+                    verbose=verbose
+                )
+            ]
 
     return experiments

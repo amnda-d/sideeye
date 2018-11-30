@@ -1,46 +1,43 @@
-from sideeye import measures, parser
-from sideeye.data import Point, Fixation, Region, Item, Trial
-
 from nose2.tools import such
-
-class TestData(object):
-
-    @classmethod
-    def setUp(cls):
-        it.testdata = True
-
-    @classmethod
-    def tearDown(cls):
-        del it.testdata
+from sideeye import measures
+from sideeye.data import Point, Fixation, Region, Item, Trial
 
 with such.A('Other Region Measures') as it:
     @it.has_setup
     def setup():
         # /aaaaaaaaaa/aaaaaaaaaa/aaaaaaaaaa/aaaaaaaaaa/
-        it.regions_x = [Region(Point(0, 0), Point(10, 0)),
-                      Region(Point(10, 0), Point(20, 0)),
-                      Region(Point(20, 0), Point(30, 0)),
-                      Region(Point(30, 0), Point(40, 0))]
+        it.regions_x = [
+            Region(Point(0, 0), Point(10, 0)),
+            Region(Point(10, 0), Point(20, 0)),
+            Region(Point(20, 0), Point(30, 0)),
+            Region(Point(30, 0), Point(40, 0))
+        ]
         it.item_x = Item(1, 1, it.regions_x)
-        it.fixations_x = [Fixation(Point(0, 0), 0, 100, it.regions_x[0]),
-                          Fixation(Point(3, 0), 100, 200, it.regions_x[0]),
-                          Fixation(Point(22, 0), 200, 300, it.regions_x[2]),
-                          Fixation(Point(22, 0), 300, 300, it.regions_x[2], excluded=True),
-                          Fixation(Point(12, 0), 300, 400, it.regions_x[1])]
+        it.fixations_x = [
+            Fixation(Point(0, 0), 0, 100, it.regions_x[0]),
+            Fixation(Point(3, 0), 100, 200, it.regions_x[0]),
+            Fixation(Point(22, 0), 200, 300, it.regions_x[2]),
+            Fixation(Point(22, 0), 300, 300, it.regions_x[2], excluded=True),
+            Fixation(Point(12, 0), 300, 400, it.regions_x[1])
+        ]
         it.trial_x = Trial(1, 400, it.item_x, it.fixations_x)
 
         # aaaaaaaaaa/aaaaaaaaa.../
         # aaaaaaaaaa/aaaaaaaaaa/
-        it.regions_y = [Region(Point(0, 0), Point(10, 0)),
-                      Region(Point(10, 0), Point(0, 1)),
-                      Region(Point(0, 1), Point(10, 1)),
-                      Region(Point(10, 1), Point(20, 1))]
+        it.regions_y = [
+            Region(Point(0, 0), Point(10, 0)),
+            Region(Point(10, 0), Point(0, 1)),
+            Region(Point(0, 1), Point(10, 1)),
+            Region(Point(10, 1), Point(20, 1))
+        ]
         it.item_y = Item(2, 1, it.regions_y)
-        it.fixations_y = [Fixation(Point(12, 0), 0, 100, it.regions_y[1]),
-                          Fixation(Point(12, 1), 100, 200, it.regions_y[3]),
-                          Fixation(Point(12, 1), 200, 200, it.regions_y[3], excluded=True),
-                          Fixation(Point(15, 1), 200, 300, it.regions_y[3]),
-                          Fixation(Point(8, 0), 300, 400, it.regions_y[0])]
+        it.fixations_y = [
+            Fixation(Point(12, 0), 0, 100, it.regions_y[1]),
+            Fixation(Point(12, 1), 100, 200, it.regions_y[3]),
+            Fixation(Point(12, 1), 200, 200, it.regions_y[3], excluded=True),
+            Fixation(Point(15, 1), 200, 300, it.regions_y[3]),
+            Fixation(Point(8, 0), 300, 400, it.regions_y[0])
+        ]
         it.trial_y = Trial(1, 400, it.item_y, it.fixations_y)
 
     with it.having('landing position measure'):

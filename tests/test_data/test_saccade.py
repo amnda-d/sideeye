@@ -1,16 +1,5 @@
-from sideeye import Point, Fixation, Saccade, Region, Item, Trial, Experiment
-
 from nose2.tools import such
-
-class TestData(object):
-
-    @classmethod
-    def setUp(cls):
-        it.testdata = True
-
-    @classmethod
-    def tearDown(cls):
-        del it.testdata
+from sideeye import Point, Fixation, Saccade
 
 with such.A('Saccade') as it:
     @it.has_test_setup

@@ -69,27 +69,21 @@ class Item:
             x_pos (int): X (character) position of a location.
             y_pos (int): Y (line) position of a location.
         """
-        try:
-            for region in range(1, len(self.regions)):
-                current_x = self.regions[region].start.x
-                current_y = self.regions[region].start.y
-                if (current_x > x_pos and current_y >= y_pos) or (current_y > y_pos):
-                    return self.regions[region - 1]
+        for region in range(1, len(self.regions)):
+            current_x = self.regions[region].start.x
+            current_y = self.regions[region].start.y
+            if (current_x > x_pos and current_y >= y_pos) or (current_y > y_pos):
+                return self.regions[region - 1]
 
-            if ((x_pos <= self.regions[-1].end.x and
-                 y_pos <= self.regions[-1].end.y) or
-                    y_pos <= self.regions[-1].end.y):
-                return self.regions[-1]
+        if ((x_pos <= self.regions[-1].end.x and
+             y_pos <= self.regions[-1].end.y) or
+                y_pos <= self.regions[-1].end.y):
+            return self.regions[-1]
 
-            raise ValueError('Region out of range of Item.')
-
-        except ValueError:
-            print('Region: (' +
-                  str(x_pos) +
-                  ', ' +
-                  str(y_pos) +
-                  ') is out of range for item: '
-                  + str(self))
+        raise ValueError(
+            'Region: (' + str(x_pos) + ', ' + str(y_pos) +
+            ') is out of range for item: ' + str(self)
+        )
 
     def region_count(self):
         """Get the number of Regions in the Item."""

@@ -1,16 +1,5 @@
-from sideeye import Point, Fixation, Saccade, Region, Item, Trial, Experiment
-
 from nose2.tools import such
-
-class TestData(object):
-
-    @classmethod
-    def setUp(cls):
-        it.testdata = True
-
-    @classmethod
-    def tearDown(cls):
-        del it.testdata
+from sideeye import Point, Fixation, Saccade, Region, Item, Trial
 
 with such.A('Trial') as it:
     @it.has_setup
@@ -35,7 +24,9 @@ with such.A('Trial') as it:
         it.trial = Trial(1, 5, it.item, it.fixations)
         it.trial_include_fixations = Trial(1, 5, it.item, it.fixations, include_fixation=True)
         it.trial_include_saccades = Trial(1, 5, it.item, it.fixations, include_saccades=True)
-        it.trial_include_both = Trial(1, 5, it.item, it.fixations, include_fixation=True, include_saccades=True)
+        it.trial_include_both = Trial(
+            1, 5, it.item, it.fixations, include_fixation=True, include_saccades=True
+        )
 
     @it.should('return the correct number of fixations')
     def test_fixations_count():
@@ -70,7 +61,7 @@ with such.A('Trial') as it:
         it.assertEqual(it.trial_include_saccades.saccades, saccades)
 
     @it.should('calculate saccades correctly when include_saccades and include_fixation are True')
-    def test_include_saccade():
+    def test_include_saccade_fixation():
         saccades = [
             Saccade(10, False, it.fixations[0], it.fixations[1]),
             Saccade(10, False, it.fixations[1], it.fixations[2]),
@@ -92,6 +83,8 @@ with such.A('Trial') as it:
     @it.should('have equality defined correctly')
     def test_trial_equality():
         it.assertTrue(Trial(1, 5, it.item, it.fixations) == Trial(1, 5, it.item, it.fixations))
-        it.assertTrue(Trial(1, 5, it.item, it.fixations) != Trial(1, 5, it.item, [it.fix1, it.fix2]))
+        it.assertTrue(
+            Trial(1, 5, it.item, it.fixations) != Trial(1, 5, it.item, [it.fix1, it.fix2])
+        )
 
 it.createTests(globals())

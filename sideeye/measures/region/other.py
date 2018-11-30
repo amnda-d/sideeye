@@ -32,8 +32,10 @@ def landing_position(trial, region_number):
 
     if (fp_fixations and fp_fixations[0].char is not None
             and fp_fixations[0].line is not None):
-        landing_pos = '"(%s, %s)"' % (fp_fixations[0].char - region.start.x,
-                                      fp_fixations[0].line - region.start.y)
+        landing_pos = '"(%s, %s)"' % (
+            fp_fixations[0].char - region.start.x,
+            fp_fixations[0].line - region.start.y
+        )
         fixation = fp_fixations[0]
 
     return save_measure(trial, region, 'landing_position', landing_pos, fixation)
@@ -120,8 +122,10 @@ def first_pass_fixation_count(trial, region_number):
     if len(fp_fixations) is 0:
         return save_measure(trial, region, 'first_pass_fixation_count', None, None)
 
-    return save_measure(trial,
-                        region,
-                        'first_pass_fixation_count',
-                        len(fp_fixations),
-                        fp_fixations)
+    return save_measure(
+        trial,
+        region,
+        'first_pass_fixation_count',
+        len(fp_fixations),
+        fp_fixations
+    )

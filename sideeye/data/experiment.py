@@ -41,10 +41,12 @@ class Experiment:
         return self.__dict__ == other.__dict__
 
     def __str__(self):
-        return ('name: ' + str(self.name)
-                + '\nfilename: ' + str(self.filename)
-                + '\ndate: ' + str(self.date)
-                + '\ntrials: ' + ', '.join([str(trial) for trial in self.trials]))
+        return (
+            'name: ' + str(self.name)
+            + '\nfilename: ' + str(self.filename)
+            + '\ndate: ' + str(self.date)
+            + '\ntrials: ' + ', '.join([str(trial) for trial in self.trials])
+        )
 
     def get_trial(self, number=None, condition=None, index=None):
         """

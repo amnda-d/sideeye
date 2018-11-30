@@ -31,12 +31,9 @@ class Saccade:
 
     def __str__(self):
         """Convert Saccade into a string."""
-        return ('(duration: '
-                + str(self.duration)
-                + ', regression: '
-                + str(self.regression)
-                + ', start: '
-                + str(self.start)
-                + ', end: '
-                + str(self.end)
-                + ')')
+        return (
+            '(duration: ' + str(self.duration) +
+            ', regression: ' + str(self.regression) +
+            ', start: ' + str(self.start) +
+            ', end: ' + str(self.end) + ')'
+        )

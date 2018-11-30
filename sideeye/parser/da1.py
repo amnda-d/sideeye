@@ -5,13 +5,15 @@ import os
 
 from ..data import Point, Fixation, Trial, Experiment
 
-def parse_timdrop(filename,
-                  items,
-                  min_cutoff=-1,
-                  max_cutoff=-1,
-                  include_fixation=False,
-                  include_saccades=False,
-                  verbose=0):
+def parse_timdrop(
+        filename,
+        items,
+        min_cutoff=-1,
+        max_cutoff=-1,
+        include_fixation=False,
+        include_saccades=False,
+        verbose=0
+    ):
     """
     Parses timdrop-formatted DA1 files into sideeye Experiment objects.
 
@@ -26,23 +28,31 @@ def parse_timdrop(filename,
                                  should be included in a saccade. See :ref:`Trials <Trial>`
                                  for more information.
     """
-    return parse(filename,
-                 items,
-                 0, 2, 1, -1, 8,
-                 min_cutoff,
-                 max_cutoff,
-                 include_fixation,
-                 include_saccades,
-                 'timdrop',
-                 verbose)
+    return parse(
+        filename=filename,
+        items=items,
+        index_col=0,
+        number_col=2,
+        condition_col=1,
+        time_col=-1,
+        fixations_first_col=8,
+        min_cutoff=min_cutoff,
+        max_cutoff=max_cutoff,
+        include_fixation=include_fixation,
+        include_saccades=include_saccades,
+        da1_type='timdrop',
+        verbose=verbose
+    )
 
-def parse_robodoc(filename,
-                  items,
-                  min_cutoff=-1,
-                  max_cutoff=-1,
-                  include_fixation=False,
-                  include_saccades=False,
-                  verbose=0):
+def parse_robodoc(
+        filename,
+        items,
+        min_cutoff=-1,
+        max_cutoff=-1,
+        include_fixation=False,
+        include_saccades=False,
+        verbose=0
+    ):
     """
     Parses robodoc-formatted DA1 files into sideeye Experiment objects.
 
@@ -57,15 +67,21 @@ def parse_robodoc(filename,
                                  should be included in a saccade. See :ref:`Trials <Trial>`
                                  for more information.
     """
-    return parse(filename,
-                 items,
-                 0, 2, 1, 3, 8,
-                 min_cutoff,
-                 max_cutoff,
-                 include_fixation,
-                 include_saccades,
-                 'robodoc',
-                 verbose)
+    return parse(
+        filename=filename,
+        items=items,
+        index_col=0,
+        number_col=2,
+        condition_col=1,
+        time_col=3,
+        fixations_first_col=8,
+        min_cutoff=min_cutoff,
+        max_cutoff=max_cutoff,
+        include_fixation=include_fixation,
+        include_saccades=include_saccades,
+        da1_type='robodoc',
+        verbose=verbose
+    )
 
 def validate(filename, fixations_first_col, da1_type=None):
     """Checks if a file is in DA1 format."""
@@ -78,20 +94,21 @@ def validate(filename, fixations_first_col, da1_type=None):
         if da1_type == 'robodoc' and line[3] < line[-1]:
             raise ValueError('%s Failed validation: Not a robodoc DA1 file' % filename)
 
-def parse(filename,
-          items,
-          index_col,
-          number_col,
-          condition_col,
-          time_col,
-          fixations_first_col,
-          min_cutoff,
-          max_cutoff,
-          include_fixation,
-          include_saccades,
-          da1_type=None,
-          verbose=0
-         ):
+def parse(
+        filename,
+        items,
+        index_col,
+        number_col,
+        condition_col,
+        time_col,
+        fixations_first_col,
+        min_cutoff,
+        max_cutoff,
+        include_fixation,
+        include_saccades,
+        da1_type=None,
+        verbose=0
+    ):
     """
     Parses DA1-like files into sideeye Experiment objects, given column positions.
 
@@ -126,16 +143,19 @@ def parse(filename,
             start = line[pos + 2]
             end = line[pos + 3]
             if (end - start) > min_cutoff and (max_cutoff < 0 or (end - start) < max_cutoff):
-                fixations += [Fixation(Point(x_pos, y_pos),
-                                       start,
-                                       end,
-                                       item.find_region(x_pos, y_pos))]
+                fixations += [
+                    Fixation(Point(x_pos, y_pos), start, end, item.find_region(x_pos, y_pos))
+                ]
             else:
-                fixations += [Fixation(Point(x_pos, y_pos),
-                                       start,
-                                       end,
-                                       item.find_region(x_pos, y_pos),
-                                       excluded=True)]
+                fixations += [
+                    Fixation(
+                        Point(x_pos, y_pos),
+                        start,
+                        end,
+                        item.find_region(x_pos, y_pos),
+                        excluded=True
+                    )
+                ]
 
         return fixations
 
@@ -149,14 +169,23 @@ def parse(filename,
                 print('\tParsing trial: %s' % line[index_col])
             if items[number][condition]:
                 fixations = parse_fixations(line[fixations_first_col:], items[number][condition])
-                trials += [Trial(line[index_col],
-                                 line[time_col],
-                                 items[number][condition],
-                                 fixations,
-                                 include_fixation,
-                                 include_saccades)]
+                trials += [
+                    Trial(
+                        line[index_col],
+                        line[time_col],
+                        items[number][condition],
+                        fixations,
+                        include_fixation,
+                        include_saccades
+                    )
+                ]
             else:
-                print('Item number', number, ', condition', condition,
-                      'does not exist. It was not added to the Experiment object.')
+                print(
+                    'Item number',
+                    number,
+                    ', condition',
+                    condition,
+                    'does not exist. It was not added to the Experiment object.'
+                )
 
         return Experiment(''.join(os.path.split(filename)[1].split('.')[:-1]), trials, filename)

@@ -75,9 +75,11 @@ def measure_output(measure, cutoff, columns, experiment, trial, region):
         trial (Trial): Trial to generate output for.
         region (Region): Region to generate output for.
     """
-    return ','.join(map(lambda column: write_column(column, experiment, trial,
-                                                    region, measure, cutoff),
-                        list(columns.keys()))) + '\n'
+    return ','.join(
+        map(lambda column: write_column(
+            column, experiment, trial, region, measure, cutoff
+        ), list(columns.keys()))
+    ) + '\n'
 
 def generate_region_output(experiments, config_file=DEFAULT_CONFIG):
     """
@@ -97,8 +99,9 @@ def generate_region_output(experiments, config_file=DEFAULT_CONFIG):
         for trial in experiment.trials.values():
             for region in trial.item.regions:
                 for (measure, value) in measures.items():
-                    output += measure_output(measure, value['cutoff'], columns,
-                                             experiment, trial, region)
+                    output += measure_output(
+                        measure, value['cutoff'], columns, experiment, trial, region
+                    )
     return output
 
 
@@ -131,15 +134,21 @@ def generate_all_output(experiments, config_file=DEFAULT_CONFIG):
         config_file (str): Name of configuration file.
     """
     config = load_config(config_file)
-    region_measures = {key:value for (key, value)
-                       in config['region_measures'].items()
-                       if value['include']}
-    trial_measures = {key:value for (key, value)
-                      in config['trial_measures'].items()
-                      if value['include']}
-    columns = {key:value for (key, value)
-               in {**config['region_output'], **config['trial_output']}.items()
-               if value['include']}
+    region_measures = {
+        key:value for (key, value)
+        in config['region_measures'].items()
+        if value['include']
+    }
+    trial_measures = {
+        key:value for (key, value)
+        in config['trial_measures'].items()
+        if value['include']
+    }
+    columns = {
+        key:value for (key, value)
+        in {**config['region_output'], **config['trial_output']}.items()
+        if value['include']
+    }
     columns = {**columns, 'measure': {'header': 'measure'}, 'value': {'header': 'value'}}
 
     output = ','.join([value['header'] for value in columns.values()]) + '\n'
@@ -164,27 +173,31 @@ def generate_all_output_wide_format(experiments, config_file=DEFAULT_CONFIG):
         config_file (str): Name of configuration file.
     """
     config = load_config(config_file)
-    columns = {key:value for (key, value)
-               in {**config['region_output'],
-                   **config['trial_output'],
-                   **config['region_measures'],
-                   **config['trial_measures']
-                  }.items()
-               if value['include']}
+    columns = {
+        key:value for (key, value)
+        in {
+            **config['region_output'],
+            **config['trial_output'],
+            **config['region_measures'],
+            **config['trial_measures']
+        }.items()
+        if value['include']}
     output = ','.join([value['header'] for value in columns.values()]) + '\n'
 
     for experiment in experiments:
         for trial in experiment.trials.values():
             for region in trial.item.regions:
-                output += ','.join(map(lambda column: write_column(column[0],
-                                                                   experiment,
-                                                                   trial,
-                                                                   region,
-                                                                   column[0],
-                                                                   (column[1]['cutoff']
-                                                                    if 'cutoff' in column[1]
-                                                                    else None
-                                                                   )
-                                                                  ),
-                                       [(key, value) for (key, value) in columns.items()])) + '\n'
+                output += ','.join(
+                    map(
+                        lambda column: write_column(
+                            column[0],
+                            experiment,
+                            trial,
+                            region,
+                            column[0],
+                            (column[1]['cutoff'] if 'cutoff' in column[1] else None)
+                        ),
+                        [(key, value) for (key, value) in columns.items()]
+                    )
+                ) + '\n'
     return output
