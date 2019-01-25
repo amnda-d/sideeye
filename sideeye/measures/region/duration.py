@@ -475,7 +475,7 @@ def go_back_time_region(trial: Trial, region_number: int) -> RegionMeasure:
                     start_fix = curr_fix
             go_back_start = start_fix.end
         except IndexError:
-            pass
+            return save_measure(trial, region, 'go_back_time_region', None, None)
 
     try:
         prev_fix = start_fix
