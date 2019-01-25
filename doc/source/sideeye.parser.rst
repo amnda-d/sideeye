@@ -17,4 +17,4 @@ Region Parser
 ------------------------------
 
 .. automodule:: sideeye.parser.region
-    :members: file, text
+    :members: textfile, file, text

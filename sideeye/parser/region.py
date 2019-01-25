@@ -42,14 +42,14 @@ def text(region_string: str) -> List[Region]:
 def textfile(filename: str, verbose: int = 0) -> Dict[ItemNum, Dict[Condition, Item]]:
     """
     A parser for a region text file, with regions separated by ``/`` and lines
-    within an item separated by ``\n``. ``\n`` is ignored in counting the length
+    within an item separated by ``\\n``. ``\\n`` is ignored in counting the length
     of a region.
 
     Each line should contain one Item, with the item number, followed by a space or
-    tab (``\t``), the item condition, another space or tab, and the region string.
+    tab (``\\t``), the item condition, another space or tab, and the region string.
 
-    For example: ``1    2   This is item one /condition two.\n/There are two
-    lines /and four regions.
+    For example: ``1    2   This is item one /condition two.\\n/There are two
+    lines /and four regions.``
     """
     if verbose > 0:
         print('\nParsing region text file: %s' % filename)
