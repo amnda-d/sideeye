@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 from codecs import open
 
-VERSION = '1.0.0a7'
+VERSION = '1.0.0a8'
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -42,7 +42,7 @@ setup(
     include_package_data=True,
 
     extras_require={
-        'test': ['nose2'],
+        'test': ['nose2', 'pylint'],
         'dev': ['nose2', 'pylint']
     },
 

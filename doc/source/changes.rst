@@ -1,6 +1,13 @@
 Version History
 ===============
 
+`1.0.0a8 <https://pypi.org/project/sideeye/1.0.0a7/>`_
+------------------------------------------------------
+- Added textfile region parser
+- Added mypy type annotations
+- Fixed go-back-time-region measure bug
+- Added length to Region class
+
 `1.0.0a7 <https://pypi.org/project/sideeye/1.0.0a7/>`_
 ------------------------------------------------------
 - Added wide output format and changed default output format to wide.
