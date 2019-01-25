@@ -14,11 +14,11 @@ with such.A('Other Region Measures') as it:
         ]
         it.item_x = Item(1, 1, it.regions_x)
         it.fixations_x = [
-            Fixation(Point(0, 0), 0, 100, it.regions_x[0]),
-            Fixation(Point(3, 0), 100, 200, it.regions_x[0]),
-            Fixation(Point(22, 0), 200, 300, it.regions_x[2]),
-            Fixation(Point(22, 0), 300, 300, it.regions_x[2], excluded=True),
-            Fixation(Point(12, 0), 300, 400, it.regions_x[1])
+            Fixation(Point(0, 0), 0, 100, 0, it.regions_x[0]),
+            Fixation(Point(3, 0), 100, 200, 1, it.regions_x[0]),
+            Fixation(Point(22, 0), 200, 300, 2, it.regions_x[2]),
+            Fixation(Point(22, 0), 300, 300, 3, it.regions_x[2], excluded=True),
+            Fixation(Point(12, 0), 300, 400, 4, it.regions_x[1])
         ]
         it.trial_x = Trial(1, 400, it.item_x, it.fixations_x)
 
@@ -32,11 +32,11 @@ with such.A('Other Region Measures') as it:
         ]
         it.item_y = Item(2, 1, it.regions_y)
         it.fixations_y = [
-            Fixation(Point(12, 0), 0, 100, it.regions_y[1]),
-            Fixation(Point(12, 1), 100, 200, it.regions_y[3]),
-            Fixation(Point(12, 1), 200, 200, it.regions_y[3], excluded=True),
-            Fixation(Point(15, 1), 200, 300, it.regions_y[3]),
-            Fixation(Point(8, 0), 300, 400, it.regions_y[0])
+            Fixation(Point(12, 0), 0, 100, 0, it.regions_y[1]),
+            Fixation(Point(12, 1), 100, 200, 1, it.regions_y[3]),
+            Fixation(Point(12, 1), 200, 200, 2, it.regions_y[3], excluded=True),
+            Fixation(Point(15, 1), 200, 300, 3, it.regions_y[3]),
+            Fixation(Point(8, 0), 300, 400, 4, it.regions_y[0])
         ]
         it.trial_y = Trial(1, 400, it.item_y, it.fixations_y)
 

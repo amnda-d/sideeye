@@ -14,18 +14,18 @@ with such.A('Boolean Region Measures') as it:
         ]
         it.item_x = Item(1, 1, it.regions_x)
         it.fixations_x = [
-            Fixation(Point(0, 0), 0, 100, it.regions_x[0]),
-            Fixation(Point(3, 0), 100, 200, it.regions_x[0]),
-            Fixation(Point(22, 0), 200, 300, it.regions_x[2]),
-            Fixation(Point(12, 0), 300, 400, it.regions_x[1])
+            Fixation(Point(0, 0), 0, 100, 0, it.regions_x[0]),
+            Fixation(Point(3, 0), 100, 200, 1, it.regions_x[0]),
+            Fixation(Point(22, 0), 200, 300, 2, it.regions_x[2]),
+            Fixation(Point(12, 0), 300, 400, 3, it.regions_x[1])
         ]
         it.trial_x = Trial(1, 400, it.item_x, it.fixations_x)
 
         it.excluded_fix = [
-            Fixation(Point(1, 0), 0, 100, it.regions_x[0], excluded=False),
-            Fixation(Point(22, 0), 110, 150, it.regions_x[2], excluded=True),
-            Fixation(Point(13, 0), 200, 250, it.regions_x[1], excluded=False),
-            Fixation(Point(1, 0), 300, 350, it.regions_x[0], excluded=True)
+            Fixation(Point(1, 0), 0, 100, 4, it.regions_x[0], excluded=False),
+            Fixation(Point(22, 0), 110, 150, 5, it.regions_x[2], excluded=True),
+            Fixation(Point(13, 0), 200, 250, 6, it.regions_x[1], excluded=False),
+            Fixation(Point(1, 0), 300, 350, 7, it.regions_x[0], excluded=True)
         ]
 
         it.excluded_trial = Trial(1, 350, it.item_x, it.excluded_fix)
@@ -40,10 +40,10 @@ with such.A('Boolean Region Measures') as it:
         ]
         it.item_y = Item(2, 1, it.regions_y)
         it.fixations_y = [
-            Fixation(Point(12, 0), 0, 100, it.regions_y[1]),
-            Fixation(Point(12, 1), 100, 200, it.regions_y[3]),
-            Fixation(Point(15, 1), 200, 300, it.regions_y[3]),
-            Fixation(Point(8, 0), 300, 400, it.regions_y[0])
+            Fixation(Point(12, 0), 0, 100, 0, it.regions_y[1]),
+            Fixation(Point(12, 1), 100, 200, 1, it.regions_y[3]),
+            Fixation(Point(15, 1), 200, 300, 2, it.regions_y[3]),
+            Fixation(Point(8, 0), 300, 400, 3, it.regions_y[0])
         ]
         it.trial_y = Trial(1, 400, it.item_y, it.fixations_y)
 

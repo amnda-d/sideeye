@@ -14,19 +14,25 @@ lint:
 build: clean
 	pip install -e .[test]
 
-test: build
-	make lint
-	cd tests
+test:
 	nose2 -c tests/nose2.cfg -v --layer-reporter
-	cd ..
-	make clean
+	@make clean
+
+typecheck:
+	mypy .
+
+testall: build lint typecheck test
 
 help:
-	@echo "		clean"
-	@echo "		  Remove python artifacts."
-	@echo "		lint"
-	@echo "		  Check style with pylint."
-	@echo "		test"
-	@echo "		  Run nose2 tests"
-	@echo "		build"
-	@echo "		  Clean artifacts and rebuild package"
+	@echo "  clean"
+	@echo "    Remove python artifacts."
+	@echo "  lint"
+	@echo "    Check style with pylint."
+	@echo "  test"
+	@echo "    Run nose2 tests."
+	@echo "  build"
+	@echo "    Clean artifacts and rebuild package."
+	@echo "  typecheck"
+	@echo "    Typecheck with mypy."
+	@echo "  testall"
+	@echo "    Build, lint, typecheck, and run tests"

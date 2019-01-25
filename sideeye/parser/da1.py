@@ -2,24 +2,25 @@
 A file parser for DA1 data files.
 """
 import os
-
-from ..data import Point, Fixation, Trial, Experiment
+from typing import List, Dict
+from ..data import Point, Fixation, Trial, Experiment, Item
+from ..types import ItemNum, Condition
 
 def parse_timdrop(
-        filename,
-        items,
-        min_cutoff=-1,
-        max_cutoff=-1,
-        include_fixation=False,
-        include_saccades=False,
-        verbose=0
-    ):
+        filename: str,
+        items: Dict[ItemNum, Dict[Condition, Item]],
+        min_cutoff: int = -1,
+        max_cutoff: int = -1,
+        include_fixation: bool = False,
+        include_saccades: bool = False,
+        verbose: int = 0
+    ) -> Experiment:
     """
     Parses timdrop-formatted DA1 files into sideeye Experiment objects.
 
     Args:
         filename (str): DA1 file.
-        items (List[Item]): List of items in the experiment.
+        items (Dict[ItemNum, Dict[Condition, Item]]): List of items in the experiment.
         min_cutoff (int): Cutoff for minimum fixation duration. Use -1 for no cutoff.
         max_cutoff (int): Cutoff for maximum fixation duration. Use -1 for no cutoff.
         include_fixation (bool): Whether excluded fixations should be included in saccades.
@@ -45,20 +46,20 @@ def parse_timdrop(
     )
 
 def parse_robodoc(
-        filename,
-        items,
-        min_cutoff=-1,
-        max_cutoff=-1,
-        include_fixation=False,
-        include_saccades=False,
-        verbose=0
-    ):
+        filename: str,
+        items: Dict[ItemNum, Dict[Condition, Item]],
+        min_cutoff: int = -1,
+        max_cutoff: int = -1,
+        include_fixation: bool = False,
+        include_saccades: bool = False,
+        verbose: int = 0
+    ) -> Experiment:
     """
     Parses robodoc-formatted DA1 files into sideeye Experiment objects.
 
     Args:
         filename (str): DA1 file.
-        items (List[Item]): List of items in the experiment.
+        items (Dict[ItemNum, Dict[Condition, Item]]): List of items in the experiment.
         min_cutoff (int): Cutoff for minimum fixation duration. Use -1 for no cutoff.
         max_cutoff (int): Cutoff for maximum fixation duration. Use -1 for no cutoff.
         include_fixation (bool): Whether excluded fixations should be included in saccades.
@@ -83,7 +84,7 @@ def parse_robodoc(
         verbose=verbose
     )
 
-def validate(filename, fixations_first_col, da1_type=None):
+def validate(filename: str, fixations_first_col: int, da1_type: str = None):
     """Checks if a file is in DA1 format."""
     if filename[-4:].lower() != '.da1':
         raise ValueError('%s Failed validation: Not a DA1 file' % filename)
@@ -95,26 +96,26 @@ def validate(filename, fixations_first_col, da1_type=None):
             raise ValueError('%s Failed validation: Not a robodoc DA1 file' % filename)
 
 def parse(
-        filename,
-        items,
-        index_col,
-        number_col,
-        condition_col,
-        time_col,
-        fixations_first_col,
-        min_cutoff,
-        max_cutoff,
-        include_fixation,
-        include_saccades,
-        da1_type=None,
-        verbose=0
-    ):
+        filename: str,
+        items: Dict[ItemNum, Dict[Condition, Item]],
+        index_col: int,
+        number_col: int,
+        condition_col: int,
+        time_col: int,
+        fixations_first_col: int,
+        min_cutoff: int,
+        max_cutoff: int,
+        include_fixation: bool,
+        include_saccades: bool,
+        da1_type: str = None,
+        verbose: int = 0
+    ) -> Experiment:
     """
     Parses DA1-like files into sideeye Experiment objects, given column positions.
 
     Args:
         filename (str): DA1 file.
-        items (List[Item]): List of items in the experiment.
+        items (Dict[ItemNum, Dict[Condition, Item]]): List of items in the experiment.
         index_col (int): Trial index column position.
         number_col (int): Item number column position.
         condition_col (int): Item condition column position.
@@ -143,15 +144,20 @@ def parse(
             start = line[pos + 2]
             end = line[pos + 3]
             if (end - start) > min_cutoff and (max_cutoff < 0 or (end - start) < max_cutoff):
-                fixations += [
-                    Fixation(Point(x_pos, y_pos), start, end, item.find_region(x_pos, y_pos))
-                ]
+                fixations += [Fixation(
+                    Point(x_pos, y_pos),
+                    start,
+                    end,
+                    len(fixations),
+                    item.find_region(x_pos, y_pos)
+                )]
             else:
                 fixations += [
                     Fixation(
                         Point(x_pos, y_pos),
                         start,
                         end,
+                        len(fixations),
                         item.find_region(x_pos, y_pos),
                         excluded=True
                     )
@@ -160,9 +166,9 @@ def parse(
         return fixations
 
     with open(filename) as da1_file:
-        trials = []
-        for line in da1_file:
-            line = [int(x) for x in line.split()]
+        trials: List[Trial] = []
+        for da1_line in da1_file:
+            line: List[int] = [int(x) for x in da1_line.split()]
             number = line[number_col]
             condition = line[condition_col]
             if verbose == 2 or verbose >= 5:

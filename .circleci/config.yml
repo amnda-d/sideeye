@@ -9,7 +9,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "setup.py" }}
+            - v1-dependencies-{{ checksum "setup.py" }}
       - run:
           name: install dependencies
           command: |
@@ -24,8 +24,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            cd tests
-            nose2 -c tests/nose2.cfg -v --layer-reporter
+            make testall
   deploy:
     docker:
       - image: circleci/python:3.6.1
@@ -35,7 +34,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "setup.py" }}
+            - v1-dependencies-{{ checksum "setup.py" }}
       - run:
           name: init .pypirc
           command: |

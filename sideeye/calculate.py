@@ -7,17 +7,23 @@ or measures on each trial or region of the experiments.
 
 import json
 import os
+from typing import List
 from . import measures
 from .output import generate_all_output, generate_all_output_wide_format
+from .types import Config
+from .data import Experiment
 
-DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'default_config.json')
+DEFAULT_CONFIG: str = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    'default_config.json'
+)
 
-def load_config(config_file):
+def load_config(config_file: str) -> Config:
     """Load a JSON config file into a dictionary."""
     with open(config_file) as cfg:
         return json.load(cfg)
 
-def calculate_measure(experiments, measure, verbose=0):
+def calculate_measure(experiments: List[Experiment], measure: str, verbose: int = 0):
     """
     Given an array of experiments and the name of a measure, calculate the measure for
     every trial in the experiment.
@@ -45,15 +51,15 @@ def calculate_measure(experiments, measure, verbose=0):
                 if verbose >= 4:
                     print('\t...for trial: %s' % trial.index)
                 for region in trial.item.regions:
-                    if not trial.region_measures[region.number][measure]:
+                    if region.number is not None and not trial.region_measures[region.number][measure]:
                         getattr(measures.region, measure)(trial, region.number)
     else:
         raise ValueError('Measure "%s" does not exist.' % measure)
 
 def calculate_all_measures(
-        experiments,
-        output_file=None,
-        config_file=DEFAULT_CONFIG
+        experiments: List[Experiment],
+        output_file: str = None,
+        config_file: str = DEFAULT_CONFIG
     ):
     """
     Given an array of experiments and config file, calculate all measures specified in the

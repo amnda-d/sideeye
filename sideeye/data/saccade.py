@@ -5,6 +5,8 @@ If the location of the end Fixation is earlier in the Item the location of the
 start Fixation, the Saccade is a regression.
 """
 
+from .fixation import Fixation
+
 class Saccade:
     """
     Represents a saccade as the time in milliseconds between two fixations.
@@ -16,20 +18,20 @@ class Saccade:
         end (Fixation): The fixation after the saccade.
     """
 
-    def __init__(self, duration, regression, start, end):
+    def __init__(self, duration: int, regression: bool, start: Fixation, end: Fixation):
         if duration < 0:
             raise ValueError('Duration of saccade must be positive.')
 
-        self.duration = duration
-        self.regression = regression
-        self.start = start
-        self.end = end
+        self.duration: int = duration
+        self.regression: bool = regression
+        self.start: Fixation = start
+        self.end: Fixation = end
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Check if two Saccades are equivalent"""
         return self.__dict__ == other.__dict__
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Convert Saccade into a string."""
         return (
             '(duration: ' + str(self.duration) +

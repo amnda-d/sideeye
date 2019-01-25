@@ -3,8 +3,10 @@ Region-based eye tracking measures with fixation count or position output.
 """
 
 from ..helpers import get_fp_fixations, region_exists, save_measure
+from ...data import Trial
+from ...types import RegionMeasure
 
-def landing_position(trial, region_number):
+def landing_position(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The location relative to the beginning of the region (in
     number of characters) of the first fixation during the first pass, where the
@@ -38,9 +40,15 @@ def landing_position(trial, region_number):
         )
         fixation = fp_fixations[0]
 
-    return save_measure(trial, region, 'landing_position', landing_pos, fixation)
+    return save_measure(
+        trial,
+        region,
+        'landing_position',
+        landing_pos,
+        [fixation] if fixation else None
+    )
 
-def launch_site(trial, region_number):
+def launch_site(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The location of the last fixation prior to the first fixation
     in the region. This measure returns an (x, y) tuple, where x is either the
@@ -82,9 +90,9 @@ def launch_site(trial, region_number):
     trial_fixations = [fix for fix in trial.fixations if not fix.excluded]
 
     for (idx, fixation) in enumerate(trial_fixations):
-        if fixation.region.number > region_number:
+        if fixation.region.number is not None and fixation.region.number > region_number:
             break
-        if fixation.region.number == region_number:
+        if fixation.region.number is not None and fixation.region.number == region_number:
             if idx == 0:
                 break
             if trial_fixations[idx - 1].char is None:
@@ -99,9 +107,15 @@ def launch_site(trial, region_number):
             fixation = trial_fixations[idx - 1]
             break
 
-    return save_measure(trial, region, 'launch_site', launch, fixation)
+    return save_measure(
+        trial,
+        region,
+        'launch_site',
+        launch,
+        [fixation] if fixation else None
+    )
 
-def first_pass_fixation_count(trial, region_number):
+def first_pass_fixation_count(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The number of fixations made in a region before leaving it during first pass.
     If the region was skipped this measure is None.

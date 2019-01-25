@@ -4,6 +4,9 @@ points in the text of the Item. A region also has a label, number, and optionall
 the text contained in the region.
 """
 
+from typing import Union, Optional
+from .point import Point
+
 class Region:
     """
     Represents a Region as x and y coordinates for character positions of the
@@ -12,39 +15,47 @@ class Region:
     Attributes:
         start (Point): The character and line position of the beginning of the Region.
         end (Point): The character and line position of the end of the Region.
-        length (number, optional): Length of region in characters.
-        text (str, optional): Text contained in the region.
-        label (str, optional): A label for the region.
-        number (int, optional): A number identifier for the region.
+        length (Optional[int]): Length of region in characters.
+        text (Optional[str]): Text contained in the region.
+        label (Optional[Union[str, int]]): A label for the region.
+        number (Optional[int]): A number identifier for the region.
 
     Args:
         start (Point): The character and line position of the beginning of the Region.
         end (Point): The character and line position of the end of the Region.
-        length (number, optional): Length of region in characters.
-        text (str, optional): Text contained in the region.
-        label (str, optional): A label for the region.
-        number (int, optional): A number identifier for the region.
+        length (Optional[int]): Length of region in characters.
+        text (Optional[str]): Text contained in the region.
+        label (Optional[Union[str, int]]): A label for the region.
+        number (Optional[int]): A number identifier for the region.
     """
 
-    def __init__(self, start, end, length=None, text="", label='undefined', number=None):
+    def __init__(
+            self,
+            start: Point,
+            end: Point,
+            length: int = None,
+            text: str = "",
+            label: Union[str, int] = 'undefined',
+            number: int = None
+        ):
         if start > end:
             raise ValueError('End of region must be after start of region.')
         if start.x < 0 or start.y < 0 or end.x < 0 or end.y < 0:
             raise ValueError('Region cannot have negative start and end.')
-        if length is not None and length < 0:
+        if length and length < 0:
             raise ValueError('Region must have positive length.')
 
-        self.start = start
-        self.end = end
-        self.length = length
-        self.label = label
-        self.text = text
-        self.number = number
+        self.start: Point = start
+        self.end: Point = end
+        self.length: Optional[int] = length
+        self.label: Union[str, int] = label
+        self.text: str = text
+        self.number: Optional[int] = number
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.__dict__ == other.__dict__
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             '(start: ' + str(self.start) +
             ', end: ' + str(self.end) +

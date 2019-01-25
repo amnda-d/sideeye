@@ -1,6 +1,5 @@
 import os
 from setuptools import setup, find_packages
-from setuptools.command.install import install
 from codecs import open
 
 VERSION = '1.0.0a7'
@@ -37,6 +36,8 @@ setup(
     python_requires='>=3.5',
 
     packages=find_packages(exclude=['doc', 'tests']),
+
+    install_requires=['typing', 'mypy', 'mypy_extensions'],
 
     include_package_data=True,
 

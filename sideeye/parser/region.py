@@ -2,10 +2,11 @@
 A file parser for region data files.
 """
 from collections import defaultdict
-
+from typing import List, Dict, DefaultDict
 from ..data import Point, Region, Item
+from ..types import ItemNum, Condition
 
-def text(string):
+def text(region_string: str) -> List[Region]:
     """
     A parser for region strings, with regions separated by ``/``.
 
@@ -14,10 +15,10 @@ def text(string):
     Multi-line Example: ``This is region 1/ This is region 2/ This is``\n
                         ``region 3/ This is region 4.``
     """
-    if not isinstance(string, str):
+    if not isinstance(region_string, str):
         raise ValueError('Not a region string.')
-    string = string.rstrip('\n').split('/')
-    regions = []
+    string = region_string.rstrip('\n').split('/')
+    regions: List[Region] = []
     line = 0
     char = 0
     for region in string:
@@ -38,7 +39,7 @@ def text(string):
         ]
     return regions
 
-def textfile(filename, verbose=0):
+def textfile(filename: str, verbose: int = 0) -> Dict[ItemNum, Dict[Condition, Item]]:
     """
     A parser for a region text file, with regions separated by ``/`` and lines
     within an item separated by ``\n``. ``\n`` is ignored in counting the length
@@ -57,9 +58,9 @@ def textfile(filename, verbose=0):
         raise ValueError('%s Failed validation: Not a region file' % filename)
 
     with open(filename, 'r') as region_file:
-        items = defaultdict(lambda: defaultdict(bool))
-        for line in region_file:
-            line = line.split(maxsplit=2)
+        items: DefaultDict[ItemNum, Dict[Condition, Item]] = defaultdict(dict)
+        for region_line in region_file:
+            line = region_line.split(maxsplit=2)
             number = int(line[0])
             condition = int(line[1])
             if verbose == 2 or verbose >= 5:
@@ -71,19 +72,19 @@ def textfile(filename, verbose=0):
             )
         return items
 
-def validate_region_file(filename):
+def validate_region_file(filename: str):
     """Checks if a file is a region file."""
     if filename[-4:].lower() != '.cnt' and filename[-4:].lower() != '.reg':
         raise ValueError('%s Failed validation: Not a region file' % filename)
 
 def file(
-        filename,
-        number_location,
-        condition_location,
-        boundaries_start=3,
-        includes_y=False,
-        verbose=0
-    ):
+        filename: str,
+        number_location: int,
+        condition_location: int,
+        boundaries_start: int = 3,
+        includes_y: bool = False,
+        verbose: int = 0
+    ) -> Dict[ItemNum, Dict[Condition, Item]]:
     """
     Parses a .reg or .cnt file into a dictionary of sideeye Item objects.
 
@@ -117,9 +118,9 @@ def file(
         return regions
 
     with open(filename, 'r') as region_file:
-        items = defaultdict(lambda: defaultdict(bool))
-        for line in region_file:
-            line = [int(x) for x in line.split()]
+        items: DefaultDict[ItemNum, Dict[Condition, Item]] = defaultdict(dict)
+        for region_line in region_file:
+            line = [int(x) for x in region_line.split()]
             condition = line[condition_location]
             number = line[number_location]
             if verbose == 2 or verbose >= 5:

@@ -2,9 +2,12 @@
 Region-based eye tracking measures with duration(ms) output.
 """
 
+from typing import List
 from ..helpers import get_fp_fixations, region_exists, save_measure
+from ...data import Trial, Fixation
+from ...types import RegionMeasure
 
-def first_fixation_duration(trial, region_number):
+def first_fixation_duration(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The duration of the first fixation in a region during first pass reading
     (i.e., before the reader fixates areas beyond the region).
@@ -33,7 +36,7 @@ def first_fixation_duration(trial, region_number):
         [fp_fixations[0]]
     )
 
-def single_fixation_duration(trial, region_number):
+def single_fixation_duration(trial: Trial, region_number: int) -> RegionMeasure:
     """
     If there is only one fixation on the region during first pass reading, this
     measure is the duration of that fixation. If the region is skipped during
@@ -62,7 +65,7 @@ def single_fixation_duration(trial, region_number):
         )
     return save_measure(trial, region, 'single_fixation_duration', None, None)
 
-def first_pass(trial, region_number):
+def first_pass(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The summed duration of all fixations in a region
     during first pass (i.e., before the reader fixates areas beyond the region).
@@ -95,7 +98,7 @@ def first_pass(trial, region_number):
 
     return save_measure(trial, region, 'first_pass', total, fp_fixations)
 
-def go_past(trial, region_number):
+def go_past(trial: Trial, region_number: int) -> RegionMeasure:
     """
     Also known as regression path duration. The summed duration of all fixations
     starting from the first fixation in the region, including any fixations in
@@ -125,11 +128,11 @@ def go_past(trial, region_number):
     if len(get_fp_fixations(trial, region_number)) is 0:
         return save_measure(trial, region, 'go_past', None, None)
 
-    gp_fixations = []
+    gp_fixations: List[Fixation] = []
     total = 0
     for fixation in trial.fixations:
         if not fixation.excluded:
-            if fixation.region.number > region_number:
+            if fixation.region.number and fixation.region.number > region_number:
                 break
             if total is not 0 or fixation.region.number is region_number:
                 gp_fixations += [fixation]
@@ -137,7 +140,7 @@ def go_past(trial, region_number):
 
     return save_measure(trial, region, 'go_past', total, gp_fixations)
 
-def total_time(trial, region_number):
+def total_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The summed duration of all fixations in the region that
     occur at any time during the trial. If this region is never fixated this
@@ -156,7 +159,7 @@ def total_time(trial, region_number):
     """
     region = region_exists(trial, region_number)
 
-    region_fixations = []
+    region_fixations: List[Fixation] = []
     total = 0
     for fixation in trial.fixations:
         if fixation.region.number is region_number and not fixation.excluded:
@@ -165,7 +168,7 @@ def total_time(trial, region_number):
 
     return save_measure(trial, region, 'total_time', total, region_fixations)
 
-def right_bounded_time(trial, region_number):
+def right_bounded_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The summed duration of all fixations starting
     from the first fixation in the region, excluding any fixations in prior
@@ -195,11 +198,11 @@ def right_bounded_time(trial, region_number):
     if len(get_fp_fixations(trial, region_number)) is 0:
         return save_measure(trial, region, 'right_bounded_time', None, None)
 
-    rb_fixations = []
+    rb_fixations: List[Fixation] = []
     total = 0
     for fixation in trial.fixations:
         if not fixation.excluded:
-            if fixation.region.number > region_number:
+            if fixation.region.number is not None and fixation.region.number > region_number:
                 break
             if fixation.region.number is region_number:
                 rb_fixations += [fixation]
@@ -207,7 +210,7 @@ def right_bounded_time(trial, region_number):
 
     return save_measure(trial, region, 'right_bounded_time', total, rb_fixations)
 
-def reread_time(trial, region_number):
+def reread_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The summed duration of all fixations in the region that occur after a region
     to the right has been fixated. If this region is never fixated this measure is 0.
@@ -229,20 +232,23 @@ def reread_time(trial, region_number):
     """
     region = region_exists(trial, region_number)
 
-    rr_fixations = []
+    rr_fixations: List[Fixation] = []
     total = 0
     reread = False
     for fixation in trial.fixations:
         if not fixation.excluded:
-            if fixation.region.number > region_number:
+            if fixation.region.number is not None and fixation.region.number > region_number:
                 reread = True
-            if reread and fixation.region.number is region_number:
+            if (
+                    reread and fixation.region.number is not None
+                    and fixation.region.number is region_number
+                ):
                 rr_fixations += [fixation]
                 total += fixation.duration
 
     return save_measure(trial, region, 'reread_time', total, rr_fixations)
 
-def second_pass(trial, region_number):
+def second_pass(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The summed duration of all fixations in the region that occur on a region
     after that region has been exited in either direction for the first time.
@@ -268,7 +274,7 @@ def second_pass(trial, region_number):
     """
     region = region_exists(trial, region_number)
 
-    sp_fixations = []
+    sp_fixations: List[Fixation] = []
     total = 0
     f_pass = False
     exited = False
@@ -284,7 +290,7 @@ def second_pass(trial, region_number):
 
     return save_measure(trial, region, 'second_pass', total, sp_fixations)
 
-def spillover_time(trial, region_number):
+def spillover_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The duration of fixations on the region immediately following
     the region of interest, where the previous fixation was on the region of interest.
@@ -312,7 +318,7 @@ def spillover_time(trial, region_number):
     """
     region = region_exists(trial, region_number)
 
-    so_fixations = []
+    so_fixations: List[Fixation] = []
     total = 0
     visited_region = False
     for fixation in trial.fixations:
@@ -329,7 +335,7 @@ def spillover_time(trial, region_number):
         return save_measure(trial, region, 'spillover_time', None, None)
     return save_measure(trial, region, 'spillover_time', total, so_fixations)
 
-def refixation_time(trial, region_number):
+def refixation_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
     The sum of all first-pass fixations excluding the first
     fixation. If there was a single fixation in the region or it was skipped
@@ -362,7 +368,7 @@ def refixation_time(trial, region_number):
 
     return save_measure(trial, region, 'refixation_time', total, fp_fixations[1:])
 
-def go_back_time_char(trial, region_number):
+def go_back_time_char(trial: Trial, region_number: int) -> RegionMeasure:
     """
     Go-back time is the time (in ms) until the first regression is made after encountering a region.
     For the purposes of go-back time, any fixation which lands to the left of the preceding fixation
@@ -390,13 +396,18 @@ def go_back_time_char(trial, region_number):
             start_fix = [
                 fix for fix in trial.fixations
                 if not fix.excluded
+                and fix.region.number is not None
                 and fix.region.number < region_number
             ][0]
             for idx in range(1, len(trial.fixations) - 1):
-                if not trial.fixations[idx].excluded:
-                    if trial.fixations[idx].region.number > region_number:
+                curr_fix = trial.fixations[idx]
+                if not curr_fix.excluded:
+                    if (
+                            curr_fix.region.number is not None
+                            and curr_fix.region.number > region_number
+                        ):
                         break
-                    start_fix = trial.fixations[idx]
+                    start_fix = curr_fix
             go_back_start = start_fix.end
         except IndexError:
             pass
@@ -422,7 +433,7 @@ def go_back_time_char(trial, region_number):
     return save_measure(trial, region, 'go_back_time_char', None, None)
 
 
-def go_back_time_region(trial, region_number):
+def go_back_time_region(trial: Trial, region_number: int) -> RegionMeasure:
     """
     Go-back time is the time (in ms) until the first regression is made after encountering a region.
     For the purposes of go-back time, any fixation which lands to the left of the preceding fixation
@@ -450,13 +461,18 @@ def go_back_time_region(trial, region_number):
             start_fix = [
                 fix for fix in trial.fixations
                 if not fix.excluded
+                and fix.region.number is not None
                 and fix.region.number < region_number
             ][0]
             for idx in range(1, len(trial.fixations) - 1):
-                if not trial.fixations[idx].excluded:
-                    if trial.fixations[idx].region.number > region_number:
+                curr_fix = trial.fixations[idx]
+                if not curr_fix.excluded:
+                    if (
+                            curr_fix.region.number is not None
+                            and curr_fix.region.number > region_number
+                        ):
                         break
-                    start_fix = trial.fixations[idx]
+                    start_fix = curr_fix
             go_back_start = start_fix.end
         except IndexError:
             pass
@@ -467,7 +483,11 @@ def go_back_time_region(trial, region_number):
         for idx in range(start_fix.index + 1, len(trial.fixations) - 1):
             curr_fix = trial.fixations[idx]
             if not curr_fix.excluded:
-                if curr_fix.region.number < prev_fix.region.number:
+                if (
+                        curr_fix.region.number is not None
+                        and prev_fix.region.number is not None
+                        and curr_fix.region.number < prev_fix.region.number
+                    ):
                     go_back_end = prev_fix.end
                     break
                 prev_fix = curr_fix

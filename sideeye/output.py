@@ -5,17 +5,30 @@ for experiments.
 
 import json
 import os
+from typing import Any, List, Dict, Optional
+from .types import Config
+from .data import Experiment, Trial, Region
 
-DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'default_config.json')
+DEFAULT_CONFIG: str = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    'default_config.json'
+)
 
-def load_config(config_file):
+def load_config(config_file: str) -> Config:
     """Loads a JSON config file into a dictionary."""
     with open(config_file) as cfg:
         return json.load(cfg)
 
-def write_column(column, experiment, trial, region, measure, cutoff):
+def write_column(
+        column: str,
+        experiment: Experiment,
+        trial: Trial,
+        region: Optional[Region],
+        measure: str,
+        cutoff: int
+    ) -> str:
     """Maps a column name to an output value."""
-    output = 'NA'
+    output: Any = 'NA'
     if column == 'experiment_name':
         output = experiment.name
     elif column == 'filename':
@@ -48,32 +61,32 @@ def write_column(column, experiment, trial, region, measure, cutoff):
     elif column == 'measure':
         output = measure
     elif column == 'value':
-        if region is not None:
+        if region is not None and region.number is not None:
             output = trial.region_measures[region.number][measure]['value']
         else:
             output = trial.trial_measures[measure]
         if cutoff >= 0 and isinstance(output, int) and output > cutoff:
             output = 'CUTOFF'
-    else:
-        try:
-            output = trial.region_measures[region.number][measure]['value']
-        except KeyError:
-            output = trial.trial_measures[measure]
-        if cutoff >= 0 and isinstance(output, int) and output > cutoff:
-            output = 'CUTOFF'
     return str(output)
 
-def measure_output(measure, cutoff, columns, experiment, trial, region):
+def measure_output(
+        measure: str,
+        cutoff: int,
+        columns: Dict[str, Dict],
+        experiment: Experiment,
+        trial: Trial,
+        region: Optional[Region]
+    ) -> str:
     """
     Generates a formatted output string for an individual measure.
 
     Args:
         measure (str): Name of measure.
         cutoff (int): Cutoff value for measure. Use -1 for no cutoff.
-        columns (List[str]): List of columns to output.
+        columns (Dict[str, Dict]): Dict of columns to output.
         experiment (Experiment): Experiment to generate output string for.
         trial (Trial): Trial to generate output for.
-        region (Region): Region to generate output for.
+        region (Optional[Region]): Region to generate output for.
     """
     return ','.join(
         map(lambda column: write_column(
@@ -81,7 +94,7 @@ def measure_output(measure, cutoff, columns, experiment, trial, region):
         ), list(columns.keys()))
     ) + '\n'
 
-def generate_region_output(experiments, config_file=DEFAULT_CONFIG):
+def generate_region_output(experiments: List[Experiment], config_file: str = DEFAULT_CONFIG) -> str:
     """
     Generates a string in csv format of a list of experiments' region measures
     using columns specified in config file.
@@ -105,7 +118,7 @@ def generate_region_output(experiments, config_file=DEFAULT_CONFIG):
     return output
 
 
-def generate_trial_output(experiments, config_file=DEFAULT_CONFIG):
+def generate_trial_output(experiments: List[Experiment], config_file: str = DEFAULT_CONFIG) -> str:
     """
     Generates a string in csv format of list of experiments' trial measures using columns and
     measures specified in config file.
@@ -125,7 +138,7 @@ def generate_trial_output(experiments, config_file=DEFAULT_CONFIG):
                 measure_output(measure, value['cutoff'], columns, experiment, trial, None)
     return output
 
-def generate_all_output(experiments, config_file=DEFAULT_CONFIG):
+def generate_all_output(experiments: List[Experiment], config_file: str = DEFAULT_CONFIG) -> str:
     """
     Generates a string in csv format of all measures specified in config file for a
     list of experiments.
@@ -163,7 +176,10 @@ def generate_all_output(experiments, config_file=DEFAULT_CONFIG):
                                              experiment, trial, region)
     return output
 
-def generate_all_output_wide_format(experiments, config_file=DEFAULT_CONFIG):
+def generate_all_output_wide_format(
+        experiments: List[Experiment],
+        config_file: str = DEFAULT_CONFIG
+) -> str:
     """
     Generates a string in csv format of all measures specified in config file for a
     list of experiments, with all measures as columns.

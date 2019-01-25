@@ -5,16 +5,22 @@ This module contains functions for parsing experiments.
 
 import json
 import os
+from typing import List
 from .. import parser
+from ..data import Experiment
+from ..types import Config
 
-DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../default_config.json')
+DEFAULT_CONFIG: str = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    '../default_config.json'
+)
 
-def load_config(config_file):
+def load_config(config_file: str) -> Config:
     """Load a JSON config file into a dictionary."""
     with open(config_file) as cfg:
         return json.load(cfg)
 
-def parse(da1_file, region_file, config_file=DEFAULT_CONFIG):
+def parse(da1_file: str, region_file: str, config_file: str = DEFAULT_CONFIG) -> Experiment:
     """
     Given a DA1 file and region file, and config file, parse an Experiment. If
     config is not provided, default config will be used.
@@ -58,7 +64,11 @@ def parse(da1_file, region_file, config_file=DEFAULT_CONFIG):
     )
     return experiment
 
-def parse_dir(da1_directory, region_file, config_file=DEFAULT_CONFIG):
+def parse_dir(
+        da1_directory: str,
+        region_file: str,
+        config_file: str = DEFAULT_CONFIG
+    ) -> List[Experiment]:
     """
     Given a directory of DA1 files, a region file, and config file, parse all DA1 files in
     the directory into Experiments. If config is not provided, default config will be used.
@@ -87,7 +97,7 @@ def parse_dir(da1_directory, region_file, config_file=DEFAULT_CONFIG):
             region_config['includes_y'],
             verbose=verbose
         )
-    experiments = []
+    experiments: List[Experiment] = []
     for da1 in da1s:
         if da1[-4:].lower() != '.da1':
             print('Skipping %s: not a DA1 file.' % da1)

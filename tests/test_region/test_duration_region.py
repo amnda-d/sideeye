@@ -14,23 +14,23 @@ with such.A('Duration Region Measures') as it:
         ]
         it.item_x = Item(1, 1, it.regions_x)
         it.fixations_x = [
-            Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
-            Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
-            Fixation(Point(22, 0), 200, 350, it.regions_x[2]),
-            Fixation(Point(24, 0), 350, 350, it.regions_x[2], excluded=True),
-            Fixation(Point(12, 0), 350, 400, it.regions_x[1]),
-            Fixation(Point(3, 0), 400, 550, it.regions_x[0]),
-            Fixation(Point(11, 0), 550, 600, it.regions_x[1])
+            Fixation(Point(0, 0), 0, 150, 0, it.regions_x[0]),
+            Fixation(Point(3, 0), 150, 200, 1, it.regions_x[0]),
+            Fixation(Point(22, 0), 200, 350, 2, it.regions_x[2]),
+            Fixation(Point(24, 0), 350, 350, 3, it.regions_x[2], excluded=True),
+            Fixation(Point(12, 0), 350, 400, 4, it.regions_x[1]),
+            Fixation(Point(3, 0), 400, 550, 5, it.regions_x[0]),
+            Fixation(Point(11, 0), 550, 600, 6, it.regions_x[1])
         ]
         it.trial_x = Trial(1, 600, it.item_x, it.fixations_x)
 
         it.fixations_x2 = [
-            Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
-            Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
-            Fixation(Point(22, 0), 200, 370, it.regions_x[2]),
-            Fixation(Point(24, 0), 370, 380, it.regions_x[2], excluded=True),
-            Fixation(Point(21, 0), 380, 400, it.regions_x[2]),
-            Fixation(Point(3, 0), 400, 550, it.regions_x[0])
+            Fixation(Point(0, 0), 0, 150, 0, it.regions_x[0]),
+            Fixation(Point(3, 0), 150, 200, 1, it.regions_x[0]),
+            Fixation(Point(22, 0), 200, 370, 2, it.regions_x[2]),
+            Fixation(Point(24, 0), 370, 380, 3, it.regions_x[2], excluded=True),
+            Fixation(Point(21, 0), 380, 400, 4, it.regions_x[2]),
+            Fixation(Point(3, 0), 400, 550, 5, it.regions_x[0])
         ]
         it.trial_x2 = Trial(1, 600, it.item_x, it.fixations_x2)
 
@@ -44,12 +44,12 @@ with such.A('Duration Region Measures') as it:
         ]
         it.item_y = Item(2, 1, it.regions_y)
         it.fixations_y = [
-            Fixation(Point(12, 0), 0, 100, it.regions_y[1]),
-            Fixation(Point(12, 1), 100, 150, it.regions_y[3]),
-            Fixation(Point(15, 1), 150, 350, it.regions_y[3]),
-            Fixation(Point(8, 0), 350, 400, it.regions_y[0]),
-            Fixation(Point(15, 1), 400, 600, it.regions_y[3]),
-            Fixation(Point(17, 1), 600, 700, it.regions_y[3])
+            Fixation(Point(12, 0), 0, 100, 0, it.regions_y[1]),
+            Fixation(Point(12, 1), 100, 150, 1, it.regions_y[3]),
+            Fixation(Point(15, 1), 150, 350, 2, it.regions_y[3]),
+            Fixation(Point(8, 0), 350, 400, 3, it.regions_y[0]),
+            Fixation(Point(15, 1), 400, 600, 4, it.regions_y[3]),
+            Fixation(Point(17, 1), 600, 700, 5, it.regions_y[3])
         ]
         it.trial_y = Trial(1, 400, it.item_y, it.fixations_y)
 
@@ -153,14 +153,14 @@ with such.A('Duration Region Measures') as it:
         @it.has_test_setup
         def setup_rb():
             it.right_bounded_fixations = [
-                Fixation(Point(0, 0), 0, 150, it.regions_x[0]),
-                Fixation(Point(3, 0), 150, 200, it.regions_x[0]),
-                Fixation(Point(14, 0), 200, 350, it.regions_x[1]),
-                Fixation(Point(12, 0), 350, 400, it.regions_x[1]),
-                Fixation(Point(3, 0), 400, 550, it.regions_x[0]),
-                Fixation(Point(11, 0), 550, 600, it.regions_x[1]),
-                Fixation(Point(21, 0), 650, 700, it.regions_x[2]),
-                Fixation(Point(11, 0), 750, 800, it.regions_x[1])
+                Fixation(Point(0, 0), 0, 150, 0, it.regions_x[0]),
+                Fixation(Point(3, 0), 150, 200, 1, it.regions_x[0]),
+                Fixation(Point(14, 0), 200, 350, 2, it.regions_x[1]),
+                Fixation(Point(12, 0), 350, 400, 3, it.regions_x[1]),
+                Fixation(Point(3, 0), 400, 550, 4, it.regions_x[0]),
+                Fixation(Point(11, 0), 550, 600, 5, it.regions_x[1]),
+                Fixation(Point(21, 0), 650, 700, 6, it.regions_x[2]),
+                Fixation(Point(11, 0), 750, 800, 7, it.regions_x[1])
             ]
             it.trial_right_bound = Trial(1, 600, it.item_x, it.right_bounded_fixations)
 

@@ -3,8 +3,9 @@ Trial-based eye-tracking measures. These measures are calculated for each trial 
 """
 
 from .helpers import save_trial_measure
+from ..data import Trial
 
-def location_first_regression(trial):
+def location_first_regression(trial: Trial):
     """
     (x, y) character position of the last fixation before the first regression saccade
     in the trial, where a regression is defined as a saccade where the position of
@@ -28,7 +29,7 @@ def location_first_regression(trial):
             )
     return save_trial_measure(trial, 'location_first_regression', None)
 
-def latency_first_regression(trial):
+def latency_first_regression(trial: Trial):
     """
     Time until the end of the fixation before the first regression saccade in the trial,
     where a regression is defined as a saccade where the position of the fixation at
@@ -49,7 +50,7 @@ def latency_first_regression(trial):
             return save_trial_measure(trial, 'latency_first_regression', saccade.start.end)
     return save_trial_measure(trial, 'latency_first_regression', None)
 
-def fixation_count(trial):
+def fixation_count(trial: Trial):
     """
     Total number of non-excluded fixations in a trial.
 
@@ -64,7 +65,7 @@ def fixation_count(trial):
         len([fix for fix in trial.fixations if not fix.excluded])
     )
 
-def percent_regressions(trial):
+def percent_regressions(trial: Trial):
     """
     Proportion of saccades that are regressions from the location of the previous fixation,
     where a regression is defined as a saccade where the position of the fixation at the
@@ -82,7 +83,7 @@ def percent_regressions(trial):
         return regressions / (length of [trial.saccades])
 
     """
-    regressions = 0
+    regressions = 0.0
 
     for saccade in trial.saccades:
         if saccade.regression:
@@ -92,7 +93,7 @@ def percent_regressions(trial):
         return save_trial_measure(trial, 'percent_regressions', None)
     return save_trial_measure(trial, 'percent_regressions', regressions/len(trial.saccades))
 
-def trial_total_time(trial):
+def trial_total_time(trial: Trial):
     """
     Total time in the trial.
 
@@ -109,7 +110,7 @@ def trial_total_time(trial):
         )
     return save_trial_measure(trial, 'trial_total_time', trial.time)
 
-def average_forward_saccade(trial):
+def average_forward_saccade(trial: Trial):
     """
     Average saccade duration between fixations moving forward through the sentence.
 
@@ -141,7 +142,7 @@ def average_forward_saccade(trial):
         return save_trial_measure(trial, 'average_forward_saccade', 0)
     return save_trial_measure(trial, 'average_forward_saccade', total/forward_saccades)
 
-def average_backward_saccade(trial):
+def average_backward_saccade(trial: Trial):
     """
     Average saccade duration between fixations moving backward through the sentence, or the
     average duration of a regression saccade.

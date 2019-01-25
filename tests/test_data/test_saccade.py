@@ -4,8 +4,8 @@ from sideeye import Point, Fixation, Saccade
 with such.A('Saccade') as it:
     @it.has_test_setup
     def setup():
-        it.fix1 = Fixation(Point(1, 2), 3, 4)
-        it.fix2 = Fixation(Point(1, 2), 5, 6)
+        it.fix1 = Fixation(Point(1, 2), 3, 4, 0, 'region')
+        it.fix2 = Fixation(Point(1, 2), 5, 6, 1, 'region')
 
     @it.should('only allow valid saccades')
     def test_saccade_validation():

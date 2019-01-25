@@ -6,49 +6,56 @@ occurred in, and whether or not it has been excluded by fixation cutoff
 parameters. If the x or y position of the fixation is -1, the fixation is excluded.
 """
 
+from .point import Point
+from .region import Region
+
 class Fixation:
     """
     Represents a single Fixation by location, start time, and end time.
 
     Attributes:
-        char (int or None): Character position of the fixation. None of position
+        char (Optional[int]): Character position of the fixation. None of position
                             is negative.
-        line (int or None): Line position of the fixation. None if position is
+        line (Optional[int]): Line position of the fixation. None if position is
                             negative.
         duration (int): Total time of Fixation (end - start) in milliseconds.
         start (int): Start time of Fixation in milliseconds since trial start.
         end (int): End time of Fixation in milliseconds since trial start.
-        region (Region): Region the Fixation occurred in.
         index (int): Index of where the Fixation occurred in a trial.
+        region (Region): Region the Fixation occurred in.
         excluded (bool): Whether or not the fixation will be excluded from calculations.
 
     Args:
         position (Point): The character and line position of the Fixation, zero-indexed.
         start (int): Start time for the Fixation, in milliseconds.
         end (int): End time for the Fixation, in milliseconds.
-        region (Region, optional): Region the Fixation occurs in, can be initially unassigned.
-        index (int, optional): An index of where the fixation occurred in a trial.
-        excluded (boolean, optional): Whether the fixation should be excluded from calculations.
+        index (int): An index of where the fixation occurred in a trial.
+        region (Region): Region the Fixation occurs in.
+        excluded (Optional[boolean]): Whether the fixation should be excluded from calculations.
     """
 
-    def __init__(self, position, start, end, region=None, index=None, excluded=False):
+    def __init__(
+            self,
+            position: Point,
+            start: int,
+            end: int,
+            index: int,
+            region: Region,
+            excluded: bool = False
+        ):
         if start > end or start < 0 or end < 0:
             raise ValueError('Invalid start or end time.')
 
-        if position.x < 0 or position.y < 0:
-            self.excluded = True
-        else:
-            self.excluded = excluded
+        self.excluded: bool = True if position.x < 0 or position.y < 0 else excluded
+        self.char: int = position.x
+        self.line: int = position.y
+        self.start: int = start
+        self.end: int = end
+        self.region: Region = region
+        self.duration: int = end - start
+        self.index: int = index
 
-        self.char = position.x
-        self.line = position.y
-        self.start = start
-        self.end = end
-        self.region = region
-        self.duration = end - start
-        self.index = index
-
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if self.region:
             return self.__dict__ == other.__dict__
         return (
@@ -60,7 +67,7 @@ class Fixation:
             and self.excluded == other.excluded
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             '(char: ' + str(self.char)
             + ', line: ' + str(self.line)
@@ -70,7 +77,7 @@ class Fixation:
             + ', excluded: ' + str(self.excluded) + ')'
         )
 
-    def assign_region(self, region):
+    def assign_region(self, region: Region):
         """
         Assign a Region object to the Fixation.
 

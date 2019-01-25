@@ -7,18 +7,18 @@ with such.A('Trial') as it:
         it.r1 = Region(Point(1, 1), Point(2, 2), 1, 'region 1')
         it.r2 = Region(Point(1, 1), Point(2, 2), 1, 'region 2')
         it.r3 = Region(Point(1, 1), Point(2, 2), 1, 'region 3')
-        it.fix1 = Fixation(Point(1, 2), 3, 4)
-        it.fix2 = Fixation(Point(1, 2), 5, 6)
+        it.fix1 = Fixation(Point(1, 2), 3, 4, 0, 'region')
+        it.fix2 = Fixation(Point(1, 2), 5, 6, 1, 'region')
         it.fixations = [
-            Fixation(Point(1, 2), 10, 20),
-            Fixation(Point(1, 2), 30, 40),
-            Fixation(Point(1, 2), 50, 60),
-            Fixation(Point(1, 2), 70, 80, excluded=True),
-            Fixation(Point(1, 2), 90, 100),
-            Fixation(Point(1, 2), 110, 120, excluded=True),
-            Fixation(Point(1, 2), 130, 140, excluded=True),
-            Fixation(Point(1, 2), 150, 160),
-            Fixation(Point(1, 2), 170, 180, excluded=True)
+            Fixation(Point(1, 2), 10, 20, 0, 'region'),
+            Fixation(Point(1, 2), 30, 40, 1, 'region'),
+            Fixation(Point(1, 2), 50, 60, 2, 'region'),
+            Fixation(Point(1, 2), 70, 80, 3, 'region', excluded=True),
+            Fixation(Point(1, 2), 90, 100, 4, 'region'),
+            Fixation(Point(1, 2), 110, 120, 5, 'region', excluded=True),
+            Fixation(Point(1, 2), 130, 140, 6, 'region', excluded=True),
+            Fixation(Point(1, 2), 150, 160, 7, 'region'),
+            Fixation(Point(1, 2), 170, 180, 8, 'region', excluded=True)
         ]
         it.item = Item(2, 1, [it.r1, it.r2, it.r3])
         it.trial = Trial(1, 5, it.item, it.fixations)
