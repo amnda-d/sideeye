@@ -16,7 +16,7 @@ Refer to `examples/sample.py <examples/sample.py>`_ for an up-to-date sample scr
 Installation
 ------------------
 
-SideEye requires Python >= 3.5.
+SideEye requires Python >= 3.6.
 
 ::
 

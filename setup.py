@@ -33,7 +33,7 @@ setup(
 
     keywords='eyetracking eye-tracking da1 psycholinguistics linguistics psychology eyetrack',
 
-    python_requires='>=3.5',
+    python_requires='>=3.6',
 
     packages=find_packages(exclude=['doc', 'tests']),
 
