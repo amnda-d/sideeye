@@ -5,8 +5,9 @@ and optionally a list of labels for the regions.
 """
 
 from typing import Sequence, List, Union
-from ..types import ItemNum, Condition
-from .region import Region
+from sideeye.types import ItemNum, Condition
+from sideeye.data.region import Region
+
 
 class Item:
     """
@@ -27,25 +28,28 @@ class Item:
         labels (List[Union[int, str]]): A list of labels for regions. If not provided,
                                          integer indices will be used. All labels must be unique.
     """
+
     def __init__(
-            self,
-            number: ItemNum,
-            condition: Condition,
-            regions: List[Region],
-            labels: Sequence[Union[int, str]] = None
-        ):
+        self,
+        number: ItemNum,
+        condition: Condition,
+        regions: List[Region],
+        labels: Sequence[Union[int, str]] = None,
+    ):
         """Inits Item class."""
         if labels and len(labels) != len(regions):
-            raise ValueError('Number of regions must be equal to number of labels.')
+            raise ValueError("Number of regions must be equal to number of labels.")
         if labels and len(set(labels)) != len(labels):
-            raise ValueError('Region labels must be unique')
+            raise ValueError("Region labels must be unique")
         if not regions:
-            raise ValueError('An Item must have at least one Region')
+            raise ValueError("An Item must have at least one Region")
         for region in regions:
             if regions.count(region) > 1:
-                raise ValueError('Regions must be unique.')
+                raise ValueError("Regions must be unique.")
 
-        self.labels: Sequence[Union[int, str]] = labels if labels else range(len(regions))
+        self.labels: Sequence[Union[int, str]] = labels if labels else range(
+            len(regions)
+        )
         for key, region in enumerate(regions):
             region.label = self.labels[key]
             region.number = key
@@ -58,7 +62,9 @@ class Item:
         return self.__dict__ == other.__dict__
 
     def __str__(self) -> str:
-        return '(number: ' + str(self.number) + ', condition: ' + str(self.condition) + ')'
+        return "(number: {}, condition: {}, regions: [{}])".format(
+            self.number, self.condition, ", ".join([str(r) for r in self.regions])
+        )
 
     def get_region(self, label: Union[str, int]) -> Region:
         """
@@ -83,14 +89,18 @@ class Item:
             if (current_x > x_pos and current_y >= y_pos) or (current_y > y_pos):
                 return self.regions[region - 1]
 
-        if ((x_pos <= self.regions[-1].end.x and
-             y_pos <= self.regions[-1].end.y) or
-                y_pos <= self.regions[-1].end.y):
+        if (
+            x_pos <= self.regions[-1].end.x and y_pos <= self.regions[-1].end.y
+        ) or y_pos <= self.regions[-1].end.y:
             return self.regions[-1]
 
         raise ValueError(
-            'Position: (' + str(x_pos) + ', ' + str(y_pos) +
-            ') is out of range for item: ' + str(self)
+            "Position: ("
+            + str(x_pos)
+            + ", "
+            + str(y_pos)
+            + ") is out of range for item: "
+            + str(self)
         )
 
     def region_count(self) -> int:

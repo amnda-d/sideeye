@@ -2,8 +2,9 @@
 Trial-based eye-tracking measures. These measures are calculated for each trial of an experiment.
 """
 
-from .helpers import save_trial_measure
-from ..data import Trial
+from sideeye.measures.helpers import save_trial_measure
+from sideeye.data import Trial
+
 
 def location_first_regression(trial: Trial):
     """
@@ -24,10 +25,11 @@ def location_first_regression(trial: Trial):
         if saccade.regression:
             return save_trial_measure(
                 trial,
-                'location_first_regression',
-                '"(%s, %s)"' % (saccade.start.char, saccade.start.line)
+                "location_first_regression",
+                '"(%s, %s)"' % (saccade.start.char, saccade.start.line),
             )
-    return save_trial_measure(trial, 'location_first_regression', None)
+    return save_trial_measure(trial, "location_first_regression", None)
+
 
 def latency_first_regression(trial: Trial):
     """
@@ -47,8 +49,11 @@ def latency_first_regression(trial: Trial):
     """
     for saccade in trial.saccades:
         if saccade.regression:
-            return save_trial_measure(trial, 'latency_first_regression', saccade.start.end)
-    return save_trial_measure(trial, 'latency_first_regression', None)
+            return save_trial_measure(
+                trial, "latency_first_regression", saccade.start.end
+            )
+    return save_trial_measure(trial, "latency_first_regression", None)
+
 
 def fixation_count(trial: Trial):
     """
@@ -61,9 +66,10 @@ def fixation_count(trial: Trial):
     """
     return save_trial_measure(
         trial,
-        'fixation_count',
-        len([fix for fix in trial.fixations if not fix.excluded])
+        "fixation_count",
+        len([fix for fix in trial.fixations if not fix.excluded]),
     )
+
 
 def percent_regressions(trial: Trial):
     """
@@ -90,8 +96,11 @@ def percent_regressions(trial: Trial):
             regressions += 1.0
 
     if not trial.saccades:
-        return save_trial_measure(trial, 'percent_regressions', None)
-    return save_trial_measure(trial, 'percent_regressions', regressions/len(trial.saccades))
+        return save_trial_measure(trial, "percent_regressions", None)
+    return save_trial_measure(
+        trial, "percent_regressions", regressions / len(trial.saccades)
+    )
+
 
 def trial_total_time(trial: Trial):
     """
@@ -105,10 +114,11 @@ def trial_total_time(trial: Trial):
     if trial.time is None:
         return save_trial_measure(
             trial,
-            'trial_total_time',
-            [fix for fix in trial.fixations if not fix.excluded][-1].end
+            "trial_total_time",
+            [fix for fix in trial.fixations if not fix.excluded][-1].end,
         )
-    return save_trial_measure(trial, 'trial_total_time', trial.time)
+    return save_trial_measure(trial, "trial_total_time", trial.time)
+
 
 def average_forward_saccade(trial: Trial):
     """
@@ -138,9 +148,12 @@ def average_forward_saccade(trial: Trial):
             forward_saccades += 1.0
             total += saccade.duration
 
-    if forward_saccades is 0.0:
-        return save_trial_measure(trial, 'average_forward_saccade', 0)
-    return save_trial_measure(trial, 'average_forward_saccade', total/forward_saccades)
+    if forward_saccades == 0.0:
+        return save_trial_measure(trial, "average_forward_saccade", 0)
+    return save_trial_measure(
+        trial, "average_forward_saccade", total / forward_saccades
+    )
+
 
 def average_backward_saccade(trial: Trial):
     """
@@ -171,6 +184,8 @@ def average_backward_saccade(trial: Trial):
             backward_saccades += 1.0
             total += saccade.duration
 
-    if backward_saccades is 0.0:
-        return save_trial_measure(trial, 'average_backward_saccade', 0)
-    return save_trial_measure(trial, 'average_backward_saccade', total/backward_saccades)
+    if backward_saccades == 0.0:
+        return save_trial_measure(trial, "average_backward_saccade", 0)
+    return save_trial_measure(
+        trial, "average_backward_saccade", total / backward_saccades
+    )

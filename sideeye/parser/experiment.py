@@ -3,120 +3,65 @@ This module contains functions for parsing experiments.
 
 """
 
-import json
-import os
 from typing import List
-from .. import parser
-from ..data import Experiment
-from ..types import Config
+from sideeye.parser import region, da1, asc
+from sideeye.data import Experiment
+from sideeye.config import Configuration
 
-DEFAULT_CONFIG: str = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)),
-    '../default_config.json'
-)
 
-def load_config(config_file: str) -> Config:
-    """Load a JSON config file into a dictionary."""
-    with open(config_file) as cfg:
-        return json.load(cfg)
-
-def parse(da1_file: str, region_file: str, config_file: str = DEFAULT_CONFIG) -> Experiment:
+def parse(
+    experiment_file: str, region_file: str, config: Configuration = Configuration()
+) -> Experiment:
     """
     Given a DA1 file and region file, and config file, parse an Experiment. If
     config is not provided, default config will be used.
 
     Args:
-        da1_file (str): Name of DA1 file.
+        experiment_file (str): Name of DA1 or ASC file.
         region_file: Name of region file (.cnt, .reg, or .txt).
-        config_file: Name of configuration file.
+        config (Configuration): Configuration.
     """
-    config = load_config(config_file)
-    region_config = config['region_fields']
-    da1_config = config['da1_fields']
-    cutoffs = config['cutoffs']
-    verbose = config['terminal_output']
+    verbose = config.terminal_output
 
-    if region_file[-4:].lower() == '.txt':
-        items = parser.region.textfile(region_file, verbose=verbose)
+    if region_file[-4:].lower() == ".txt":
+        items = region.textfile(region_file, verbose=verbose)
     else:
-        items = parser.region.file(
-            region_file,
-            region_config['number'],
-            region_config['condition'],
-            region_config['boundaries_start'],
-            region_config['includes_y'],
-            verbose=verbose
-        )
+        items = region.file(region_file, config, verbose=verbose)
 
-    experiment = parser.da1.parse(
-        da1_file,
-        items,
-        da1_config['index'],
-        da1_config['number'],
-        da1_config['condition'],
-        da1_config['time'],
-        da1_config['fixation_start'],
-        cutoffs['min'],
-        cutoffs['max'],
-        cutoffs['include_fixation'],
-        cutoffs['include_saccades'],
-        verbose=verbose
-    )
+    if experiment_file[-4:].lower() == ".da1":
+        experiment = da1.parse(experiment_file, items, config)
+    if experiment_file[-4:].lower() == ".asc":
+        experiment = asc.parse(experiment_file, items, config.asc_parsing)
     return experiment
 
-def parse_dir(
-        da1_directory: str,
-        region_file: str,
-        config_file: str = DEFAULT_CONFIG
-    ) -> List[Experiment]:
+
+def parse_files(
+    experiment_files: List[str],
+    region_file: str,
+    config: Configuration = Configuration(),
+) -> List[Experiment]:
     """
-    Given a directory of DA1 files, a region file, and config file, parse all DA1 files in
-    the directory into Experiments. If config is not provided, default config will be used.
+    Given a list of DA1 or ASC files, a region file, and config file, parse all files in
+    the list into Experiments. If config is not provided, default config will be used.
 
     Args:
-        da1_directory: Name of directory containing DA1 files.
+        experiment_files: List of DA1 or ASC files.
         region_file: Name of region file (.cnt, .reg, or .txt).
-        config_file: Name of configuration file.
+        config (Config): Configuration.
     """
-    config = load_config(config_file)
-    da1s = os.listdir(da1_directory)
+    verbose = config.terminal_output
 
-    region_config = config['region_fields']
-    da1_config = config['da1_fields']
-    cutoffs = config['cutoffs']
-    verbose = config['terminal_output']
-
-    if region_file[-4:].lower() == '.txt':
-        items = parser.region.textfile(region_file, verbose=verbose)
+    if region_file[-4:].lower() == ".txt":
+        items = region.textfile(region_file, verbose=verbose)
     else:
-        items = parser.region.file(
-            region_file,
-            region_config['number'],
-            region_config['condition'],
-            region_config['boundaries_start'],
-            region_config['includes_y'],
-            verbose=verbose
-        )
+        items = region.file(region_file, config, verbose=verbose)
     experiments: List[Experiment] = []
-    for da1 in da1s:
-        if da1[-4:].lower() != '.da1':
-            print('Skipping %s: not a DA1 file.' % da1)
+    for experiment_file in experiment_files:
+        if experiment_file[-4:].lower() == ".da1":
+            experiments += [da1.parse(experiment_file, items, config)]
+        elif experiment_file[-4:].lower() == ".asc":
+            experiments += [asc.parse(experiment_file, items, config.asc_parsing)]
         else:
-            experiments += [
-                parser.da1.parse(
-                    os.path.join(da1_directory, da1),
-                    items,
-                    da1_config['index'],
-                    da1_config['number'],
-                    da1_config['condition'],
-                    da1_config['time'],
-                    da1_config['fixation_start'],
-                    cutoffs['min'],
-                    cutoffs['max'],
-                    cutoffs['include_fixation'],
-                    cutoffs['include_saccades'],
-                    verbose=verbose
-                )
-            ]
+            print("Skipping %s: not a DA1 or ASC file." % experiment_file)
 
     return experiments

@@ -11,17 +11,19 @@ and make any necessary changes to the config file. Run sample.py in the new dire
 """
 
 # Import modules.
-import sideeye
 import os
+import sideeye
 
 # Get directory path.
-dirname = os.path.dirname(os.path.realpath(__file__))
+DIRNAME = os.path.dirname(os.path.realpath(__file__))
 
 # Get config file path.
-config = os.path.join(dirname, 'sample_config.json')
+CONFIG = sideeye.config.Configuration(os.path.join(DIRNAME, "sample_config.json"))
 
 # Parse all DA1 files in directory using items listed in region file.
-experiments = sideeye.parser.experiment.parse_dir(os.path.join(dirname, 'sample_DA1s'), os.path.join(dirname, 'sample.cnt'), config)
+EXPERIMENTS = sideeye.parser.experiment.parse_dir(
+    os.path.join(DIRNAME, "sample_DA1s"), os.path.join(DIRNAME, "sample.cnt"), CONFIG
+)
 
 # Calculate all measures listed in config file, and output results as a csv.
-sideeye.calculate_all_measures(experiments, 'sample_output.csv', config)
+sideeye.calculate_all_measures(EXPERIMENTS, "sample_output.csv", CONFIG)

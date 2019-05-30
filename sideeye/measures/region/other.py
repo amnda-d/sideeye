@@ -2,9 +2,10 @@
 Region-based eye tracking measures with fixation count or position output.
 """
 
-from ..helpers import get_fp_fixations, region_exists, save_measure
-from ...data import Trial
-from ...types import RegionMeasure
+from sideeye.measures.helpers import get_fp_fixations, region_exists, save_measure
+from sideeye.data import Trial
+from sideeye.types import RegionMeasure
+
 
 def landing_position(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -32,21 +33,21 @@ def landing_position(trial: Trial, region_number: int) -> RegionMeasure:
     fixation = None
     fp_fixations = get_fp_fixations(trial, region_number)
 
-    if (fp_fixations and fp_fixations[0].char is not None
-            and fp_fixations[0].line is not None):
+    if (
+        fp_fixations
+        and fp_fixations[0].char is not None
+        and fp_fixations[0].line is not None
+    ):
         landing_pos = '"(%s, %s)"' % (
             fp_fixations[0].char - region.start.x,
-            fp_fixations[0].line - region.start.y
+            fp_fixations[0].line - region.start.y,
         )
         fixation = fp_fixations[0]
 
     return save_measure(
-        trial,
-        region,
-        'landing_position',
-        landing_pos,
-        [fixation] if fixation else None
+        trial, region, "landing_position", landing_pos, [fixation] if fixation else None
     )
+
 
 def launch_site(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -90,9 +91,15 @@ def launch_site(trial: Trial, region_number: int) -> RegionMeasure:
     trial_fixations = [fix for fix in trial.fixations if not fix.excluded]
 
     for (idx, fixation) in enumerate(trial_fixations):
-        if fixation.region.number is not None and fixation.region.number > region_number:
+        if (
+            fixation.region.number is not None
+            and fixation.region.number > region_number
+        ):
             break
-        if fixation.region.number is not None and fixation.region.number == region_number:
+        if (
+            fixation.region.number is not None
+            and fixation.region.number == region_number
+        ):
             if idx == 0:
                 break
             if trial_fixations[idx - 1].char is None:
@@ -108,12 +115,9 @@ def launch_site(trial: Trial, region_number: int) -> RegionMeasure:
             break
 
     return save_measure(
-        trial,
-        region,
-        'launch_site',
-        launch,
-        [fixation] if fixation else None
+        trial, region, "launch_site", launch, [fixation] if fixation else None
     )
+
 
 def first_pass_fixation_count(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -133,13 +137,9 @@ def first_pass_fixation_count(trial: Trial, region_number: int) -> RegionMeasure
     region = region_exists(trial, region_number)
     fp_fixations = get_fp_fixations(trial, region_number)
 
-    if len(fp_fixations) is 0:
-        return save_measure(trial, region, 'first_pass_fixation_count', None, None)
+    if not fp_fixations:
+        return save_measure(trial, region, "first_pass_fixation_count", None, None)
 
     return save_measure(
-        trial,
-        region,
-        'first_pass_fixation_count',
-        len(fp_fixations),
-        fp_fixations
+        trial, region, "first_pass_fixation_count", len(fp_fixations), fp_fixations
     )

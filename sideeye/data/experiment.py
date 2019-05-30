@@ -5,8 +5,9 @@ a single participant's data.
 
 from datetime import datetime
 from typing import List, Dict
-from .trial import Trial
-from ..types import Condition, ItemNum, ItemId
+from sideeye.data.trial import Trial
+from sideeye.types import Condition, ItemNum, ItemId
+
 
 class Experiment:
     """
@@ -26,13 +27,10 @@ class Experiment:
         filename (Optional[str]): Optional name of source file.
         date (Optional[datetime]): Optional date.
     """
+
     def __init__(
-            self,
-            name: str,
-            trials: List[Trial],
-            filename: str = '',
-            date: datetime = None
-        ):
+        self, name: str, trials: List[Trial], filename: str = "", date: datetime = None
+    ):
         self.name: str = name
         self.trials: Dict[ItemId, Trial] = {}
         self.filename: str = filename
@@ -46,19 +44,16 @@ class Experiment:
         return self.__dict__ == other.__dict__
 
     def __str__(self) -> str:
-        return (
-            'name: ' + str(self.name)
-            + '\nfilename: ' + str(self.filename)
-            + '\ndate: ' + str(self.date)
-            + '\ntrials: ' + ', '.join([str(trial) for trial in self.trials])
+        return "name: {}\nfilename: {}\ndate: {}\ntrials: [\n{}\n]".format(
+            self.name,
+            self.filename,
+            self.date,
+            ",\n".join([str(trial) for trial in self.trials]),
         )
 
     def get_trial(
-            self,
-            number: ItemNum = None,
-            condition: Condition = None,
-            index: int = None
-        ) -> Trial:
+        self, number: ItemNum = None, condition: Condition = None, index: int = None
+    ) -> Trial:
         """
         Get a trial by item number and condition, or by index if specified.
 
@@ -71,4 +66,4 @@ class Experiment:
             return self.trials[self.trial_indices[index]]
         if number and condition:
             return self.trials[(number, condition)]
-        raise ValueError('Either index or condition and number must be provided.')
+        raise ValueError("Either index or condition and number must be provided.")

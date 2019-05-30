@@ -13,6 +13,12 @@
     "boundaries_start": 3,
     "includes_y": false
   },
+  "asc_parsing": {
+    "fixation_min_cutoff": false,
+    "max_saccade_dur": false,
+    "blink_max_count": false,
+    "blink_max_dur": false
+  },
   "cutoffs": {
     "min": -1,
     "max": -1,
@@ -21,211 +27,142 @@
   },
   "region_measures": {
     "skip": {
-      "include": true,
-      "cutoff": -1,
-      "header": "skip"
+      "exclude": false
     },
     "first_pass_regressions_out": {
-      "include": true,
-      "cutoff": -1,
-      "header": "first_pass_regressions_out"
+      "exclude": false
     },
     "first_pass_regressions_in": {
-      "include": true,
-      "cutoff": -1,
-      "header": "first_pass_regressions_in"
+      "exclude": false
     },
     "first_fixation_duration": {
-      "include": true,
-      "cutoff": -1,
-      "header": "first_fixation_duration"
+      "exclude": false
     },
     "single_fixation_duration": {
-      "include": true,
-      "cutoff": -1,
-      "header": "single_fixation_duration"
+      "exclude": false
     },
     "first_pass": {
-      "include": true,
-      "cutoff": -1,
-      "header": "first_pass"
+      "exclude": false
     },
     "go_past": {
-      "include": true,
-      "cutoff": -1,
-      "header": "go_past"
+      "exclude": false
     },
     "total_time": {
-      "include": true,
-      "cutoff": -1,
-      "header": "total_time"
+      "exclude": false
     },
     "right_bounded_time": {
-      "include": true,
-      "cutoff": -1,
-      "header": "right_bounded_time"
+      "exclude": false
     },
     "reread_time": {
-      "include": true,
-      "cutoff": -1,
-      "header": "reread_time"
+      "exclude": false
     },
     "second_pass": {
-      "include": true,
-      "cutoff": -1,
-      "header": "second_pass"
+      "exclude": false
     },
     "spillover_time": {
-      "include": true,
-      "cutoff": -1,
-      "header": "spillover_time"
+      "exclude": false
     },
     "refixation_time": {
-      "include": true,
-      "cutoff": -1,
-      "header": "refixation_time"
+      "exclude": false
     },
     "landing_position": {
-      "include": true,
-      "cutoff": -1,
-      "header": "landing_position"
+      "exclude": false
     },
     "launch_site": {
-      "include": true,
-      "cutoff": -1,
-      "header": "launch_site"
+      "exclude": false
     },
     "first_pass_fixation_count": {
-      "include": true,
-      "cutoff": -1,
-      "header": "first_pass_fixation_count"
+      "exclude": false
     },
     "go_back_time_region": {
-      "include": true,
-      "cutoff": -1,
-      "header": "go_back_time_region"
+      "exclude": false
     },
     "go_back_time_char": {
-      "include": true,
-      "cutoff": -1,
-      "header": "go_back_time_char"
+      "exclude": false
     }
   },
   "trial_measures": {
     "location_first_regression": {
-      "include": true,
-      "cutoff": -1,
-      "header": "location_first_regression"
+      "exclude": false
     },
     "latency_first_regression": {
-      "include": true,
-      "cutoff": -1,
-      "header": "latency_first_regression"
+      "exclude": false
     },
     "fixation_count": {
-      "include": true,
-      "cutoff": -1,
-      "header": "fixation_count"
+      "exclude": false
     },
     "percent_regressions": {
-      "include": true,
-      "cutoff": -1,
-      "header": "percent_regressions"
+      "exclude": false
     },
     "trial_total_time": {
-      "include": true,
-      "cutoff": -1,
-      "header": "trial_total_time"
+      "exclude": false
     },
     "average_forward_saccade": {
-      "include": true,
-      "cutoff": -1,
-      "header": "average_forward_saccade"
+      "exclude": false
     },
     "average_backward_saccade": {
-      "include": true,
-      "cutoff": -1,
-      "header": "average_backward_saccade"
+      "exclude": false
     }
   },
   "region_output": {
     "experiment_name": {
-      "include": true,
-      "header": "experiment_name"
+      "exclude": false
     },
     "filename": {
-      "include": false,
-      "header": "filename"
+      "exclude": true
     },
     "date": {
-      "include": false,
-      "header": "date"
+      "exclude": true
     },
     "trial_id": {
-      "include": true,
-      "header": "trial_id"
+      "exclude": false
     },
     "trial_total_time": {
-      "include": true,
-      "header": "trial_total_time"
+      "exclude": false
     },
     "item_id": {
-      "include": true,
-      "header": "item_id"
+      "exclude": false
     },
     "item_condition": {
-      "include": true,
-      "header": "item_condition"
+      "exclude": false
     },
     "region_label": {
-      "include": false,
-      "header": "region_label"
+      "exclude": true
     },
     "region_number": {
-      "include": true,
-      "header": "region_number"
+      "exclude": false
     },
     "region_text": {
-      "include": false,
-      "header": "region_text"
+      "exclude": true
     },
     "region_start": {
-      "include": false,
-      "header": "region_start"
+      "exclude": true
     },
     "region_end": {
-      "include": false,
-      "header": "region_end"
+      "exclude": true
     }
   },
   "trial_output": {
     "experiment_name": {
-      "include": true,
-      "header": "experiment_name"
+      "exclude": false
     },
     "filename": {
-      "include": false,
-      "header": "filename"
+      "exclude": true
     },
     "date": {
-      "include": false,
-      "header": "date"
+      "exclude": true
     },
     "trial_id": {
-      "include": true,
-      "header": "trial_id"
+      "exclude": false
     },
     "trial_total_time": {
-      "include": true,
-      "header": "trial_total_time"
+      "exclude": false
     },
     "item_id": {
-      "include": true,
-      "header": "item_id"
+      "exclude": false
     },
     "item_condition": {
-      "include": true,
-      "header": "item_condition"
+      "exclude": false
     }
   },
   "terminal_output": 0

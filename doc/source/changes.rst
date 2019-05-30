@@ -1,7 +1,13 @@
 Version History
 ===============
 
-`1.0.0a8 <https://pypi.org/project/sideeye/1.0.0a7/>`_
+`1.0.0a9 <https://pypi.org/project/sideeye/1.0.0a9/>`_
+------------------------------------------------------
+- Added `sideeye` script
+- Added ASC parsing (experimental feature)
+- Improved configuration file parsing
+
+`1.0.0a8 <https://pypi.org/project/sideeye/1.0.0a8/>`_
 ------------------------------------------------------
 - Added textfile region parser
 - Added mypy type annotations

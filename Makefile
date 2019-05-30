@@ -8,13 +8,13 @@ clean:
 	@rm -rf *.egg-info
 
 lint:
-	pylint sideeye --disable=too-few-public-methods,too-many-arguments,too-many-branches --output-format=colorized || true
-	pylint tests --disable=too-few-public-methods,too-many-arguments,wildcard-import,too-many-branches,missing-docstring,duplicate-code --output-format=colorized || true
+	pylint sideeye
+	pylint tests --disable=wildcard-import,missing-docstring,duplicate-code
 
 build: clean
 	pip install -e .[test]
 
-test:
+test: build
 	nose2 -c tests/nose2.cfg -v --layer-reporter
 	@make clean
 

@@ -21,12 +21,12 @@ SideEye
 Introduction
 ============
 
-SideEye is a Python package for processing data from eye-tracking while reading experiments. The package contains parsers that accept fixation data in .DA1 file format, and region definitions in several formats. SideEye calculates eye-tracking measures for parsed data, and can write output in .csv format.
+SideEye is a Python package for processing data from eye-tracking while reading experiments. The package contains parsers that accept fixation data in .DA1 or .ASC file format, and region definitions in several formats. SideEye calculates eye-tracking measures for parsed data, and can write output in .csv format.
 
 Installation
 ------------------
 
-SideEye requires Python >= 3.5.
+SideEye requires Python >= 3.6.
 
 ::
 

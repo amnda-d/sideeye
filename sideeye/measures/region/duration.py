@@ -3,9 +3,10 @@ Region-based eye tracking measures with duration(ms) output.
 """
 
 from typing import List
-from ..helpers import get_fp_fixations, region_exists, save_measure
-from ...data import Trial, Fixation
-from ...types import RegionMeasure
+from sideeye.measures.helpers import get_fp_fixations, region_exists, save_measure
+from sideeye.data import Trial, Fixation
+from sideeye.types import RegionMeasure
+
 
 def first_fixation_duration(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -26,15 +27,16 @@ def first_fixation_duration(trial: Trial, region_number: int) -> RegionMeasure:
     region = region_exists(trial, region_number)
     fp_fixations = get_fp_fixations(trial, region_number)
 
-    if len(fp_fixations) is 0:
-        return save_measure(trial, region, 'first_fixation_duration', None, None)
+    if not fp_fixations:
+        return save_measure(trial, region, "first_fixation_duration", None, None)
     return save_measure(
         trial,
         region,
-        'first_fixation_duration',
-        fp_fixations[0].duration,
-        [fp_fixations[0]]
+        "first_fixation_duration",
+        fp_fixations[0].duration(),
+        [fp_fixations[0]],
     )
+
 
 def single_fixation_duration(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -55,15 +57,16 @@ def single_fixation_duration(trial: Trial, region_number: int) -> RegionMeasure:
     region = region_exists(trial, region_number)
     fp_fixations = get_fp_fixations(trial, region_number)
 
-    if len(fp_fixations) is 1:
+    if len(fp_fixations) == 1:
         return save_measure(
             trial,
             region,
-            'single_fixation_duration',
-            fp_fixations[0].duration,
-            [fp_fixations[0]]
+            "single_fixation_duration",
+            fp_fixations[0].duration(),
+            [fp_fixations[0]],
         )
-    return save_measure(trial, region, 'single_fixation_duration', None, None)
+    return save_measure(trial, region, "single_fixation_duration", None, None)
+
 
 def first_pass(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -81,7 +84,7 @@ def first_pass(trial: Trial, region_number: int) -> RegionMeasure:
         total = 0
 
         for fixation in fp_fixations:
-            total += fixation.duration
+            total += fixation.duration()
 
         return total
 
@@ -89,14 +92,15 @@ def first_pass(trial: Trial, region_number: int) -> RegionMeasure:
     region = region_exists(trial, region_number)
     fp_fixations = get_fp_fixations(trial, region_number)
 
-    if len(fp_fixations) is 0:
-        return save_measure(trial, region, 'first_pass', None, None)
+    if not fp_fixations:
+        return save_measure(trial, region, "first_pass", None, None)
 
     total = 0
     for fixation in fp_fixations:
-        total += fixation.duration
+        total += fixation.duration()
 
-    return save_measure(trial, region, 'first_pass', total, fp_fixations)
+    return save_measure(trial, region, "first_pass", total, fp_fixations)
+
 
 def go_past(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -118,15 +122,15 @@ def go_past(trial: Trial, region_number: int) -> RegionMeasure:
                 if fixation.region_number > region_number:
                     break
                 if total is not 0 or fixation.region_number is region_number:
-                    total += fixation.duration
+                    total += fixation.duration()
 
         return total
 
     """
     region = region_exists(trial, region_number)
 
-    if len(get_fp_fixations(trial, region_number)) is 0:
-        return save_measure(trial, region, 'go_past', None, None)
+    if not get_fp_fixations(trial, region_number):
+        return save_measure(trial, region, "go_past", None, None)
 
     gp_fixations: List[Fixation] = []
     total = 0
@@ -134,11 +138,12 @@ def go_past(trial: Trial, region_number: int) -> RegionMeasure:
         if not fixation.excluded:
             if fixation.region.number and fixation.region.number > region_number:
                 break
-            if total is not 0 or fixation.region.number is region_number:
+            if total or fixation.region.number is region_number:
                 gp_fixations += [fixation]
-                total += fixation.duration
+                total += fixation.duration()
 
-    return save_measure(trial, region, 'go_past', total, gp_fixations)
+    return save_measure(trial, region, "go_past", total, gp_fixations)
+
 
 def total_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -152,7 +157,7 @@ def total_time(trial: Trial, region_number: int) -> RegionMeasure:
 
         for fixation in trial:
             if fixation.region_number is region_number and fixation is not excluded:
-                total += fixation.duration
+                total += fixation.duration()
 
         return total
 
@@ -164,9 +169,10 @@ def total_time(trial: Trial, region_number: int) -> RegionMeasure:
     for fixation in trial.fixations:
         if fixation.region.number is region_number and not fixation.excluded:
             region_fixations += [fixation]
-            total += fixation.duration
+            total += fixation.duration()
 
-    return save_measure(trial, region, 'total_time', total, region_fixations)
+    return save_measure(trial, region, "total_time", total, region_fixations)
+
 
 def right_bounded_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -188,27 +194,31 @@ def right_bounded_time(trial: Trial, region_number: int) -> RegionMeasure:
                 if fixation.region_number > region_number:
                     break
                 if fixation.region_number is region_number:
-                    total += fixation.duration
+                    total += fixation.duration()
 
         return total
 
     """
     region = region_exists(trial, region_number)
 
-    if len(get_fp_fixations(trial, region_number)) is 0:
-        return save_measure(trial, region, 'right_bounded_time', None, None)
+    if not get_fp_fixations(trial, region_number):
+        return save_measure(trial, region, "right_bounded_time", None, None)
 
     rb_fixations: List[Fixation] = []
     total = 0
     for fixation in trial.fixations:
         if not fixation.excluded:
-            if fixation.region.number is not None and fixation.region.number > region_number:
+            if (
+                fixation.region.number is not None
+                and fixation.region.number > region_number
+            ):
                 break
             if fixation.region.number is region_number:
                 rb_fixations += [fixation]
-                total += fixation.duration
+                total += fixation.duration()
 
-    return save_measure(trial, region, 'right_bounded_time', total, rb_fixations)
+    return save_measure(trial, region, "right_bounded_time", total, rb_fixations)
+
 
 def reread_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -225,7 +235,7 @@ def reread_time(trial: Trial, region_number: int) -> RegionMeasure:
                 if fixation.region_number > region_number:
                     reread = True
                 if reread and fixation.region_number is region_number:
-                    total += fixation.duration
+                    total += fixation.duration()
 
         return total
 
@@ -237,16 +247,21 @@ def reread_time(trial: Trial, region_number: int) -> RegionMeasure:
     reread = False
     for fixation in trial.fixations:
         if not fixation.excluded:
-            if fixation.region.number is not None and fixation.region.number > region_number:
+            if (
+                fixation.region.number is not None
+                and fixation.region.number > region_number
+            ):
                 reread = True
             if (
-                    reread and fixation.region.number is not None
-                    and fixation.region.number is region_number
-                ):
+                reread
+                and fixation.region.number is not None
+                and fixation.region.number is region_number
+            ):
                 rr_fixations += [fixation]
-                total += fixation.duration
+                total += fixation.duration()
 
-    return save_measure(trial, region, 'reread_time', total, rr_fixations)
+    return save_measure(trial, region, "reread_time", total, rr_fixations)
+
 
 def second_pass(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -267,7 +282,7 @@ def second_pass(trial: Trial, region_number: int) -> RegionMeasure:
                 if first_pass and fixation.region_number is not region_number:
                     exited = True
                 if first_pass and exited and fixation.region_number is region_number:
-                    total += fixation.duration
+                    total += fixation.duration()
 
         return total
 
@@ -286,9 +301,10 @@ def second_pass(trial: Trial, region_number: int) -> RegionMeasure:
                 exited = True
             if f_pass and exited and fixation.region.number is region_number:
                 sp_fixations += [fixation]
-                total += fixation.duration
+                total += fixation.duration()
 
-    return save_measure(trial, region, 'second_pass', total, sp_fixations)
+    return save_measure(trial, region, "second_pass", total, sp_fixations)
+
 
 def spillover_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -308,7 +324,7 @@ def spillover_time(trial: Trial, region_number: int) -> RegionMeasure:
                 if fixation.region_number is region_number:
                     visited_region = True
                 if visited_region and fixation.region_number is region_number + 1:
-                    total += fixation.duration
+                    total += fixation.duration()
 
         if total is 0:
             return None
@@ -329,11 +345,12 @@ def spillover_time(trial: Trial, region_number: int) -> RegionMeasure:
                 visited_region = True
             if visited_region and fixation.region.number is region_number + 1:
                 so_fixations += [fixation]
-                total += fixation.duration
+                total += fixation.duration()
 
-    if total is 0:
-        return save_measure(trial, region, 'spillover_time', None, None)
-    return save_measure(trial, region, 'spillover_time', total, so_fixations)
+    if not total:
+        return save_measure(trial, region, "spillover_time", None, None)
+    return save_measure(trial, region, "spillover_time", total, so_fixations)
+
 
 def refixation_time(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -351,7 +368,7 @@ def refixation_time(trial: Trial, region_number: int) -> RegionMeasure:
         total = 0
 
         for fixation in fp_fixations[1:]:
-            total += fixation.duration
+            total += fixation.duration()
 
         return total
 
@@ -359,14 +376,15 @@ def refixation_time(trial: Trial, region_number: int) -> RegionMeasure:
     region = region_exists(trial, region_number)
     fp_fixations = get_fp_fixations(trial, region_number)
 
-    if len(fp_fixations) is 0 or len(fp_fixations) is 1:
-        return save_measure(trial, region, 'refixation_time', None, None)
+    if not fp_fixations or len(fp_fixations) == 1:
+        return save_measure(trial, region, "refixation_time", None, None)
 
     total = 0
     for fixation in fp_fixations[1:]:
-        total += fixation.duration
+        total += fixation.duration()
 
-    return save_measure(trial, region, 'refixation_time', total, fp_fixations[1:])
+    return save_measure(trial, region, "refixation_time", total, fp_fixations[1:])
+
 
 def go_back_time_char(trial: Trial, region_number: int) -> RegionMeasure:
     """
@@ -394,7 +412,8 @@ def go_back_time_char(trial: Trial, region_number: int) -> RegionMeasure:
     if not fp_fixations:
         try:
             start_fix = [
-                fix for fix in trial.fixations
+                fix
+                for fix in trial.fixations
                 if not fix.excluded
                 and fix.region.number is not None
                 and fix.region.number < region_number
@@ -403,14 +422,14 @@ def go_back_time_char(trial: Trial, region_number: int) -> RegionMeasure:
                 curr_fix = trial.fixations[idx]
                 if not curr_fix.excluded:
                     if (
-                            curr_fix.region.number is not None
-                            and curr_fix.region.number > region_number
-                        ):
+                        curr_fix.region.number is not None
+                        and curr_fix.region.number > region_number
+                    ):
                         break
                     start_fix = curr_fix
             go_back_start = start_fix.end
         except IndexError:
-            pass
+            return save_measure(trial, region, "go_back_time_char", None, None)
 
     try:
         prev_fix = start_fix
@@ -418,9 +437,9 @@ def go_back_time_char(trial: Trial, region_number: int) -> RegionMeasure:
         for idx in range(start_fix.index + 1, len(trial.fixations) - 1):
             curr_fix = trial.fixations[idx]
             if not curr_fix.excluded:
-                if (curr_fix.line < prev_fix.line
-                        or (curr_fix.line == prev_fix.line and curr_fix.char < prev_fix.char)
-                   ):
+                if curr_fix.line < prev_fix.line or (
+                    curr_fix.line == prev_fix.line and curr_fix.char < prev_fix.char
+                ):
                     go_back_end = prev_fix.end
                     break
                 prev_fix = curr_fix
@@ -428,9 +447,11 @@ def go_back_time_char(trial: Trial, region_number: int) -> RegionMeasure:
         pass
 
     if go_back_end is not None:
-        return save_measure(trial, region, 'go_back_time_char', go_back_end-go_back_start, None)
+        return save_measure(
+            trial, region, "go_back_time_char", go_back_end - go_back_start, None
+        )
 
-    return save_measure(trial, region, 'go_back_time_char', None, None)
+    return save_measure(trial, region, "go_back_time_char", None, None)
 
 
 def go_back_time_region(trial: Trial, region_number: int) -> RegionMeasure:
@@ -459,7 +480,8 @@ def go_back_time_region(trial: Trial, region_number: int) -> RegionMeasure:
     if not fp_fixations:
         try:
             start_fix = [
-                fix for fix in trial.fixations
+                fix
+                for fix in trial.fixations
                 if not fix.excluded
                 and fix.region.number is not None
                 and fix.region.number < region_number
@@ -468,14 +490,14 @@ def go_back_time_region(trial: Trial, region_number: int) -> RegionMeasure:
                 curr_fix = trial.fixations[idx]
                 if not curr_fix.excluded:
                     if (
-                            curr_fix.region.number is not None
-                            and curr_fix.region.number > region_number
-                        ):
+                        curr_fix.region.number is not None
+                        and curr_fix.region.number > region_number
+                    ):
                         break
                     start_fix = curr_fix
             go_back_start = start_fix.end
         except IndexError:
-            return save_measure(trial, region, 'go_back_time_region', None, None)
+            return save_measure(trial, region, "go_back_time_region", None, None)
 
     try:
         prev_fix = start_fix
@@ -484,10 +506,10 @@ def go_back_time_region(trial: Trial, region_number: int) -> RegionMeasure:
             curr_fix = trial.fixations[idx]
             if not curr_fix.excluded:
                 if (
-                        curr_fix.region.number is not None
-                        and prev_fix.region.number is not None
-                        and curr_fix.region.number < prev_fix.region.number
-                    ):
+                    curr_fix.region.number is not None
+                    and prev_fix.region.number is not None
+                    and curr_fix.region.number < prev_fix.region.number
+                ):
                     go_back_end = prev_fix.end
                     break
                 prev_fix = curr_fix
@@ -495,6 +517,8 @@ def go_back_time_region(trial: Trial, region_number: int) -> RegionMeasure:
         pass
 
     if go_back_end is not None:
-        return save_measure(trial, region, 'go_back_time_region', go_back_end-go_back_start, None)
+        return save_measure(
+            trial, region, "go_back_time_region", go_back_end - go_back_start, None
+        )
 
-    return save_measure(trial, region, 'go_back_time_region', None, None)
+    return save_measure(trial, region, "go_back_time_region", None, None)

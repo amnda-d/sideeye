@@ -12,4 +12,4 @@ from .item import Item
 from .trial import Trial
 from .experiment import Experiment
 
-__all__ = ['Point', 'Fixation', 'Saccade', 'Region', 'Item', 'Trial', 'Experiment']
+__all__ = ["Point", "Fixation", "Saccade", "Region", "Item", "Trial", "Experiment"]

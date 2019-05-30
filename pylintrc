@@ -1,0 +1,14 @@
+[MESSAGES CONTROL]
+
+disable=
+  bad-continuation,
+  cell-var-from-loop,
+  dangerous-default-value,
+  duplicate-code,
+  too-few-public-methods,
+  too-many-arguments,
+  too-many-branches,
+  too-many-instance-attributes,
+  too-many-locals
+
+output-format=colorized

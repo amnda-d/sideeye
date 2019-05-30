@@ -5,13 +5,15 @@ Item, lists of Fixations and Saccades associated with the Trial, and a dictionar
 of trial and region measures calculated for the Trial.
 """
 
+import json
 from typing import List
 from collections import defaultdict
-from .saccade import Saccade
-from .point import Point
-from .item import Item
-from .fixation import Fixation
-from ..types import RegionMeasures, TrialMeasures
+from sideeye.data.saccade import Saccade
+from sideeye.data.point import Point
+from sideeye.data.item import Item
+from sideeye.data.fixation import Fixation
+from sideeye.types import Measures, TrialMeasures
+
 
 class Trial:
     """
@@ -36,22 +38,23 @@ class Trial:
         include_saccades (bool): Boolean indicating whether saccades surrounding an excluded
                                  fixation should be included in a saccade.
     """
+
     def __init__(
-            self,
-            index: int,
-            time: int,
-            item: Item,
-            fixations: List[Fixation],
-            include_fixation: bool = False,
-            include_saccades: bool = False
-        ):
+        self,
+        index: int,
+        time: int,
+        item: Item,
+        fixations: List[Fixation],
+        include_fixation: bool = False,
+        include_saccades: bool = False,
+    ):
         """Inits Trial class."""
         if index < 0:
-            raise ValueError('Index must be greater than 0.')
+            raise ValueError("Index must be greater than 0.")
         if not item:
-            raise ValueError('Trial must be associated with an Item.')
+            raise ValueError("Trial must be associated with an Item.")
         if time and time < 0:
-            raise ValueError('Total time must be positive.')
+            raise ValueError("Total time must be positive.")
 
         saccades: List[Saccade] = []
         saccade_start = None
@@ -59,8 +62,7 @@ class Trial:
         for key, fixation in enumerate(fixations):
             saccade_start = (
                 fixation
-                if saccade_start is None
-                and not fixation.excluded
+                if saccade_start is None and not fixation.excluded
                 else saccade_start
             )
             if not fixation.excluded:
@@ -79,17 +81,17 @@ class Trial:
                         saccades += [
                             Saccade(
                                 saccade_duration,
-                                Point(fixation.char, fixation.line) <
-                                Point(saccade_start.char, saccade_start.line),
+                                Point(fixation.char, fixation.line)
+                                < Point(saccade_start.char, saccade_start.line),
                                 saccade_start,
-                                fixation
+                                fixation,
                             )
                         ]
                 saccade_start = fixation
                 saccade_duration = 0
             else:
                 if include_fixation:
-                    saccade_duration += fixation.duration
+                    saccade_duration += fixation.duration()
                 if include_saccades:
                     saccade_duration += fixation.start - fixations[key - 1].end
 
@@ -102,18 +104,24 @@ class Trial:
         self.fixations: List[Fixation] = fixations
         self.saccades: List[Saccade] = saccades
         self.trial_measures: TrialMeasures = defaultdict(dict)
-        self.region_measures: RegionMeasures = defaultdict(lambda: defaultdict(dict))
+        self.region_measures: Measures = defaultdict(lambda: defaultdict(dict))
 
     def __eq__(self, other) -> bool:
         return self.__dict__ == other.__dict__
 
     def __str__(self) -> str:
-        return (
-            '(index: ' + str(self.index) +
-            ', time: ' + str(self.time) +
-            'ms, item: ' + str(self.item) +
-            ', fixations: ' + str(len(self.fixations)) +
-            ', saccades: ' + str(len(self.saccades)) + ')'
+        return json.dumps(
+            {
+                "index": self.index,
+                "time": self.time,
+                "item": self.item,
+                "fixation count": len(self.fixations),
+                "fixations": self.fixations,
+                "saccade count": len(self.saccades),
+                "saccades": self.saccades,
+            },
+            indent=4,
+            default=lambda x: str(x) if isinstance(x, (Fixation, Item)) else x.__dict__,
         )
 
     def fixation_count(self) -> int:

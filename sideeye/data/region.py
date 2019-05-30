@@ -5,7 +5,8 @@ the text contained in the region.
 """
 
 from typing import Union, Optional
-from .point import Point
+from sideeye.data.point import Point
+
 
 class Region:
     """
@@ -30,20 +31,20 @@ class Region:
     """
 
     def __init__(
-            self,
-            start: Point,
-            end: Point,
-            length: int = None,
-            text: str = "",
-            label: Union[str, int] = 'undefined',
-            number: int = None
-        ):
+        self,
+        start: Point,
+        end: Point,
+        length: int = None,
+        text: str = "",
+        label: Union[str, int] = "undefined",
+        number: int = None,
+    ):
         if start > end:
-            raise ValueError('End of region must be after start of region.')
+            raise ValueError("End of region must be after start of region.")
         if start.x < 0 or start.y < 0 or end.x < 0 or end.y < 0:
-            raise ValueError('Region cannot have negative start and end.')
+            raise ValueError("Region cannot have negative start and end.")
         if length and length < 0:
-            raise ValueError('Region must have positive length.')
+            raise ValueError("Region must have positive length.")
 
         self.start: Point = start
         self.end: Point = end
@@ -56,11 +57,6 @@ class Region:
         return self.__dict__ == other.__dict__
 
     def __str__(self) -> str:
-        return (
-            '(start: ' + str(self.start) +
-            ', end: ' + str(self.end) +
-            ', length: ' + str(self.length) +
-            ', label: ' + str(self.label) +
-            ', number: ' + str(self.number) +
-            ', text: ' + str(self.text) + ')'
+        return "(start: {}, end: {}, length: {}, label: {}, number: {}, text: {})".format(
+            self.start, self.end, self.length, self.label, self.number, self.text
         )

@@ -4,7 +4,7 @@ The Configuration File
 .. contents::
 
 The configuration file is a JSON file specifying the parameters used by SideEye's parsing and output functions. There is a :doc:`default configuration <default_config.json>` used by SideEye if a custom configuration is not provided.
-A custom configuration file must contain the same fields as the default configuration file. To use a custom configuration, copy :doc:`default_config.json <default_config.json>`, change values to your configuration, and provide the file name in functions requiring a configuration in your code.
+A custom configuration file must contain the same fields as the default configuration file. To use a custom configuration, copy :doc:`default_config.json <default_config.json>`, change values to your configuration, and provide the file name in functions requiring a configuration in your code. If any section is excluded from a custom configuration, default values will be used.
 
 The sections of the config file are:
 
@@ -13,6 +13,8 @@ The sections of the config file are:
 ``da1_fields``: The locations of values in each line of a .DA1 file.
 
 ``region_fields``: The locations of values in each line of a region file.
+
+``asc_parsing``: Cutoff values for ASC parsing.
 
 ``cutoffs``: Fixation duration cutoffs.
 
@@ -109,6 +111,20 @@ The default configuration matches a region file with the following format:
   -------------------------------------------------------------------
   Value:    num.  | cond. |   |  r1   |  r1   |  r2   |  r2   | ... |
 
+asc_parsing
+~~~~~~~~~~~
+
+This section contains parameters for parsing ASC files. If only DA1 files are being processed, this section can be ignored. The following four optional fields are used for fixation and trial exclusion in ASC parsing:
+
+``fixation_min_cutoff``: Minimum cutoff for including a fixation.
+
+``max_saccade_dur``: Maximum cutoff for saccade duration.
+
+``blink_max_count``: Maximum number of blinks before trial exclusion.
+
+``blink_max_dur``: Maximum blink duration before trial exclusion.
+
+
 cutoffs
 ~~~~~~~
 
@@ -127,11 +143,11 @@ region_measures
 
 This section contains parameters for region measure calculation and output. It is a list of all calculated region measure, each with two parameters:
 
-``cutoff``: A cutoff value for the measure. If the calculated measure is greater than this value, its value in the output report is ``CUTOFF``. For some measures, where the value is not numerical, this parameter is ignored.
+``cutoff``: An optional cutoff value for the measure. If the calculated measure is greater than this value, its value in the output report is ``CUTOFF``. For some measures, where the value is not numerical, this parameter is ignored. If cutoff is not included in the configuration, or is set to ``None`` or ``-1``, it will not be used.
 
-``include``: A boolean (true/false) value specifying whether the measure should be included in the output report. If false, the measure will be excluded.
+``exclude``: A boolean (true/false) value specifying whether the measure should be excluded from the output report. If true, the measure will be excluded. If false or not included in the configuration, the measure will be included.
 
-``header``: A string used as a header for the measure in wide output format.
+``header``: A string used as a header for the measure in wide output format. If not set, the function name will be used as the header.
 
 The measures in this section of the config file are:
 
@@ -176,9 +192,9 @@ region_output
 
 This section specifies the columns that should be included in the output file for region measures. Each output column has two parameters:
 
-``include``: Whether or not the column should be included in the output report, true or false.
+``exclude``: A boolean (true/false) value specifying whether the column should be excluded from the output report. If true, the column will be excluded. If false or not included in the configuration, the column will be included.
 
-``header``: A title for the header of the column. Can be different from the name of the column parameter.
+``header``: A title for the header of the column. If not specified, the default name will be used.
 
 Columns included in this section are:
 

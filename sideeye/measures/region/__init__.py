@@ -21,11 +21,7 @@ the measure. First pass fixations are defined as:
         return first_pass_fixations
 """
 
-from .boolean import (
-    skip,
-    first_pass_regressions_in,
-    first_pass_regressions_out
-)
+from .boolean import skip, first_pass_regressions_in, first_pass_regressions_out
 
 from .other import landing_position, launch_site, first_pass_fixation_count
 
@@ -41,26 +37,26 @@ from .duration import (
     spillover_time,
     refixation_time,
     go_back_time_char,
-    go_back_time_region
+    go_back_time_region,
 )
 
 __all__ = [
-    'skip',
-    'first_pass_regressions_in',
-    'first_pass_regressions_out',
-    'landing_position',
-    'launch_site',
-    'first_pass_fixation_count',
-    'first_fixation_duration',
-    'single_fixation_duration',
-    'first_pass',
-    'go_past',
-    'total_time',
-    'right_bounded_time',
-    'reread_time',
-    'second_pass',
-    'spillover_time',
-    'refixation_time',
-    'go_back_time_char',
-    'go_back_time_region'
+    "skip",
+    "first_pass_regressions_in",
+    "first_pass_regressions_out",
+    "landing_position",
+    "launch_site",
+    "first_pass_fixation_count",
+    "first_fixation_duration",
+    "single_fixation_duration",
+    "first_pass",
+    "go_past",
+    "total_time",
+    "right_bounded_time",
+    "reread_time",
+    "second_pass",
+    "spillover_time",
+    "refixation_time",
+    "go_back_time_char",
+    "go_back_time_region",
 ]

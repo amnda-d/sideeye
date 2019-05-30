@@ -3,8 +3,10 @@ A file parser for region data files.
 """
 from collections import defaultdict
 from typing import List, Dict, DefaultDict
-from ..data import Point, Region, Item
-from ..types import ItemNum, Condition
+from sideeye.data import Point, Region, Item
+from sideeye.types import ItemNum, Condition
+from sideeye.config import Configuration
+
 
 def text(region_string: str) -> List[Region]:
     """
@@ -16,28 +18,26 @@ def text(region_string: str) -> List[Region]:
                         ``region 3/ This is region 4.``
     """
     if not isinstance(region_string, str):
-        raise ValueError('Not a region string.')
-    string = region_string.rstrip('\n').split('/')
+        raise ValueError("Not a region string.")
+    string = region_string.rstrip("\n").split("/")
     regions: List[Region] = []
     line = 0
     char = 0
     for region in string:
         start = Point(char, line)
-        region = region.replace('\\n', '\n')
-        if '\n' in region:
+        region = region.replace("\\n", "\n")
+        if "\n" in region:
             line += 1
             char = 0
-        char += len(region.split('\n')[-1])
+        char += len(region.split("\n")[-1])
         end = Point(char, line)
         regions += [
             Region(
-                start,
-                end,
-                len([c for c in region if c != '\n']),
-                region.strip('\n')
+                start, end, len([c for c in region if c != "\n"]), region.strip("\n")
             )
         ]
     return regions
+
 
 def textfile(filename: str, verbose: int = 0) -> Dict[ItemNum, Dict[Condition, Item]]:
     """
@@ -52,51 +52,46 @@ def textfile(filename: str, verbose: int = 0) -> Dict[ItemNum, Dict[Condition, I
     lines /and four regions.``
     """
     if verbose > 0:
-        print('\nParsing region text file: %s' % filename)
+        print("\nParsing region text file: %s" % filename)
 
-    if filename[-4:].lower() != '.txt':
-        raise ValueError('%s Failed validation: Not a region file' % filename)
+    if filename[-4:].lower() != ".txt":
+        raise ValueError("%s Failed validation: Not a region file" % filename)
 
-    with open(filename, 'r') as region_file:
+    with open(filename, "r") as region_file:
         items: DefaultDict[ItemNum, Dict[Condition, Item]] = defaultdict(dict)
         for region_line in region_file:
             line = region_line.split(maxsplit=2)
             number = int(line[0])
             condition = int(line[1])
             if verbose == 2 or verbose >= 5:
-                print('\tParsing item: %s, condition: %s' % (number, condition))
-            items[number][condition] = Item(
-                number,
-                condition,
-                text(line[2])
-            )
+                print("\tParsing item: %s, condition: %s" % (number, condition))
+            items[number][condition] = Item(number, condition, text(line[2]))
         return items
+
 
 def validate_region_file(filename: str):
     """Checks if a file is a region file."""
-    if filename[-4:].lower() != '.cnt' and filename[-4:].lower() != '.reg':
-        raise ValueError('%s Failed validation: Not a region file' % filename)
+    if filename[-4:].lower() != ".cnt" and filename[-4:].lower() != ".reg":
+        raise ValueError("%s Failed validation: Not a region file" % filename)
+
 
 def file(
-        filename: str,
-        number_location: int,
-        condition_location: int,
-        boundaries_start: int = 3,
-        includes_y: bool = False,
-        verbose: int = 0
-    ) -> Dict[ItemNum, Dict[Condition, Item]]:
+    filename: str, config: Configuration = Configuration(), verbose: int = 0
+) -> Dict[ItemNum, Dict[Condition, Item]]:
     """
     Parses a .reg or .cnt file into a dictionary of sideeye Item objects.
 
     Args:
         filename (str): Region filename.
-        number_location (int): Item number column location.
-        condition_location (int): Condition number column location.
-        boundaries_start (int): Column location of first region boundary start.
-        includes_y (bool): Whether or not the region boundaries specify line position.
+        config (Configuration): Configuration.
     """
     if verbose > 0:
-        print('\nParsing region file: %s' % filename)
+        print("\nParsing region file: %s" % filename)
+
+    number_location = config.region_fields.number
+    condition_location = config.region_fields.condition
+    boundaries_start = config.region_fields.boundaries_start
+    includes_y = config.region_fields.includes_y
 
     validate_region_file(filename)
 
@@ -117,17 +112,16 @@ def file(
                 regions += [Region(Point(x_start, 0), Point(x_end, 0))]
         return regions
 
-    with open(filename, 'r') as region_file:
+    with open(filename, "r") as region_file:
         items: DefaultDict[ItemNum, Dict[Condition, Item]] = defaultdict(dict)
         for region_line in region_file:
-            line = [int(x) for x in region_line.split()]
-            condition = line[condition_location]
-            number = line[number_location]
+            split_line = region_line.split()
+            condition = split_line[condition_location]
+            number = split_line[number_location]
+            line = [int(x) for x in split_line]
             if verbose == 2 or verbose >= 5:
-                print('\tParsing item: %s, condition: %s' % (number, condition))
+                print("\tParsing item: %s, condition: %s" % (number, condition))
             items[number][condition] = Item(
-                number,
-                condition,
-                line_to_regions(line[boundaries_start:])
+                number, condition, line_to_regions(line[boundaries_start:])
             )
         return items

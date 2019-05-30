@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.1
+      - image: circleci/python:3.6
     working_directory: ~/sideeye
 
     steps:
@@ -27,7 +27,7 @@ jobs:
             make testall
   deploy:
     docker:
-      - image: circleci/python:3.6.1
+      - image: circleci/python:3.6
     working_directory: ~/sideeye
 
     steps:

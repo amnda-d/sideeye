@@ -5,7 +5,9 @@ If the location of the end Fixation is earlier in the Item the location of the
 start Fixation, the Saccade is a regression.
 """
 
-from .fixation import Fixation
+import json
+from sideeye.data.fixation import Fixation
+
 
 class Saccade:
     """
@@ -20,7 +22,7 @@ class Saccade:
 
     def __init__(self, duration: int, regression: bool, start: Fixation, end: Fixation):
         if duration < 0:
-            raise ValueError('Duration of saccade must be positive.')
+            raise ValueError("Duration of saccade must be positive.")
 
         self.duration: int = duration
         self.regression: bool = regression
@@ -33,9 +35,12 @@ class Saccade:
 
     def __str__(self) -> str:
         """Convert Saccade into a string."""
-        return (
-            '(duration: ' + str(self.duration) +
-            ', regression: ' + str(self.regression) +
-            ', start: ' + str(self.start) +
-            ', end: ' + str(self.end) + ')'
+        return json.dumps(
+            {
+                "duration": self.duration,
+                "regression": self.regression,
+                "start": self.start,
+                "end": self.end,
+            },
+            default=lambda x: str(x) if isinstance(x, Fixation) else x.__dict__,
         )

@@ -6,8 +6,9 @@ occurred in, and whether or not it has been excluded by fixation cutoff
 parameters. If the x or y position of the fixation is -1, the fixation is excluded.
 """
 
-from .point import Point
-from .region import Region
+from sideeye.data.point import Point
+from sideeye.data.region import Region
+
 
 class Fixation:
     """
@@ -18,7 +19,6 @@ class Fixation:
                             is negative.
         line (Optional[int]): Line position of the fixation. None if position is
                             negative.
-        duration (int): Total time of Fixation (end - start) in milliseconds.
         start (int): Start time of Fixation in milliseconds since trial start.
         end (int): End time of Fixation in milliseconds since trial start.
         index (int): Index of where the Fixation occurred in a trial.
@@ -35,16 +35,16 @@ class Fixation:
     """
 
     def __init__(
-            self,
-            position: Point,
-            start: int,
-            end: int,
-            index: int,
-            region: Region,
-            excluded: bool = False
-        ):
+        self,
+        position: Point,
+        start: int,
+        end: int,
+        index: int,
+        region: Region,
+        excluded: bool = False,
+    ):
         if start > end or start < 0 or end < 0:
-            raise ValueError('Invalid start or end time.')
+            raise ValueError("Invalid start or end time.")
 
         self.excluded: bool = True if position.x < 0 or position.y < 0 else excluded
         self.char: int = position.x
@@ -52,7 +52,6 @@ class Fixation:
         self.start: int = start
         self.end: int = end
         self.region: Region = region
-        self.duration: int = end - start
         self.index: int = index
 
     def __eq__(self, other) -> bool:
@@ -63,19 +62,17 @@ class Fixation:
             and self.line == other.line
             and self.start == other.start
             and self.end == other.end
-            and self.duration == other.duration
             and self.excluded == other.excluded
         )
 
     def __str__(self) -> str:
-        return (
-            '(char: ' + str(self.char)
-            + ', line: ' + str(self.line)
-            + ', start: ' + str(self.start)
-            + 'ms, end: ' + str(self.end)
-            + 'ms, region: ' + str(self.region)
-            + ', excluded: ' + str(self.excluded) + ')'
+        return "( char: {}, line: {}, start: {}, end: {}, region: {}, excluded: {} )".format(
+            self.char, self.line, self.start, self.end, self.region, self.excluded
         )
+
+    def duration(self) -> int:
+        """Fixation duration in ms."""
+        return self.end - self.start
 
     def assign_region(self, region: Region):
         """
