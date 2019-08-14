@@ -37,10 +37,10 @@ with such.A("Region String Parser") as it:
         @it.should("parse a region string text file")
         def test_region_string_file():
             it.assertEqual(
-                it.txt_items[1][1],
+                it.txt_items["1"]["1"],
                 Item(
-                    1,
-                    1,
+                    "1",
+                    "1",
                     [
                         Region(Point(0, 0), Point(17, 0), 17, "this is region 1 "),
                         Region(Point(17, 0), Point(33, 0), 16, "this is region 2"),
@@ -54,18 +54,18 @@ with such.A("Region String Parser") as it:
                 ),
             )
             it.assertEqual(
-                it.txt_items[1][2],
+                it.txt_items["1"]["2"],
                 Item(
-                    1,
-                    2,
+                    "1",
+                    "2",
                     [Region(Point(0, 0), Point(20, 0), 20, "item with one region")],
                 ),
             )
             it.assertEqual(
-                it.txt_items[2][1],
+                it.txt_items["2"]["1"],
                 Item(
-                    2,
-                    1,
+                    "2",
+                    "1",
                     [
                         Region(Point(0, 0), Point(9, 0), 9, "item with"),
                         Region(Point(9, 0), Point(19, 1), 19, "one region per line"),
@@ -73,10 +73,10 @@ with such.A("Region String Parser") as it:
                 ),
             )
             it.assertEqual(
-                it.txt_items[2][2],
+                it.txt_items["2"]["2"],
                 Item(
-                    2,
-                    2,
+                    "2",
+                    "2",
                     [
                         Region(Point(0, 0), Point(8, 0), 8, "this is "),
                         Region(Point(8, 0), Point(16, 0), 8, "an item "),
@@ -89,10 +89,10 @@ with such.A("Region String Parser") as it:
                 ),
             )
             it.assertEqual(
-                it.txt_items[3][1],
+                it.txt_items["3"]["1"],
                 Item(
-                    3,
-                    1,
+                    "3",
+                    "1",
                     [
                         Region(Point(0, 0), Point(10, 1), 20, "this is an\nitem with "),
                         Region(

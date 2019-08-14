@@ -57,7 +57,7 @@ def write_column(
         output = trial.region_measures[region.number][measure]["value"]
     elif measure in trial.trial_measures:
         output = trial.trial_measures[measure]
-    if cutoff and output > cutoff >= 0 and isinstance(output, int):
+    if isinstance(output, int) and cutoff and output > cutoff >= 0:
         output = "CUTOFF"
     return str(output)
 

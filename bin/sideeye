@@ -20,7 +20,7 @@ ASC_FILES = askopenfilenames(
 
 
 REGION_FILE = askopenfilename(
-    title="Select region file", filetypes=[("Region Files", "*.reg *.cnt")]
+    title="Select region file", filetypes=[("Region Files", "*.reg *.cnt *.txt")]
 )
 
 OUTPUT_FILE = asksaveasfilename(

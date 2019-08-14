@@ -1,6 +1,10 @@
 Version History
 ===============
 
+`1.0.0a10 <https://pypi.org/project/sideeye/1.0.0a10/>`_
+------------------------------------------------------
+- Parse all item and condition labels as strings, not numbers
+
 `1.0.0a9 <https://pypi.org/project/sideeye/1.0.0a9/>`_
 ------------------------------------------------------
 - Added `sideeye` script

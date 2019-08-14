@@ -14,8 +14,8 @@ class RegionMeasure(TypedDict):
     fixations: Optional[List[Fixation]]
 
 
-Condition = Union[str, int]
-ItemNum = Union[str, int]
+Condition = str
+ItemNum = str
 ItemId = Tuple[ItemNum, Condition]
 Measures = DefaultDict[int, DefaultDict[str, Union[Dict, RegionMeasure]]]
 TrialMeasures = DefaultDict[str, Dict]

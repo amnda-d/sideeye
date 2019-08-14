@@ -6,10 +6,11 @@ import re
 import os
 from datetime import datetime
 from math import sqrt
-from typing import Optional, Dict, List, Union, Tuple
+from typing import Optional, Dict, List, Tuple
 from mypy_extensions import TypedDict
 from sideeye.data import Fixation, Point, Trial, Item, Experiment
 from sideeye.config import Configuration, ASCParsingConfig
+from sideeye.types import Condition, ItemNum
 
 
 class CharPosition(TypedDict, total=False):
@@ -180,7 +181,7 @@ def get_new_fixations(
 
 def get_trials(
     asc: str,
-    items: Dict[Union[str, int], Dict[Union[str, int], Item]],
+    items: Dict[Condition, Dict[ItemNum, Item]],
     config: ASCParsingConfig = Configuration().asc_parsing,
 ) -> List[Trial]:
     """
@@ -265,7 +266,7 @@ def get_trials(
 
 def parse(
     asc_file: str,
-    items: Dict[Union[str, int], Dict[Union[str, int], Item]],
+    items: Dict[Condition, Dict[ItemNum, Item]],
     config: ASCParsingConfig = Configuration().asc_parsing,
 ):
     """

@@ -60,12 +60,13 @@ def textfile(filename: str, verbose: int = 0) -> Dict[ItemNum, Dict[Condition, I
     with open(filename, "r") as region_file:
         items: DefaultDict[ItemNum, Dict[Condition, Item]] = defaultdict(dict)
         for region_line in region_file:
-            line = region_line.split(maxsplit=2)
-            number = int(line[0])
-            condition = int(line[1])
-            if verbose == 2 or verbose >= 5:
-                print("\tParsing item: %s, condition: %s" % (number, condition))
-            items[number][condition] = Item(number, condition, text(line[2]))
+            if region_line:
+                line = region_line.split(maxsplit=2)
+                number = line[0]
+                condition = line[1]
+                if verbose == 2 or verbose >= 5:
+                    print("\tParsing item: %s, condition: %s" % (number, condition))
+                items[number][condition] = Item(number, condition, text(line[2]))
         return items
 
 

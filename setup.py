@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 from codecs import open
 
-VERSION = "1.0.0a9"
+VERSION = "1.0.0a10"
 
 here = os.path.abspath(os.path.dirname(__file__))
 
