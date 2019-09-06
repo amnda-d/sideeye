@@ -216,7 +216,11 @@ def get_trials(
                     len(fixations),
                     fixation_start_time,
                 )
-                if item and condition and item in items and condition in items[item]
+                if start_time
+                and item
+                and condition
+                and item in items
+                and condition in items[item]
                 else (None, fixation_start_time)
             )
             fixations = (
@@ -254,6 +258,7 @@ def get_trials(
                             fixations,
                         )
                     ]
+                start_time = 0
                 fixations = []
                 fixation_start_time = 0
                 characters = []
