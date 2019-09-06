@@ -1,6 +1,10 @@
 Version History
 ===============
 
+`1.0.0a11 <https://pypi.org/project/sideeye/1.0.0a11/>`_
+------------------------------------------------------
+- Bug fix: Only include fixations in ASC files after start of trial
+
 `1.0.0a10 <https://pypi.org/project/sideeye/1.0.0a10/>`_
 ------------------------------------------------------
 - Parse all item and condition labels as strings, not numbers

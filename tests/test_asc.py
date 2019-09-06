@@ -7,7 +7,7 @@ with such.A(".ASC Parser") as it:
     @it.has_setup
     def setup():
         it.asc_header = """
-        MSG 0 SYNCTIME
+        MSG 1 SYNCTIME
         MSG 1000 TRIALID E1I1D1
         MSG 1001 REGION CHAR 1 1 T 10 100 20 110
         MSG 1002 REGION CHAR 1 1 e 20 100 30 110
@@ -20,8 +20,8 @@ with such.A(".ASC Parser") as it:
         MSG 1009 REGION CHAR 1 1 m 90 100 100 110
         """
         it.asc_end = """
-        MSG 10000 TRIAL_RESULT 7
-        MSG 10001 TRIAL OK
+        MSG 10001 TRIAL_RESULT 7
+        MSG 10002 TRIAL OK
         """
         it.items = {"1": {"1": Item("1", "1", parser.region.text("Test/ item"))}}
 
@@ -195,6 +195,45 @@ with such.A(".ASC Parser") as it:
                 10000,
                 it.items["1"]["1"],
                 [Fixation(Point(0, 0), 0, 25, 0, it.items["1"]["1"].regions[0])],
+            ),
+        )
+
+    @it.should("not include fixations before the start of a trial.")
+    def test_fix_before_synctime():
+        fixations = """
+        MSG 1000 TRIALID E1I1D1
+        MSG 1001 REGION CHAR 1 1 T 10 100 20 110
+        MSG 1002 REGION CHAR 1 1 e 20 100 30 110
+        MSG 1003 REGION CHAR 1 1 s 30 100 40 110
+        MSG 1004 REGION CHAR 1 1 t 40 100 50 110
+        MSG 1005 REGION CHAR 1 1   50 100 60 110
+        MSG 1006 REGION CHAR 1 1 i 60 100 70 110
+        MSG 1007 REGION CHAR 1 1 t 70 100 80 110
+        MSG 1008 REGION CHAR 1 1 e 80 100 90 110
+        MSG 1009 REGION CHAR 1 1 m 90 100 100 110
+        EFIX R 2000 2005 5 12 105 0
+        MSG 2001 SYNCTIME
+        EFIX R 2005 2020 15 33 105 0
+        """
+        parsed_experiment = parser.asc.get_trials(
+            fixations + it.asc_end,
+            it.items,
+            config.ASCParsingConfig(
+                {
+                    "blink_max_dur": False,
+                    "blink_max_count": False,
+                    "max_saccade_dur": False,
+                    "fixation_min_cutoff": 10,
+                }
+            ),
+        )
+        it.assertEqual(
+            parsed_experiment[0],
+            Trial(
+                0,
+                8000,
+                it.items["1"]["1"],
+                [Fixation(Point(2, 0), 0, 15, 0, it.items["1"]["1"].regions[0])],
             ),
         )
 
