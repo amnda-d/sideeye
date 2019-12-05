@@ -81,8 +81,12 @@ class Trial:
                         saccades += [
                             Saccade(
                                 saccade_duration,
-                                Point(fixation.char, fixation.line)
-                                < Point(saccade_start.char, saccade_start.line),
+                                (
+                                    Point(fixation.char, fixation.line)
+                                    < Point(saccade_start.char, saccade_start.line)
+                                )
+                                if not fixations[key - 1].excluded
+                                else False,
                                 saccade_start,
                                 fixation,
                             )
