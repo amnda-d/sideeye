@@ -21,8 +21,13 @@ DIRNAME = os.path.dirname(os.path.realpath(__file__))
 CONFIG = sideeye.config.Configuration(os.path.join(DIRNAME, "sample_config.json"))
 
 # Parse all DA1 files in directory using items listed in region file.
-EXPERIMENTS = sideeye.parser.experiment.parse_dir(
-    os.path.join(DIRNAME, "sample_DA1s"), os.path.join(DIRNAME, "sample.cnt"), CONFIG
+EXPERIMENTS = sideeye.parser.experiment.parse_files(
+    [
+        os.path.join(os.path.join(DIRNAME, "sample_DA1s"), da1)
+        for da1 in os.listdir(os.path.join(DIRNAME, "sample_DA1s"))
+    ],
+    os.path.join(DIRNAME, "sample.cnt"),
+    CONFIG,
 )
 
 # Calculate all measures listed in config file, and output results as a csv.
