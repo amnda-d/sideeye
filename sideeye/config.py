@@ -160,7 +160,7 @@ class MeasuresConfig:
             if not ("exclude" in config and config["exclude"])
         }
         self.all = {**self.trial, **self.region}
-        self.names = [key for key in {**trial_measures, **region_measures}]
+        self.names = {**trial_measures, **region_measures}.keys()
 
 
 class OutputColumnConfig:

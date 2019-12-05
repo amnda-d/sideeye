@@ -12,14 +12,14 @@ with such.A("Trial") as it:
         it.fix2 = Fixation(Point(1, 2), 5, 6, 1, "region")
         it.fixations = [
             Fixation(Point(1, 2), 10, 20, 0, "region"),
-            Fixation(Point(1, 2), 30, 40, 1, "region"),
-            Fixation(Point(1, 2), 50, 60, 2, "region"),
-            Fixation(Point(1, 2), 70, 80, 3, "region", excluded=True),
+            Fixation(Point(2, 2), 30, 40, 1, "region"),
+            Fixation(Point(3, 2), 50, 60, 2, "region"),
+            Fixation(Point(4, 2), 70, 80, 3, "region", excluded=True),
             Fixation(Point(1, 2), 90, 100, 4, "region"),
-            Fixation(Point(1, 2), 110, 120, 5, "region", excluded=True),
-            Fixation(Point(1, 2), 130, 140, 6, "region", excluded=True),
-            Fixation(Point(1, 2), 150, 160, 7, "region"),
-            Fixation(Point(1, 2), 170, 180, 8, "region", excluded=True),
+            Fixation(Point(2, 2), 110, 120, 5, "region", excluded=True),
+            Fixation(Point(3, 2), 130, 140, 6, "region", excluded=True),
+            Fixation(Point(4, 2), 150, 160, 7, "region"),
+            Fixation(Point(5, 2), 170, 180, 8, "region", excluded=True),
         ]
         it.item = Item(2, 1, [it.r1, it.r2, it.r3])
         it.trial = Trial(1, 5, it.item, it.fixations)
@@ -44,6 +44,13 @@ with such.A("Trial") as it:
             Saccade(10, False, it.fixations[1], it.fixations[2]),
         ]
         it.assertEqual(it.trial.saccades, saccades)
+
+    @it.should("not classify a saccade after an excluded fixation as a regression")
+    def test_regression():
+        it.assertEqual(
+            it.trial_include_fixations.saccades[2],
+            Saccade(10, False, it.fixations[2], it.fixations[4]),
+        )
 
     @it.should("calculate saccades correctly when include_fixation=True")
     def test_include_fixation():

@@ -40,15 +40,15 @@ def write_column(
             output = region.number
     elif column == "region_text":
         if region is not None:
-            output = region.text
+            output = f'"{region.text}"'
     elif column == "region_start":
         if region is not None:
-            output = region.start
+            output = f'"{region.start}"'
     elif column == "region_end":
         if region is not None:
-            output = region.end
+            output = f'"{region.end}"'
     elif column == "measure":
-        output = measure
+        output = f'"{measure}"' if "," in str(measure) else measure
     elif (
         region is not None
         and region.number is not None
@@ -59,7 +59,7 @@ def write_column(
         output = trial.trial_measures[measure]
     if isinstance(output, int) and cutoff and output > cutoff >= 0:
         output = "CUTOFF"
-    return str(output)
+    return str(output).replace("\n", "\\n")
 
 
 def measure_output(
