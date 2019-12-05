@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 from codecs import open
 
-VERSION = "1.0.0a11"
+VERSION = "1.0.0a12"
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,6 +26,7 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     keywords="eyetracking eye-tracking da1 psycholinguistics linguistics psychology eyetrack",
     python_requires=">=3.6",

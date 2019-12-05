@@ -48,7 +48,7 @@ def write_column(
         if region is not None:
             output = f'"{region.end}"'
     elif column == "measure":
-        output = measure
+        output = f'"{measure}"' if "," in str(measure) else measure
     elif (
         region is not None
         and region.number is not None

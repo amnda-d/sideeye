@@ -1,6 +1,12 @@
 Version History
 ===============
 
+`1.0.0a12 <https://pypi.org/project/sideeye/1.0.0a12/>`_
+------------------------------------------------------
+- Bug fix: Escape newlines in output CSV files
+- Bug fix: Quote region start and end coordinates in output CSV files
+- Bug fix: Don't classify saccades after data loss as regressions
+
 `1.0.0a11 <https://pypi.org/project/sideeye/1.0.0a11/>`_
 ------------------------------------------------------
 - Bug fix: Only include fixations in ASC files after start of trial
