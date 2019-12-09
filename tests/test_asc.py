@@ -8,7 +8,7 @@ with such.A(".ASC Parser") as it:
     def setup():
         it.asc_header = """
         MSG 1 SYNCTIME
-        MSG 1000 TRIALID E1I1D1
+        MSG 1000 TRIALID E1I1D0
         MSG 1001 REGION CHAR 1 1 T 10 100 20 110
         MSG 1002 REGION CHAR 1 1 e 20 100 30 110
         MSG 1003 REGION CHAR 1 1 s 30 100 40 110
@@ -58,7 +58,7 @@ with such.A(".ASC Parser") as it:
         trial_1 = it.asc_header + "EFIX R 2000 2010 10 12 105 0" + it.asc_end
         trial_2 = """
         MSG 20000 SYNCTIME
-        MSG 20000 TRIALID E1I1D1
+        MSG 20000 TRIALID E1I1D0
         MSG 20001 REGION CHAR 1 1 T 10 100 20 110
         MSG 20002 REGION CHAR 1 1 e 20 100 30 110
         MSG 20003 REGION CHAR 1 1 s 30 100 40 110
@@ -88,6 +88,32 @@ with such.A(".ASC Parser") as it:
             Trial(
                 1,
                 20000,
+                it.items["1"]["1"],
+                [Fixation(Point(0, 0), 0, 10, 0, it.items["1"]["1"].regions[0])],
+            ),
+        )
+
+    @it.should("only parse trials ending in D0")
+    def test_d0_d1():
+        trial_1 = it.asc_header + "EFIX R 2000 2010 10 12 105 0" + it.asc_end
+        trial_2 = """
+        MSG 20000 SYNCTIME
+        MSG 20000 TRIALID E1I1D1
+        MSG 20001 REGION CHAR 1 1 A 10 100 20 110
+        MSG 20002 REGION CHAR 1 1 a 20 100 30 110
+        MSG 20003 REGION CHAR 1 1 a 30 100 40 110
+        MSG 20004 REGION CHAR 1 1 a 40 100 50 110
+        EFIX R 30000 30010 10 12 105 0
+        MSG 40000 TRIAL_RESULT 7
+        MSG 40001 TRIAL OK
+        """
+        parsed_experiment = parser.asc.get_trials(trial_1 + trial_2, it.items)
+        it.assertEqual(len(parsed_experiment), 1)
+        it.assertEqual(
+            parsed_experiment[0],
+            Trial(
+                0,
+                10000,
                 it.items["1"]["1"],
                 [Fixation(Point(0, 0), 0, 10, 0, it.items["1"]["1"].regions[0])],
             ),
@@ -201,7 +227,7 @@ with such.A(".ASC Parser") as it:
     @it.should("not include fixations before the start of a trial.")
     def test_fix_before_synctime():
         fixations = """
-        MSG 1000 TRIALID E1I1D1
+        MSG 1000 TRIALID E1I1D0
         MSG 1001 REGION CHAR 1 1 T 10 100 20 110
         MSG 1002 REGION CHAR 1 1 e 20 100 30 110
         MSG 1003 REGION CHAR 1 1 s 30 100 40 110
