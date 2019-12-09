@@ -26,7 +26,7 @@ class CharPosition(TypedDict, total=False):
 
 
 LINE_TYPES = ["MSG", "EFIX", "EBLINK", "SYNCTIME"]
-ITEM_REGEX = re.compile(r"E(?P<condition>.+)I(?P<item>.+)D(?P<dependent>.+)")
+ITEM_REGEX = re.compile(r"E(?P<condition>.+)I(?P<item>.+)D0")
 CHAR_REGEX = re.compile(
     r"CHAR.+(?P<char>.)\s+(?P<x1>.+)\s+(?P<y1>.+)\s+(?P<x2>.+)\s+(?P<y2>.+)"
 )

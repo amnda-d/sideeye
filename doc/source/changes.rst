@@ -1,6 +1,10 @@
 Version History
 ===============
 
+`1.0.0a13 <https://pypi.org/project/sideeye/1.0.0a13/>`_
+------------------------------------------------------
+- Bug fix: Only include trials ending in D0 in ASC parsing.
+
 `1.0.0a12 <https://pypi.org/project/sideeye/1.0.0a12/>`_
 ------------------------------------------------------
 - Bug fix: Escape newlines in output CSV files
