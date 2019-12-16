@@ -22,9 +22,7 @@ The sections of the config file are:
 
 ``trial_measures``: Used in trial measure calculation and output.
 
-``region_output``: Reported columns for region measures in output file.
-
-``trial_output``: Reported columns for trial measures in output file.
+``output_columns``: Reported columns in the output file.
 
 ``terminal_output``: Amount of status/debugging information to output to terminal.
 
@@ -187,10 +185,10 @@ This section contains parameters for trial measure calculation and output. Each 
   average_forward_saccade
   average_backward_saccade
 
-region_output
+output_columns
 ~~~~~~~~~~~~~
 
-This section specifies the columns that should be included in the output file for region measures. Each output column has two parameters:
+This section specifies the columns that should be included in the output file. Each output column has two parameters:
 
 ``exclude``: A boolean (true/false) value specifying whether the column should be excluded from the output report. If true, the column will be excluded. If false or not included in the configuration, the column will be included.
 
@@ -221,11 +219,6 @@ Columns included in this section are:
 ``region_start``: Character location of beginning of region.
 
 ``region_end``: Character location of end of region.
-
-trial_output
-~~~~~~~~~~~~
-
-This section specifies the columns that should be included in the output file for trial measures. Each column has the same parameters as ``region_output``. The columns are the same, but with columns beginning with ``region_`` excluded.
 
 terminal_output
 ~~~~~~~~~~~~~~~

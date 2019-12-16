@@ -104,7 +104,7 @@
       "exclude": false
     }
   },
-  "region_output": {
+  "output_columns": {
     "experiment_name": {
       "exclude": false
     },
@@ -140,29 +140,6 @@
     },
     "region_end": {
       "exclude": true
-    }
-  },
-  "trial_output": {
-    "experiment_name": {
-      "exclude": false
-    },
-    "filename": {
-      "exclude": true
-    },
-    "date": {
-      "exclude": true
-    },
-    "trial_id": {
-      "exclude": false
-    },
-    "trial_total_time": {
-      "exclude": false
-    },
-    "item_id": {
-      "exclude": false
-    },
-    "item_condition": {
-      "exclude": false
     }
   },
   "terminal_output": 0

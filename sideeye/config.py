@@ -187,22 +187,13 @@ class OutputColumnConfig:
 class OutputConfig:
     """Output column configuration."""
 
-    def __init__(
-        self,
-        region_output: Dict[str, Dict[str, Union[int, str]]],
-        trial_output: Dict[str, Dict[str, Union[int, str]]],
-    ):
-        self.region = {
+    def __init__(self, output_columns: Dict[str, Dict[str, Union[int, str]]]):
+        outputconfig = {
             measure: OutputColumnConfig(measure, config)
-            for (measure, config) in region_output.items()
+            for (measure, config) in output_columns.items()
             if not ("exclude" in config and config["exclude"])
         }
-        self.trial = {
-            measure: OutputColumnConfig(measure, config)
-            for (measure, config) in trial_output.items()
-            if not ("exclude" in config and config["exclude"])
-        }
-        self.columns = {**self.region, **self.trial}
+        self.columns = {**outputconfig}
 
 
 class Configuration:
@@ -284,8 +275,8 @@ class Configuration:
             },
         )
         self.output = OutputConfig(
-            config["region_output"]
-            if "region_output" in config
+            config["output_columns"]
+            if "output_columns" in config
             else {
                 "experiment_name": {},
                 "filename": {"exclude": True, "header": "filename"},
@@ -299,18 +290,7 @@ class Configuration:
                 "region_text": {"exclude": True, "header": "region_text"},
                 "region_start": {"exclude": True, "header": "region_start"},
                 "region_end": {"exclude": True, "header": "region_end"},
-            },
-            config["trial_output"]
-            if "trial_output" in config
-            else {
-                "experiment_name": {},
-                "filename": {"exclude": True, "header": "filename"},
-                "date": {"exclude": True, "header": "date"},
-                "trial_id": {},
-                "trial_total_time": {},
-                "item_id": {},
-                "item_condition": {},
-            },
+            }
         )
         self.terminal_output = (
             config["terminal_output"] if "terminal_output" in config else 0

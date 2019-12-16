@@ -1,6 +1,10 @@
 Version History
 ===============
 
+`1.0.0a14 <https://pypi.org/project/sideeye/1.0.0a14/>`_
+------------------------------------------------------
+- Combine region_output and trial_output into one configuration section.
+
 `1.0.0a13 <https://pypi.org/project/sideeye/1.0.0a13/>`_
 ------------------------------------------------------
 - Bug fix: Only include trials ending in D0 in ASC parsing.

@@ -59,7 +59,7 @@ Default Configuration
       "average_forward_saccade": {},
       "average_backward_saccade": {}
     },
-    "region_output": {
+    "output_columns": {
       "experiment_name": {},
       "filename": { "exclude": true },
       "date": { "exclude": true },
@@ -72,15 +72,6 @@ Default Configuration
       "region_text": { "exclude": true },
       "region_start": { "exclude": true },
       "region_end": { "exclude": true }
-    },
-    "trial_output": {
-      "experiment_name": {},
-      "filename": { "exclude": true },
-      "date": { "exclude": true },
-      "trial_id": {},
-      "trial_total_time": {},
-      "item_id": {},
-      "item_condition": {}
     },
     "terminal_output": 0
   }

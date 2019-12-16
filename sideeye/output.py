@@ -106,7 +106,7 @@ def generate_region_output(
         config (Configuration): Configuration.
     """
     measures = config.measures.region
-    columns = config.output.region
+    columns = config.output.columns
     output = ",".join([value.header for value in columns.values()]) + "\n"
 
     for experiment in experiments:
@@ -131,7 +131,7 @@ def generate_trial_output(
         config (Configuration): Configuration.
     """
     measures = config.measures.trial
-    columns = config.output.trial
+    columns = config.output.columns
     output = ",".join([value.header for value in columns.values()]) + "\n"
 
     for experiment in experiments:
