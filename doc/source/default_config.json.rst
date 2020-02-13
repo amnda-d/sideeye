@@ -71,7 +71,8 @@ Default Configuration
       "region_number": {},
       "region_text": { "exclude": true },
       "region_start": { "exclude": true },
-      "region_end": { "exclude": true }
+      "region_end": { "exclude": true },
+      "value": { "exclude": true }
     },
     "terminal_output": 0
   }
