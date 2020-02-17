@@ -223,11 +223,12 @@ class Configuration:
     output: OutputConfig
     terminal_output: int
 
-    def __init__(self, config_file: str = None):
-        config: Dict = {}
-        if config_file:
-            with open(config_file) as cfg:
+    def __init__(self, raw_config: Union[Dict, str] = {}):
+        if isinstance(raw_config, str):
+            with open(raw_config) as cfg:
                 config = json.load(cfg)
+        else:
+            config = raw_config
         self.wide_format = config["wide_format"] if "wide_format" in config else True
         self.da1_fields = DA1Config(
             config["da1_fields"] if "da1_fields" in config else {}
@@ -290,6 +291,7 @@ class Configuration:
                 "region_text": {"exclude": True, "header": "region_text"},
                 "region_start": {"exclude": True, "header": "region_start"},
                 "region_end": {"exclude": True, "header": "region_end"},
+                "value": {"exclude": True, "header": "value"},
             }
         )
         self.terminal_output = (

@@ -220,6 +220,8 @@ Columns included in this section are:
 
 ``region_end``: Character location of end of region.
 
+``value``: Value of measure, for long-format output.
+
 terminal_output
 ~~~~~~~~~~~~~~~
 

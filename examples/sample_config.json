@@ -1,5 +1,5 @@
 {
-  "wide_format": true,
+  "wide_format": false,
   "da1_fields": {
     "index": 0,
     "condition": 1,
@@ -140,6 +140,9 @@
     },
     "region_end": {
       "exclude": true
+    },
+    "value": {
+      "exclude": false
     }
   },
   "terminal_output": 0
